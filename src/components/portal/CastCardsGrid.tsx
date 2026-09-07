@@ -30,75 +30,111 @@ export interface CastMember {
 const INITIAL_CAST: CastMember[] = [
   {
     id: "1",
-    name: "Sofía Valenzuela",
-    characterName: "La Curandera de las Sombras",
-    characterTitle: "Guardiana del Fuego y Ritos Ancestrales",
-    archetype: "Chamánica / Psicomágica",
-    bio: "Canalizadora del trance en el Acto I. Encargada de abrir el círculo sagrado y el cántico inicial de la tierra.",
+    name: "Gabriel (Actor Central)",
+    characterName: "El Niño Gabriel",
+    characterTitle: "El que despertó al demonio con el código 616",
+    archetype: "Oráculo Digital & Vidente",
+    bio: "Digitó el código 616 en la tarjeta de crédito de sus padres jugando videojuegos. Custodio del secreto primordial: 'Argentina es una civilización'. Enfrenta al hombre-robot algorítmico.",
     photoUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCsflbwK8N7xrmAZNR5DO6vSuetzhGlCIVlIQBtWq0O-O9PxJwwZ_PEE1dm78WKiMqDXlkvuLxgMOIUNw0NKw7pS31nhFxYJVy-tA8TKYXve7xXX5W8pieSHDUlgJbXJ5D0KRnszl7yHyjCMVJ5npCO7MJ-1hZBMoFOFsqsJ-Munks8XbIULVaJq9rnQ5hChTUBsoL8S0m9PxlzfvpZagzEJth4lWZ63sGI7Er61SPegvWVWq0IJXBcOw",
-    scenes: ["Acto I: La Invocación", "Acto III: El Juicio del Fuego"],
+    scenes: ["Escena 3: Gabriel y la Madre", "Escena 6: El Olvido", "Escena 9: El Secreto de Argentum"],
     roleColor: "border-[#fabc4d] text-[#fabc4d]",
   },
   {
     id: "2",
-    name: "Nahuel Terrada",
-    characterName: "El Cazador de la Niebla",
-    characterTitle: "El Forastero en Tierras Paganas",
-    archetype: "Héroe Trágico / Rebelde",
-    bio: "Representa el choque entre la razón urbana y el desborde dionisíaco del monte. Portador del arco y la máscara de cuero.",
+    name: "Flor Darío / Luciana",
+    characterName: "La Madre (Doña Argentina)",
+    characterTitle: "Matriarca del Grotesco & La Familia Musicardi",
+    archetype: "Tierra & Realidad Cotidiana",
+    bio: "Exige que Gabriel deje TikTok y haga la tarea sin ChatGPT. Encarna la histeria del hogar argentino: '¡Yo hago ravioles, ella hace ravioles! ¡Somos los Musicardi, una gran familia!'.",
     photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB-vrWjlzCmj_urRsf4vgfYtqeWWbMxLFv0oQ2meaiWBMULKQQ_TkgHIK9RprNvc5Ba2mtBEShz-MZsS-johUxMLU-i9YLnLPLR-D5v2RvvG0JozUcq9whSEE2lbOEF8S2rpfsUTPq6ZsbPH0MYxlU-0223l7V8m2SgT6_cDtiMUpJMc0N3d2TAIorR1h26kXVBIWq5fO-DztgqMZtdN9LAgdzENUpq2n0mOxh3w-iZ2n4XaROaEAxDVQ",
-    scenes: ["Acto II: El Encuentro en la Salamanca", "Acto IV: La Pasada General"],
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBDVK18okmiTLrsL4KN3z0AyZrWSIibc4NbnNq-p27AjRbrCsPzcEJ14SybTyhLe7CjC4PtWeB6xbVytQWskBfB9srNgcXp1coyoEmOkluJ805K4bhO8YG1zWJmRmCiejUZk1d-Jn0mnFVexBfjXDO2W4cd35KXNxagQ7Xg5wCxlEcgZgJdkD5KDcqMvfeEkA8MTAiH0pDipcWROEaDq0Etx_2A7QlnDBZimjpAGjuHqHJkhBjWj6-n9g",
+    scenes: ["Escena 3: Gabriel y la Madre", "Escena 8: Bloque Musical Musicardi"],
     roleColor: "border-[#ffb3ae] text-[#ffb3ae]",
   },
   {
     id: "3",
-    name: "Martina Larrea",
-    characterName: "La Niña Vidente",
-    characterTitle: "Oráculo de la Puna & Voces Ocultas",
-    archetype: "Inocencia & Revelación",
-    bio: "Portadora de los textos sagrados y acotaciones del más allá. Encarna la clarividencia en medio del aquelarre.",
+    name: "Darío / Tomi Mendieta",
+    characterName: "El Colla / Sabio Andino",
+    characterTitle: "Filósofo del Espacio-Tiempo & La Manzana",
+    archetype: "Sabiduría Andina",
+    bio: "Abre la metafísica tras las cantoras: en el siglo XXI pasamos a la era del espacio-tiempo, la materia no existe (E=mc²). Muerde la manzana de la discordia en el centro del altar.",
     photoUrl:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDCg_8fADmKyzMRR_mKHXuIaxrV69zviLZdeq3yKs8C8T6KExLZEebYSK-3FcuB78lQqCY7_XElf0PkhrC9ew9gYa2AP4ch_unLN6DgmNIK-fDzkKNvIHCZSyBAKMZ0fGJfwGe1o6ZXp0aRI46N68z24bqRqFjWMtslN8b1nD4uvqhka4Q6J1-LCddcgO-rZCCRout_blqth4Xk44gFPjBK1tam7VAJxwtAQF19DXOO1i60z97TGlRKWA",
-    scenes: ["Acto I: Prólogo", "Acto II: Danza de los Susurros"],
+    scenes: ["Escena 2: La Búsqueda de la Verdad", "Escena 7: La Comparsa"],
     roleColor: "border-[#efbf67] text-[#efbf67]",
   },
   {
     id: "4",
-    name: "Esteban Quiroga",
-    characterName: "El Mandinga de las Penumbras",
-    characterTitle: "Encarnación de la Tentación Criolla",
-    archetype: "Sombra / Bufón Sagrado",
-    bio: "Figura catalizadora del conflicto moral. Domina el claroscuro y los diálogos con el público en el teatro-foro.",
+    name: "Ulises / Aixa",
+    characterName: "El Gaucho (Coya Leguizamón)",
+    characterTitle: "Custodio de la Salamanca Criolla",
+    archetype: "El Filósofo del Monte",
+    bio: "Explica la diferencia entre el demonio europeo y la Salamanca criolla: liberamos el demonio en carnaval para que no ande suelto el resto del año. Cuestiona la falsa libertad mediática.",
     photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCdZhLf6PlMIY9ZK_btiq1zbQVOBk5ksf-swM6hHa6CChNXkdnQ2P0yAQ3axzC6IxyxNRPD7q9HqLIVmHaD9Hu5ViFHedb06bt_j9NZIeqNJrGcXlW2_gifRnXHoFKtQsIxu-tliNBDsEf2EAcoO9O2j-DPwfgia0xnojZGBpimYith8kT949DGshHdvwoT1hWqetlZ5GHFFRnVMJvm-vODWCmqL5FvGZ7lY4DB-PTLKIWtBUl4etJB8A",
-    scenes: ["Acto II: El Pacto", "Acto III: Juicio Colectivo"],
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuB-vrWjlzCmj_urRsf4vgfYtqeWWbMxLFv0oQ2meaiWBMULKQQ_TkgHIK9RprNvc5Ba2mtBEShz-MZsS-johUxMLU-i9YLnLPLR-D5v2RvvG0JozUcq9whSEE2lbOEF8S2rpfsUTPq6ZsbPH0MYxlU-0223l7V8m2SgT6_cDtiMUpJMc0N3d2TAIorR1h26kXVBIWq5fO-DztgqMZtdN9LAgdzENUpq2n0mOxh3w-iZ2n4XaROaEAxDVQ",
+    scenes: ["Escena 4: El Demonio Criollo", "Escena 7: La Comparsa"],
     roleColor: "border-[#9e2a2b] text-[#ffb3ae]",
   },
   {
     id: "5",
-    name: "Camila Benítez",
-    characterName: "La Tejedora del Tiempo",
-    characterTitle: "Guardiana del Manifiesto Textil",
-    archetype: "Matriarca / Destino",
-    bio: "Manipula los hilos del telar escénico conectando los cuerpos de los oficiantes con el altar central.",
+    name: "Martina Larrea",
+    characterName: "El Presentador de la Libertad",
+    characterTitle: "Conductor del Show Mediático '¡Viva la Libertad!'",
+    archetype: "Bufón Televisivo",
+    bio: "Encabeza la parodia televisiva repartiendo 'libertades absolutas' (de las leyes, del pasado y de la gravedad de Newton) a Daiana, Edwin y Juan Salteño.",
     photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBDVK18okmiTLrsL4KN3z0AyZrWSIibc4NbnNq-p27AjRbrCsPzcEJ14SybTyhLe7CjC4PtWeB6xbVytQWskBfB9srNgcXp1coyoEmOkluJ805K4bhO8YG1zWJmRmCiejUZk1d-Jn0mnFVexBfjXDO2W4cd35KXNxagQ7Xg5wCxlEcgZgJdkD5KDcqMvfeEkA8MTAiH0pDipcWROEaDq0Etx_2A7QlnDBZimjpAGjuHqHJkhBjWj6-n9g",
-    scenes: ["Acto I: El Telar", "Acto IV: Apoteosis Final"],
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuB4AxDnqmXvbMLeNcWb4KsMTGKpwwJfWzqcK39TJfLpkd9jPgElmdZOsH8KAUIyVUiPwl3SvwrL20QMmNZwpxGuXvm5JG45VJb75VRinFbHGzwjsOcnhQUpTBINvysbCEfien4VKhYAcAWuKt6sK3GSa28UpB3FSBhxEsHcv5AWjMQF-hhjvqKhxTFPVIGk-AdUBRRTvGSJ0loFb--BrrOIsZX5LqfJeReIvu2risbDyKwQKTWozzy__w",
+    scenes: ["Escena 5: ¡Viva la Libertad Carajo!"],
     roleColor: "border-[#fabc4d] text-[#fabc4d]",
   },
   {
     id: "6",
-    name: "Valentin Ramos C.",
-    characterName: "El Oficiante Mayor",
-    characterTitle: "Dirección Escénica & Guía del Ritual",
-    archetype: "Hierofante / Guía",
-    bio: "Dirección y conducción del ensamble. Marca el pulso de las campanas y la ruptura de la cuarta pared.",
+    name: "Tomás (Mendieta)",
+    characterName: "José Mercado",
+    characterTitle: "El Titiritero de la Biyuya & El Billetín",
+    archetype: "El Mercado Financiero",
+    bio: "Decide quién cobra y quién no. Factura 700 millones de euros en la Champions pero ofrece un millón de pesos para el fútbol femenino. Primo de Raúl Estado y socio de Javier Petróleo.",
     photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB4AxDnqmXvbMLeNcWb4KsMTGKpwwJfWzqcK39TJfLpkd9jPgElmdZOsH8KAUIyVUiPwl3SvwrL20QMmNZwpxGuXvm5JG45VJb75VRinFbHGzwjsOcnhQUpTBINvysbCEfien4VKhYAcAWuKt6sK3GSa28UpB3FSBhxEsHcv5AWjMQF-hhjvqKhxTFPVIGk-AdUBRRTvGSJ0loFb--BrrOIsZX5LqfJeReIvu2risbDyKwQKTWozzy__w",
-    scenes: ["Todas las Escenas", "Apertura y Cierre"],
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCdZhLf6PlMIY9ZK_btiq1zbQVOBk5ksf-swM6hHa6CChNXkdnQ2P0yAQ3axzC6IxyxNRPD7q9HqLIVmHaD9Hu5ViFHedb06bt_j9NZIeqNJrGcXlW2_gifRnXHoFKtQsIxu-tliNBDsEf2EAcoO9O2j-DPwfgia0xnojZGBpimYith8kT949DGshHdvwoT1hWqetlZ5GHFFRnVMJvm-vODWCmqL5FvGZ7lY4DB-PTLKIWtBUl4etJB8A",
+    scenes: ["Escena 5: ¡Viva la Libertad Carajo!"],
+    roleColor: "border-[#9e2a2b] text-[#ffb3ae]",
+  },
+  {
+    id: "7",
+    name: "Sofía Valenzuela",
+    characterName: "Daiana (La Matancera)",
+    characterTitle: "Administrativa de Fábrica & Futbolista de Boca",
+    archetype: "La Dignidad Trabajadora",
+    bio: "Trabaja en la Fábrica de Sueños en La Matanza. Confronta a José Mercado con valentía: '¿De dónde salieron esos 22 pares de huevos? Salieron de una cachucha'.",
+    photoUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuAkj_mnBEhgY8r6ZIiSZ4SBc491464gDVPGv0QiuYlUGkq5cEIy_cdiFV5JEni2LTp04WEMnc9nHcSdzlF8SbjiF_pKwvLotKuzwRwRSzXb9egonyMFCV8HKtF3qoh9ETdAiUvhM_ii-IofswPq5FjpYDfKi-kMwKaTbnLam5KH0fDuRzQPSeeeWlemTSeY0wqSywbobnnOw9kvun63B1LeZixjNfmaAhVS4Spvo85T0fflWY28aq3rhm4fYxFIqcmjLt4",
+    scenes: ["Escena 5: ¡Viva la Libertad Carajo!"],
     roleColor: "border-[#fabc4d] text-[#fabc4d]",
+  },
+  {
+    id: "8",
+    name: "Juan (Actor / Cantor)",
+    characterName: "Juan Salteño",
+    characterTitle: "El Cantor Teatrista de Salta",
+    archetype: "El Poeta & La Memoria",
+    bio: "Quiere armar una compañía teatral para hacer actos psicomágicos a través de los símbolos. José Mercado le da una guitarra para Cosquín y entona la Zamba para olvidar con todo el elenco.",
+    photoUrl:
+      "https://lh3.googleusercontent.com/aida/AEtjO1X4p4gVHON_LlbC1QFQ3d27pnxEJbs7tF2KGI4VV-SBUn47FzGOCqtomDy-SGgOx8Dmd7j8TBGIuV4tnL6n7MDZiikPPFGzh466Tg8k4ki8ykpr3bfpa-Ru-02u9FD82pyUAsUx7lGim7ILc1evat2c_quVrS-rasO3HKlbuZTe342O3ZDp9c97yobHEvvEpoXvdwM21Qqh5XFOahiKhz_0ZT3KD4qqsimBEsVkJQ0e9TbZZWpTjEOiySeG",
+    scenes: ["Escena 5: ¡Viva la Libertad Carajo!", "Escena 8: Bloque Musical"],
+    roleColor: "border-[#efbf67] text-[#efbf67]",
+  },
+  {
+    id: "9",
+    name: "Cantora 1 & Cantora 2",
+    characterName: "Las Cantoras del Origen",
+    characterTitle: "Voces de la Patria & Cabelleras Eternas",
+    archetype: "Sirenas Ancestrales",
+    bio: "Ubicadas en los extremos del escenario con cabello largo sostenido por un monje y un diablo norteño. Abren y cierran el ritual: 'Argentina, ¿qué pasa con tu voz?'.",
+    photoUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCPStdwIZHlBiVIZjUR8gBS3kWa5k-4kQ1DSd-A53kwvwW76um7wYebIszzWgq_8Q1lB2eVnaAQddSqLEqD1fKBnw6LSuy-3MLZxgzy2hX1y5VANK6AxZeO4o8jctgBaJjoeSJx1pj-KNCnzC4bkzItMXfzB7pd_93bvLRhfK75jcTBQNr1fnP6GHTY_90dtVcZTenrkMJKi1VnMxwVk3-mt3gl61nqMmn6psjernnBSbgLMO-guFEyQg",
+    scenes: ["Escena 1: Las Cantoras & La Manzana", "Escena 7: Coplas del Olvido", "Escena 10: Himno"],
+    roleColor: "border-[#bd8718] text-[#fabc4d]",
   },
 ];
 
@@ -120,7 +156,7 @@ export default function CastCardsGrid() {
   const [newArchetype, setNewArchetype] = useState("");
   const [newBio, setNewBio] = useState("");
   const [newPhotoUrl, setNewPhotoUrl] = useState("");
-  const [newScenes, setNewScenes] = useState("Acto I, Acto II");
+  const [newScenes, setNewScenes] = useState("Escena 1, Escena 5");
 
   // Handle file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,9 +197,9 @@ export default function CastCardsGrid() {
       id: Date.now().toString(),
       name: newActorName,
       characterName: newCharName,
-      characterTitle: newCharTitle || "Personaje del Ritual",
-      archetype: newArchetype || "Dionisíaco",
-      bio: newBio || "Ficha actoral en proceso de construcción dramatúrgica.",
+      characterTitle: newCharTitle || "Personaje de Fiesta Pagana",
+      archetype: newArchetype || "Dionisíaco / Criollo",
+      bio: newBio || "Ficha actoral adaptada al guión oficial.",
       photoUrl:
         newPhotoUrl.trim() ||
         uploadedImagePreview ||
@@ -196,14 +232,14 @@ export default function CastCardsGrid() {
           <div className="flex items-center gap-2 mb-1">
             <Sparkles className="w-4 h-4 text-[#fabc4d]" />
             <span className="font-jakarta text-xs text-[#efbf67] uppercase tracking-[0.2em] font-bold">
-              Directorio & Galería Oficial
+              Directorio & Galería Oficial de la Obra
             </span>
           </div>
           <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#f7f4eb]">
-            Panel de Elenco & Fichas de Personaje
+            Panel de Elenco • Personajes del Guión
           </h2>
           <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] mt-1 max-w-xl">
-            Tarjetas de presentación de actores y personajes del ritual. Podés hacer clic en cada foto para actualizarla o cargar una nueva desde tu equipo.
+            Fichas de presentación del elenco adaptadas al guión de <em>Fiesta Pagana en Teatros</em>. Podés hacer clic en cada foto para actualizarla o cargar una nueva desde tu equipo.
           </p>
         </div>
 
@@ -461,7 +497,7 @@ export default function CastCardsGrid() {
                   Nueva Ficha de Elenco
                 </h3>
                 <p className="text-xs text-[#efbf67] font-jakarta">
-                  Registrá un nuevo actor con su personaje correspondiente y fotografía
+                  Registrá un nuevo actor con su personaje correspondiente del guión
                 </p>
               </div>
             </div>
@@ -477,7 +513,7 @@ export default function CastCardsGrid() {
                     type="text"
                     value={newActorName}
                     onChange={(e) => setNewActorName(e.target.value)}
-                    placeholder="Ej. Martín Fierro"
+                    placeholder="Ej. Martina Larrea"
                     className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                   />
                 </div>
@@ -491,7 +527,7 @@ export default function CastCardsGrid() {
                     type="text"
                     value={newCharName}
                     onChange={(e) => setNewCharName(e.target.value)}
-                    placeholder="Ej. El Payador Místico"
+                    placeholder="Ej. Edwin (El Repartidor)"
                     className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                   />
                 </div>
@@ -506,7 +542,7 @@ export default function CastCardsGrid() {
                     type="text"
                     value={newCharTitle}
                     onChange={(e) => setNewCharTitle(e.target.value)}
-                    placeholder="Ej. Oráculo de las Pampas"
+                    placeholder="Ej. El Repartidor Hermano de las Hallacas"
                     className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                   />
                 </div>
@@ -519,7 +555,7 @@ export default function CastCardsGrid() {
                     type="text"
                     value={newArchetype}
                     onChange={(e) => setNewArchetype(e.target.value)}
-                    placeholder="Ej. Chamánico, Rebelde, Sombra"
+                    placeholder="Ej. Migrante, Obrero, Chamánico"
                     className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                   />
                 </div>
@@ -533,7 +569,7 @@ export default function CastCardsGrid() {
                   rows={3}
                   value={newBio}
                   onChange={(e) => setNewBio(e.target.value)}
-                  placeholder="Descripción de la intervención psicomágica y requerimientos corporales..."
+                  placeholder="Descripción del personaje según el guión teatral..."
                   className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl p-3 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                 />
               </div>
@@ -546,7 +582,7 @@ export default function CastCardsGrid() {
                   type="text"
                   value={newScenes}
                   onChange={(e) => setNewScenes(e.target.value)}
-                  placeholder="Acto I: Invocación, Acto III: Juicio"
+                  placeholder="Escena 5: ¡Viva la Libertad!, Escena 8: Musicardi"
                   className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                 />
               </div>

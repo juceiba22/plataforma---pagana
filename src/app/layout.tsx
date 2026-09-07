@@ -4,22 +4,25 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Fiesta Pagana • Plataforma Teatral & Ritual",
+  title: "Fiesta Pagana en Teatros • Obra Ritual & Farsa Filosófica",
   description:
-    "Una liturgia nocturna donde la barrera entre escenario y platea se consume. Mitología porteña, máscaras arquetípicas, catarsis polifónica y celebración ritual.",
+    "Una experiencia escénica donde la Argentina se mira al espejo: la batalla celeste y terrestre, el mito criollo de la Salamanca, el show de la libertad y la profecía de Argentum.",
   keywords: [
-    "Fiesta Pagana",
+    "Fiesta Pagana en Teatros",
     "Teatro Ritual",
-    "Psicomagia",
-    "Buenos Aires",
-    "Ninio Ancestral",
-    "Olmo Masini",
-    "Alternativa Teatral",
-    "Teatro Foro",
+    "Argentina es una Civilización",
+    "Argentum",
+    "La Salamanca",
+    "Gabriel y el Demonio",
+    "José Mercado",
+    "Teatro Argentino",
+    "Grotesco Criollo",
+    "Marechal",
   ],
   openGraph: {
-    title: "Fiesta Pagana • Teatro Ritual • Buenos Aires",
-    description: "Teatro foro • Bandas en vivo • Fiesta. Un evento psico-mágico.",
+    title: "Fiesta Pagana en Teatros • Obra Ritual & Farsa Argentina",
+    description:
+      "¿Qué pasa con tu voz, Argentina? Una obra de teatro ritual, farsa política y drama mitológico sobre el destino y la identidad americana.",
     type: "website",
     locale: "es_AR",
   },

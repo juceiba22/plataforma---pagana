@@ -20,19 +20,19 @@ export default function ManifestoSection() {
           </div>
 
           <span className="font-jakarta text-xs uppercase tracking-[0.22em] text-[#fabc4d] font-bold block mb-3">
-            El Fuego Sagrado • Compromiso Escénico
+            El Secreto Revelado • Manifiesto Dramatúrgico
           </span>
 
           <h3 className="font-cinzel text-2xl sm:text-4xl lg:text-5xl uppercase font-bold text-[#f7f4eb] mb-6 leading-tight">
-            El Manifiesto de la Transmutación
+            Argentina es una Civilización
           </h3>
 
           <blockquote className="font-jakarta text-base sm:text-xl text-[#efbf67] italic leading-relaxed max-w-2xl mx-auto mb-8 font-light">
-            "No acudimos a la sala para olvidar la realidad, sino para encender en ella un fuego sagrado que consuma nuestras armaduras. El teatro es la fiesta donde lo profano y lo sagrado vuelven a estrecharse las manos."
+            "No somos un holograma reemplazable ni una pieza del algoritmo del hombre-robot. Tenemos que recordarnos quiénes somos: el nombre de nuestra Patria viene de Argentum. 'Hazte de plata y espeja el oro que se da en las alturas y verdaderamente serás un argentino'."
           </blockquote>
 
           <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] max-w-xl mx-auto mb-8 leading-relaxed">
-            Una propuesta escénica nacida del colectivo independiente de Buenos Aires que une psicomagia jodorowskiana, folclore experimental y teatro de la liberación.
+            Una obra de teatro independiente que cruza la poética mística de Leopoldo Marechal con el grotesco de los Musicardi y la memoria inquebrantable de los indios del norte.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -41,7 +41,7 @@ export default function ManifestoSection() {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#fabc4d] text-[#281900] font-jakarta text-xs uppercase tracking-[0.16em] font-bold shadow-[0_0_24px_rgba(250,188,77,0.5)] hover:brightness-110 transition-all"
             >
               <Ticket className="w-4 h-4" />
-              Adquirir Pase Ritual MMXXV
+              Conseguir Entradas MMXXV
             </button>
           </div>
         </div>

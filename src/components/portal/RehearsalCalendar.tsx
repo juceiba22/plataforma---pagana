@@ -31,62 +31,76 @@ export interface RehearsalEvent {
   badgeColor: string;
 }
 
-const INITIAL_EVENTS: RehearsalEvent[] = [
+const SCRIPT_REHEARSAL_EVENTS: RehearsalEvent[] = [
   {
     id: "1",
     day: 12,
     month: 8, // Septiembre
     year: 2026,
-    title: "Ensayo Teatro-Foro: Ruptura de la Cuarta Pared",
-    type: "Teatro-Foro",
+    title: "Escena 1 & 2: Las Cantoras, la Manzana y el Espacio-Tiempo",
+    type: "Técnico",
     time: "19:00 - 22:30",
     location: "Sala Principal (Cámara Negra)",
-    castInvited: "Todo el Elenco + 12 Espectadores Testigo",
+    castInvited: "Cantora 1, Cantora 2, El Colla, Bombisto y Cuatro Demonios",
     objective:
-      "Ajustar los pactos de consentimiento con el público y la mediación del Chamán durante la asamblea del Acto III.",
-    badgeColor: "bg-[#9e2a2b] text-[#f7f4eb] border-[#ffb3ae]/40",
+      "Ajustar la atenuación de luces de las cantoras in crescendo hacia la manzana central. Coordinación del golpe seco de bombo con el monólogo de E=mc².",
+    badgeColor: "bg-[#281900] text-[#fabc4d] border-[#fabc4d]/30",
   },
   {
     id: "2",
-    day: 18,
+    day: 16,
     month: 8, // Septiembre
     year: 2026,
-    title: "Pasada General & Técnica Completa",
-    type: "Pasada General",
-    time: "18:00 - 23:00",
-    location: "Espacio Callejón / Escenario A",
-    castInvited: "Elenco Completo, Músicos, Luces & Vestuario",
+    title: "Escena 3: Gabriel y la Madre (Código 616 & TikTok)",
+    type: "Teatro-Foro",
+    time: "18:30 - 21:30",
+    location: "Estudio B • Sala de Ensayos",
+    castInvited: "El Niño Gabriel y La Madre",
     objective:
-      "Puesta en tiempo real sin interrupciones con planta de luces definitiva, cambios rápidos de máscara y prueba sonora.",
-    badgeColor: "bg-[#bd8718] text-[#281900] border-[#fabc4d]/50",
+      "Trabajo de frente al público con luces exclusivas independientes. Ajustar el ritmo confidencial del relato de la tarjeta de crédito y la reacción de la madre.",
+    badgeColor: "bg-[#9e2a2b] text-[#f7f4eb] border-[#ffb3ae]/40",
   },
   {
     id: "3",
-    day: 24,
+    day: 20,
     month: 8, // Septiembre
     year: 2026,
-    title: "Ensayo de la Libertad: Catarsis & Trance Físico",
+    title: "Escena 5: ¡Viva la Libertad Carajo! & José Mercado",
     type: "Ensayo de la Libertad",
-    time: "20:00 - 00:00",
+    time: "19:00 - 23:00",
     location: "Nave Experimental del Santuario",
-    castInvited: "Elenco Actoral, Ensamble de Percusión",
+    castInvited: "El Presentador, Daiana, José Mercado, Edwin, Juan Salteño y Todo el Elenco",
     objective:
-      "Improvisación corporal sin texto fijo, respiración holotrópica y exploración del desborde dionisíaco para el clímax.",
+      "Dinámica de show televisivo paródico. Transición del debate de Daiana (huevos vs cachucha) al contrapunto de José Mercado y el canto colectivo de la Zamba para olvidar.",
     badgeColor: "bg-[#78191b] text-[#ffdad6] border-[#ffb4ab]/40",
   },
   {
     id: "4",
-    day: 28,
-    month: 8,
+    day: 24,
+    month: 8, // Septiembre
     year: 2026,
-    title: "Ajuste de Luces & Partituras de Marechal",
-    type: "Técnico",
-    time: "17:30 - 20:30",
-    location: "Sala de Streaming & Estudio B",
-    castInvited: "Dirección de Iluminación & Actores Principales",
+    title: "Escena 8: Bloque Musical Musicardi & Terapia Nacional",
+    type: "Música",
+    time: "20:00 - 23:30",
+    location: "Sala Principal con Ensamble",
+    castInvited: "La Madre, Gabriel, Músicos (Redoblante, Bajo, Bandoneón) y Coro de Actores",
     objective:
-      "Claroscuro y proyección de sombras para el debate entre la demonología criolla y la europea.",
-    badgeColor: "bg-[#281900] text-[#fabc4d] border-[#fabc4d]/30",
+      "Enlace del monólogo de los ravioles con la canción 'Nuestra Génesis'. Ajuste del falso disturbio de precios ('¡Tenemos que ir a terapia todo el país!').",
+    badgeColor: "bg-[#bd8718] text-[#281900] border-[#fabc4d]/50",
+  },
+  {
+    id: "5",
+    day: 28,
+    month: 8, // Septiembre
+    year: 2026,
+    title: "Escena 9 & 10: Pasada General: El Secreto de Argentum e Himno",
+    type: "Pasada General",
+    time: "18:00 - 23:30",
+    location: "Espacio Callejón / Sala Teatral",
+    castInvited: "Elenco Completo, Músicos, Dirección de Luces y Vestuario",
+    objective:
+      "Pasada general corrida de las 10 escenas del guión. Reparto de tarjetas del secreto ('Argentina es una civilización') y rezo en loop hasta el Himno Nacional.",
+    badgeColor: "bg-[#9e2a2b] text-[#f7f4eb] border-[#ffb3ae]/40",
   },
 ];
 
@@ -110,8 +124,8 @@ const DAYS_OF_WEEK = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 export default function RehearsalCalendar() {
   const [currentMonth, setCurrentMonth] = useState(8); // Septiembre
   const [currentYear, setCurrentYear] = useState(2026);
-  const [selectedDay, setSelectedDay] = useState<number>(12);
-  const [events, setEvents] = useState<RehearsalEvent[]>(INITIAL_EVENTS);
+  const [selectedDay, setSelectedDay] = useState<number>(20);
+  const [events, setEvents] = useState<RehearsalEvent[]>(SCRIPT_REHEARSAL_EVENTS);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Form State for new rehearsal
@@ -164,7 +178,7 @@ export default function RehearsalCalendar() {
       time: newTime,
       location: newLocation,
       castInvited: newCastInvited,
-      objective: newObjective || "Ensayo convocado por Dirección de Fiesta Pagana.",
+      objective: newObjective || "Ensayo convocado para escenas del guión oficial.",
       badgeColor,
     };
 
@@ -180,7 +194,7 @@ export default function RehearsalCalendar() {
     (ev) => ev.month === currentMonth && ev.year === currentYear
   );
 
-  // Filter events for selected day (if selected) or all upcoming this month
+  // Filter events for selected day
   const selectedDayEvents = monthEvents.filter((ev) => ev.day === selectedDay);
 
   return (
@@ -191,14 +205,14 @@ export default function RehearsalCalendar() {
           <div className="flex items-center gap-2 mb-1">
             <CalendarIcon className="w-4 h-4 text-[#fabc4d]" />
             <span className="font-jakarta text-xs text-[#efbf67] uppercase tracking-[0.2em] font-bold">
-              Planificación & Montaje Escénico
+              Montaje del Guión • Temporada de Teatros
             </span>
           </div>
           <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#f7f4eb]">
-            Cronograma de Ensayos (Calendario Vivo)
+            Cronograma de Ensayos por Escenas
           </h2>
           <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] mt-1 max-w-xl">
-            Gestioná y agendá los ensayos de teatro-foro, pasadas generales y laboratorios de trance para el elenco y el equipo técnico.
+            Planificación de ensayos de las 10 escenas del guión: Las Cantoras, Gabriel y la Madre, ¡Viva la Libertad!, Los Musicardi y El Secreto de Argentum.
           </p>
         </div>
 
@@ -214,7 +228,7 @@ export default function RehearsalCalendar() {
         </button>
       </div>
 
-      {/* Main Calendar View: Grid + Day Detail Drawer */}
+      {/* Main Calendar View */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left 7 Columns: Interactive Calendar Grid */}
         <div className="lg:col-span-7 p-6 rounded-2xl bg-[#141419] border border-[#58413f]/40 shadow-xl flex flex-col justify-between bg-noise">
@@ -300,7 +314,7 @@ export default function RehearsalCalendar() {
                     {dayNum}
                   </span>
 
-                  {/* Event indicators dots / mini pill */}
+                  {/* Event indicators dots */}
                   {hasEvents.length > 0 && (
                     <div className="flex flex-col gap-0.5 mt-1">
                       {hasEvents.slice(0, 2).map((ev, evIdx) => (
@@ -348,7 +362,7 @@ export default function RehearsalCalendar() {
                 </h3>
               </div>
               <span className="font-jakarta text-xs text-[#efbf67] font-semibold">
-                {selectedDayEvents.length} Agendado(s)
+                {selectedDayEvents.length} Convocado(s)
               </span>
             </div>
 
@@ -357,10 +371,10 @@ export default function RehearsalCalendar() {
                 <div className="p-8 rounded-xl bg-[#0b0b0e] border border-[#58413f]/30 text-center flex flex-col items-center justify-center my-auto">
                   <Theater className="w-10 h-10 text-[#58413f] mb-2" />
                   <p className="font-cinzel text-sm text-[#dfbfbc] font-bold">
-                    Día Libre o Sin Convocatoria
+                    Día Libre de Ensayo
                   </p>
                   <p className="font-jakarta text-xs text-[#8a877e] mt-1 max-w-xs">
-                    No hay ensayos agendados para este día. Podés agendar uno con el botón a continuación.
+                    No hay escenas programadas para este día. Podés convocar a los actores con el botón de abajo.
                   </p>
                   <button
                     onClick={() => {
@@ -436,7 +450,7 @@ export default function RehearsalCalendar() {
                   Agendar Ensayo en Calendario
                 </h3>
                 <p className="text-xs text-[#efbf67] font-jakarta">
-                  Completá los datos de convocatoria para el elenco y el equipo técnico
+                  Completá los datos de convocatoria para las escenas de Fiesta Pagana
                 </p>
               </div>
             </div>
@@ -444,14 +458,14 @@ export default function RehearsalCalendar() {
             <form onSubmit={handleAddEvent} className="space-y-4">
               <div className="space-y-1">
                 <label className="text-xs font-bold text-[#efbf67] uppercase">
-                  Título del Ensayo *
+                  Título de la Escena / Ensayo *
                 </label>
                 <input
                   required
                   type="text"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="Ej. Ensayo Teatro-Foro: Escena de la Salamanca"
+                  placeholder="Ej. Escena 5: Daiana y José Mercado"
                   className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                 />
               </div>
@@ -470,7 +484,7 @@ export default function RehearsalCalendar() {
                     <option value="Pasada General">Pasada General</option>
                     <option value="Ensayo de la Libertad">Ensayo de la Libertad</option>
                     <option value="Técnico">Técnico / Luces</option>
-                    <option value="Música">Música & Sonido</option>
+                    <option value="Música">Música & Coro</option>
                   </select>
                 </div>
 
@@ -525,7 +539,7 @@ export default function RehearsalCalendar() {
                   type="text"
                   value={newCastInvited}
                   onChange={(e) => setNewCastInvited(e.target.value)}
-                  placeholder="Elenco Completo, Músicos, Dirección"
+                  placeholder="Gabriel, La Madre, José Mercado, Dirección"
                   className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                 />
               </div>
@@ -538,7 +552,7 @@ export default function RehearsalCalendar() {
                   rows={2}
                   value={newObjective}
                   onChange={(e) => setNewObjective(e.target.value)}
-                  placeholder="Definición de intenciones, bloqueos y dinámicas de interacción..."
+                  placeholder="Objetivos dramatúrgicos, pies de entrada y marcaciones de dirección..."
                   className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl p-3 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                 />
               </div>

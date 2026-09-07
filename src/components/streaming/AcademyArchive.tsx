@@ -19,17 +19,17 @@ export const ACADEMY_CLASSES: VideoClass[] = [
   {
     id: "1",
     category: "marechal",
-    categoryLabel: "Dramaturgia Mística",
+    categoryLabel: "Dramaturgia & Mística",
     duration: "01:48:30",
     title: "La Batalla Celeste y Terrestre de Marechal",
     description:
-      "Exploración de la poética trascendental de Leopoldo Marechal, la lucha metafísica del ser y su traducción al cuerpo del actor en la escena ritual.",
+      "Exploración de la poética mística de Leopoldo Marechal, la tensión entre lo divino y lo terrenal, el código 616 y la revelación del secreto de Argentum en el cuerpo del actor.",
     thumbnail:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCsflbwK8N7xrmAZNR5DO6vSuetzhGlCIVlIQBtWq0O-O9PxJwwZ_PEE1dm78WKiMqDXlkvuLxgMOIUNw0NKw7pS31nhFxYJVy-tA8TKYXve7xXX5W8pieSHDUlgJbXJ5D0KRnszl7yHyjCMVJ5npCO7MJ-1hZBMoFOFsqsJ-Munks8XbIULVaJq9rnQ5hChTUBsoL8S0m9PxlzfvpZagzEJth4lWZ63sGI7Er61SPegvWVWq0IJXBcOw",
     badgeBg: "bg-[#bd8718] text-[#281900]",
     attachments: [
       { name: "Guion_Batalla_Celeste_Marechal.pdf", type: "pdf" },
-      { name: "Analisis_Metateatral_Marechal.pdf", type: "pdf" },
+      { name: "Analisis_Metateatral_Argentum.pdf", type: "pdf" },
     ],
   },
   {
@@ -39,45 +39,45 @@ export const ACADEMY_CLASSES: VideoClass[] = [
     duration: "02:15:10",
     title: "La Demonología Europea vs la Demonología Criolla",
     description:
-      "Contraste entre el canon fáustico medieval y los arquetipos populares del monte: el Mandinga, la Salamanca, el Pombero y el pacto de sangre en la Puna.",
+      "El contraste entre el pacto notarial fáustico y el desborde carnavalesco de la Salamanca: por qué el hombre criollo libera el demonio antes de la Pascua y qué busca en esa libertad.",
     thumbnail:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuB-vrWjlzCmj_urRsf4vgfYtqeWWbMxLFv0oQ2meaiWBMULKQQ_TkgHIK9RprNvc5Ba2mtBEShz-MZsS-johUxMLU-i9YLnLPLR-D5v2RvvG0JozUcq9whSEE2lbOEF8S2rpfsUTPq6ZsbPH0MYxlU-0223l7V8m2SgT6_cDtiMUpJMc0N3d2TAIorR1h26kXVBIWq5fO-DztgqMZtdN9LAgdzENUpq2n0mOxh3w-iZ2n4XaROaEAxDVQ",
     badgeBg: "bg-[#9e2a2b] text-[#f7f4eb]",
     attachments: [
-      { name: "Bestiario_Mandinga_Salamanca.pdf", type: "pdf" },
+      { name: "Bestiario_Salamanca_Carnaval.pdf", type: "pdf" },
       { name: "Canto_Coplas_del_Averno.wav", type: "audio" },
     ],
   },
   {
     id: "3",
     category: "comunicacion",
-    categoryLabel: "Dinámicas Escénicas",
+    categoryLabel: "Grotesco & Escena",
     duration: "01:35:45",
     title: "La Comunicación y las Escenas en Teatro",
     description:
-      "La escucha profunda, la triangulación de miradas y los subtextos corporales en la ruptura de la cuarta pared durante las intervenciones colectivas.",
+      "Dinámicas de grotesco criollo en la familia Musicardi, el show televisivo de la libertad, la réplica obrera de Daiana y el pacto confidencial de Gabriel con la platea.",
     thumbnail:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDCg_8fADmKyzMRR_mKHXuIaxrV69zviLZdeq3yKs8C8T6KExLZEebYSK-3FcuB78lQqCY7_XElf0PkhrC9ew9gYa2AP4ch_unLN6DgmNIK-fDzkKNvIHCZSyBAKMZ0fGJfwGe1o6ZXp0aRI46N68z24bqRqFjWMtslN8b1nD4uvqhka4Q6J1-LCddcgO-rZCCRout_blqth4Xk44gFPjBK1tam7VAJxwtAQF19DXOO1i60z97TGlRKWA",
     badgeBg: "bg-[#bd8718] text-[#281900]",
     attachments: [
-      { name: "Manual_Escucha_Activa_Teatral.pdf", type: "pdf" },
-      { name: "Partituras_Corporales_NoVerbales.pdf", type: "pdf" },
+      { name: "Manual_Grotesco_Musicardi.pdf", type: "pdf" },
+      { name: "Partituras_Show_Televisivo.pdf", type: "pdf" },
     ],
   },
   {
     id: "4",
     category: "luces",
-    categoryLabel: "Técnica & Claroscuro",
+    categoryLabel: "Iluminación & Puesta",
     duration: "01:20:00",
     title: "La Técnica de Luces en Teatro",
     description:
-      "Diseño de claroscuro expresionista, ángulos cenitales, gobos de penumbra y atmósfera psicomágica para generar espacios sagrados con reflectores cálidos.",
+      "Penumbras sobre la manzana oculta, cenitales exclusivos para Gabriel y la Madre, reflectores de show mediático para el Presentador y atmósfera de trance para la comparsa.",
     thumbnail:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCdZhLf6PlMIY9ZK_btiq1zbQVOBk5ksf-swM6hHa6CChNXkdnQ2P0yAQ3axzC6IxyxNRPD7q9HqLIVmHaD9Hu5ViFHedb06bt_j9NZIeqNJrGcXlW2_gifRnXHoFKtQsIxu-tliNBDsEf2EAcoO9O2j-DPwfgia0xnojZGBpimYith8kT949DGshHdvwoT1hWqetlZ5GHFFRnVMJvm-vODWCmqL5FvGZ7lY4DB-PTLKIWtBUl4etJB8A",
     badgeBg: "bg-[#353438] text-[#f7f4eb]",
     attachments: [
-      { name: "Planta_Luces_DobleFiltro.pdf", type: "pdf" },
-      { name: "Diagrama_Gobos_Claroscuro.png", type: "image" },
+      { name: "Planta_Luces_Manzana_Penumbras.pdf", type: "pdf" },
+      { name: "Diagrama_Cenitales_Gabriel_Madre.png", type: "image" },
     ],
   },
 ];
@@ -104,14 +104,14 @@ export default function AcademyArchive() {
           <div className="flex items-center gap-2 mb-1">
             <Video className="w-4 h-4 text-[#fabc4d]" />
             <span className="font-jakarta text-xs text-[#efbf67] uppercase tracking-[0.2em] font-bold">
-              Archivo de Transmisiones & Masterclasses
+              Archivo de Formación & Masterclasses del Guión
             </span>
           </div>
           <h2 className="font-cinzel text-2xl sm:text-3xl lg:text-4xl text-[#f7f4eb] tracking-tight font-bold">
             Biblioteca de Clases & Ensayos
           </h2>
           <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] mt-1 max-w-lg">
-            Accedé a los registros grabados en vivo de las masterclasses teóricas, dramaturgia y técnicas escénicas.
+            Accedé a los registros grabados de las masterclasses teóricas, dramaturgia mística y técnicas escénicas del universo de <em>Fiesta Pagana en Teatros</em>.
           </p>
         </div>
 
@@ -121,7 +121,7 @@ export default function AcademyArchive() {
             { id: "all", label: "Todas las Clases (4)" },
             { id: "marechal", label: "1. Batalla Celeste (Marechal)" },
             { id: "demonologia", label: "2. Demonología Criolla" },
-            { id: "comunicacion", label: "3. Comunicación en Teatro" },
+            { id: "comunicacion", label: "3. Comunicación & Escenas" },
             { id: "luces", label: "4. Técnica de Luces" },
           ].map((pill) => (
             <button

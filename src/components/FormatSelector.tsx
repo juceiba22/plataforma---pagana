@@ -1,12 +1,65 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, Flame, BookOpen, Clock, Music, Users, Ticket, ArrowRight, Shield } from "lucide-react";
+import { Sparkles, Flame, BookOpen, Clock, Music, Users, Ticket, ArrowRight, Shield, Theater } from "lucide-react";
 import RitualModal from "./RitualModal";
 
 export default function FormatSelector() {
-  const [activeFormat, setActiveFormat] = useState<"completo" | "reducido">("completo");
+  const [activeFormat, setActiveFormat] = useState<"obra-completa" | "guion-escenas">("obra-completa");
   const [isRitualModalOpen, setIsRitualModalOpen] = useState(false);
+
+  const PLAY_SCENES = [
+    {
+      number: "1",
+      name: "El Lamento de las Cantoras & La Manzana",
+      desc: "Las dos cantoras y sus largas cabelleras sostenidas por un monje y un diablo andino entonan: 'Argentina, ¿qué pasa con tu voz?'. La manzana reposa oculta en penumbras en el centro del altar.",
+    },
+    {
+      number: "2",
+      name: "La Búsqueda de la Verdad & El Espacio-Tiempo",
+      desc: "Cuatro demonios avanzan en cuclillas. El Colla abre el portal de la física metafísica: E=mc², la materia no existe, y muerde la manzana de la discordia con sorna.",
+    },
+    {
+      number: "3",
+      name: "Gabriel y la Madre (El Código 616)",
+      desc: "Gabriel confiesa al público cómo un error con la tarjeta de crédito y el código 616 despertó a las nueve jerarquías infernales. Su madre le exige dejar TikTok y hacer la tarea.",
+    },
+    {
+      number: "4",
+      name: "El Demonio Criollo & La Salamanca",
+      desc: "El Gaucho explica por qué en nuestra tierra la Salamanca se libera en carnaval para no andar suelta el resto del año, buscando la verdadera libertad americana.",
+    },
+    {
+      number: "5",
+      name: "¡Viva la Libertad Carajo! (El Show de Televisión)",
+      desc: "Farsa mediática: el Presentador reparte libertades ficticias a Daiana de La Matanza, Edwin el repartidor y Juan Salteño, mientras José Mercado impone el poder del dinero.",
+    },
+    {
+      number: "6",
+      name: "El Olvido de los Algoritmos & Celulares",
+      desc: "'¿Alguien se acuerda del último reel que vio?'. El tiempo del teléfono es el tiempo del olvido: la dispersión de la atención y la desintegración del misterio.",
+    },
+    {
+      number: "7",
+      name: "La Cantora y la Comparsa del Norte",
+      desc: "'Somos los indios del norte, no nos vamos a olvidar, que la tierra es la mamita y arriba el Padre Sol'. Danza ritual con bombos y coplas de resistencia.",
+    },
+    {
+      number: "8",
+      name: "Génesis Popular & Los Musicardi",
+      desc: "Grotesco criollo y catarsis: el puchero, los ravioles, el karma político argentino (FMI, hiperinflación) y el grito de: '¡Tenemos que ir a terapia todo el país!'.",
+    },
+    {
+      number: "9",
+      name: "El Secreto de Argentum",
+      desc: "Gabriel revela el destino de nuestra tierra: 'Argentina es una civilización'. Rezo colectivo: 'Hazte de plata y espeja el oro de las alturas'.",
+    },
+    {
+      number: "10",
+      name: "Apoteosis Final & Himno Nacional",
+      desc: "Clímax ceremonial donde todo el ensamble, elenco y público entonan el Himno Nacional Argentino en una versión sagrada y pagana.",
+    },
+  ];
 
   return (
     <section id="formatos-escenicos" className="w-full bg-[#0b0b0e] py-20 lg:py-32 relative overflow-hidden bg-noise">
@@ -15,57 +68,57 @@ export default function FormatSelector() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <span className="font-jakarta text-xs uppercase tracking-[0.2em] text-[#ffb3ae] font-bold block mb-2">
-              Dispositivos Escénicos
+              Estructura Dramatúrgica
             </span>
             <h2 className="font-cinzel text-3xl sm:text-4xl lg:text-5xl text-[#f7f4eb] uppercase font-bold tracking-tight">
-              Elige el Calibre de Tu Experiencia
+              La Puesta en Escena
             </h2>
           </div>
 
           {/* Format Switcher Buttons */}
           <div className="inline-flex p-1 bg-[#141419] rounded-xl self-start md:self-auto border border-[#58413f]/40">
             <button
-              onClick={() => setActiveFormat("completo")}
+              onClick={() => setActiveFormat("obra-completa")}
               className={`px-4 sm:px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                activeFormat === "completo"
+                activeFormat === "obra-completa"
                   ? "bg-[#9e2a2b] text-[#f7f4eb] shadow-[0_0_20px_rgba(158,42,43,0.6)]"
                   : "text-[#dfbfbc] hover:text-[#f7f4eb]"
               }`}
             >
-              Formato Completo (Ritual)
+              Obra en Teatros (Puesta Total)
             </button>
             <button
-              onClick={() => setActiveFormat("reducido")}
+              onClick={() => setActiveFormat("guion-escenas")}
               className={`px-4 sm:px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                activeFormat === "reducido"
+                activeFormat === "guion-escenas"
                   ? "bg-[#9e2a2b] text-[#f7f4eb] shadow-[0_0_20px_rgba(158,42,43,0.6)]"
                   : "text-[#dfbfbc] hover:text-[#f7f4eb]"
               }`}
             >
-              Versión Reducida (Teatro)
+              Las 10 Escenas del Guión
             </button>
           </div>
         </div>
 
-        {/* VIEW 1: Formato Completo (Ritual Integral) */}
-        {activeFormat === "completo" && (
+        {/* VIEW 1: Obra Completa */}
+        {activeFormat === "obra-completa" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center animate-fadeIn">
             {/* Ceremonial Flyer Display */}
             <div className="lg:col-span-5 relative flex justify-center">
               <div className="relative w-full max-w-sm p-3 rounded-2xl bg-[#141419] border border-[#fabc4d]/40 shadow-[0_0_40px_rgba(250,188,77,0.15)] bg-noise group">
                 <div className="absolute -top-3 -left-3 px-3 py-1 rounded bg-[#fabc4d] text-[#281900] font-jakarta text-xs uppercase tracking-widest font-bold z-20 shadow-lg">
-                  Oficial MMXXV
+                  Guión Oficial
                 </div>
                 <div className="overflow-hidden rounded-xl">
                   <img
-                    alt="Flyer Fiesta Pagana Ritual Integral"
+                    alt="Fiesta Pagana en Teatros"
                     className="w-full h-auto rounded-xl object-cover shadow-2xl group-hover:scale-105 transition-transform duration-700"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkj_mnBEhgY8r6ZIiSZ4SBc491464gDVPGv0QiuYlUGkq5cEIy_cdiFV5JEni2LTp04WEMnc9nHcSdzlF8SbjiF_pKwvLotKuzwRwRSzXb9egonyMFCV8HKtF3qoh9ETdAiUvhM_ii-IofswPq5FjpYDfKi-kMwKaTbnLam5KH0fDuRzQPSeeeWlemTSeY0wqSywbobnnOw9kvun63B1LeZixjNfmaAhVS4Spvo85T0fflWY28aq3rhm4fYxFIqcmjLt4"
                   />
                 </div>
                 <div className="p-3 text-center">
                   <span className="font-jakarta text-xs uppercase tracking-widest text-[#efbf67] font-semibold block">
-                    Liturgia Completa • 4 Fases • 5 Horas
+                    10 Escenas • Farsa, Mito & Rock
                   </span>
                 </div>
               </div>
@@ -77,73 +130,37 @@ export default function FormatSelector() {
                 <div className="inline-flex items-center gap-1.5 text-[#fabc4d] mb-2">
                   <Flame className="w-4 h-4 text-[#fabc4d]" />
                   <span className="font-jakarta text-xs uppercase tracking-widest font-bold">
-                    Ritual Nocturno Integral
+                    Experiencia Escénica Viva
                   </span>
                 </div>
                 <h3 className="font-cinzel text-2xl sm:text-3xl text-[#f7f4eb] font-bold uppercase tracking-tight">
-                  Invocación, Concierto & Celebración Colectiva
+                  De la Pampa al Altiplano, del Algoritmo a la Identidad
                 </h3>
                 <p className="font-jakarta text-sm text-[#dfbfbc] mt-2 leading-relaxed">
-                  El despliegue absoluto de Fiesta Pagana. Una velada transgresora diseñada en cuatro momentos correlativos donde el espectador es iniciado, desafiado, conmovido y liberado en la danza.
+                  <em>Fiesta Pagana en Teatros</em> desarticula las certezas de la modernidad a través de un viaje coral que entrelaza la física cuántica con la Salamanca, el grotesco familiar de <em>Esperando la Carroza</em> con la parodia de los medios masivos, y culmina en la proclamación de la Argentina como destino civilizatorio.
                 </p>
               </div>
 
-              {/* Step Progression / Itinerary */}
-              <div className="space-y-3">
-                <div className="p-4 rounded-xl bg-[#141419] border border-[#58413f]/40 hover:border-[#fabc4d]/30 transition-colors flex gap-4 items-start">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#9e2a2b] text-[#f7f4eb] font-bold flex items-center justify-center font-cinzel text-sm">
-                    I
-                  </span>
-                  <div>
-                    <h4 className="font-epilogue text-sm sm:text-base text-[#f7f4eb] font-semibold">
-                      Rito Inicial: Máscaras & Clowns Trágicos
-                    </h4>
-                    <p className="font-jakarta text-xs text-[#dfbfbc] mt-1 leading-relaxed">
-                      Recepción ceremonial inmersiva. Seres enmascarados despojan a los asistentes de sus roles cotidianos a través de juegos psicomágicos de silencio y mirada directa.
-                    </p>
-                  </div>
+              {/* Core Pillars */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-[#141419] border border-[#58413f]/40 space-y-1">
+                  <Sparkles className="w-5 h-5 text-[#fabc4d] mb-1" />
+                  <h5 className="font-jakarta text-xs font-bold text-[#f7f4eb] uppercase">
+                    La Batalla Celeste & Terrestre
+                  </h5>
+                  <p className="text-xs text-[#dfbfbc]">
+                    La lucha metafísica entre la carne, la culpa y la sabiduría del monte.
+                  </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#141419] border border-[#58413f]/40 hover:border-[#fabc4d]/30 transition-colors flex gap-4 items-start">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#bd8718] text-[#281900] font-bold flex items-center justify-center font-cinzel text-sm">
-                    II
-                  </span>
-                  <div>
-                    <h4 className="font-epilogue text-sm sm:text-base text-[#f7f4eb] font-semibold">
-                      Doble Ensamble Musical en Vivo
-                    </h4>
-                    <p className="font-jakarta text-xs text-[#dfbfbc] mt-1 leading-relaxed">
-                      Actuaciones estelares de Olmo Masini con su bandoneón procesado y Ninio Ancestral fusionando coplas del norte con pulsos electrónicos contemporáneos.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-xl bg-[#141419] border border-[#58413f]/40 hover:border-[#fabc4d]/30 transition-colors flex gap-4 items-start">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#9e2a2b] text-[#f7f4eb] font-bold flex items-center justify-center font-cinzel text-sm">
-                    III
-                  </span>
-                  <div>
-                    <h4 className="font-epilogue text-sm sm:text-base text-[#f7f4eb] font-semibold">
-                      Teatro Foro: Intervención Activa
-                    </h4>
-                    <p className="font-jakarta text-xs text-[#dfbfbc] mt-1 leading-relaxed">
-                      La escena se detiene ante el conflicto. El público ingresa al espacio actoral para transformar el destino de los personajes y confrontar los mandatos del olvido.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-xl bg-[#141419] border border-[#58413f]/40 hover:border-[#fabc4d]/30 transition-colors flex gap-4 items-start">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#bd8718] text-[#281900] font-bold flex items-center justify-center font-cinzel text-sm">
-                    IV
-                  </span>
-                  <div>
-                    <h4 className="font-epilogue text-sm sm:text-base text-[#f7f4eb] font-semibold">
-                      Fiesta Final con DJ Set
-                    </h4>
-                    <p className="font-jakarta text-xs text-[#dfbfbc] mt-1 leading-relaxed">
-                      Desintegración de la solemnidad. Pistas tribales, cumbia psicodélica, sintetizadores oscuros y baile desatado en comunión con el elenco hasta entrada la madrugada.
-                    </p>
-                  </div>
+                <div className="p-4 rounded-xl bg-[#141419] border border-[#58413f]/40 space-y-1">
+                  <Theater className="w-5 h-5 text-[#ffb3ae] mb-1" />
+                  <h5 className="font-jakarta text-xs font-bold text-[#f7f4eb] uppercase">
+                    Farsa Televisiva & Teatro Foro
+                  </h5>
+                  <p className="text-xs text-[#dfbfbc]">
+                    El público confronta a José Mercado y las trampas de la falsa libertad.
+                  </p>
                 </div>
               </div>
 
@@ -153,100 +170,34 @@ export default function FormatSelector() {
                   className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#fabc4d] text-[#281900] font-jakarta text-xs uppercase tracking-wider font-bold shadow-[0_0_20px_rgba(250,188,77,0.4)] hover:brightness-110 transition-all"
                 >
                   <Ticket className="w-4 h-4" />
-                  Asegurar Experiencia Integral en Galpón de Guevara
+                  Conseguir Entradas en Alternativa Teatral
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* VIEW 2: Versión Reducida (Obra de Teatro de Cámara) */}
-        {activeFormat === "reducido" && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center animate-fadeIn">
-            <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 text-[#efbf67]">
-                <BookOpen className="w-4 h-4" />
-                <span className="font-jakarta text-xs uppercase tracking-widest font-bold">
-                  Temporada de Cámara • Espacio Callejón
+        {/* VIEW 2: Las 10 Escenas del Guión */}
+        {activeFormat === "guion-escenas" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fadeIn">
+            {PLAY_SCENES.map((scene) => (
+              <div
+                key={scene.number}
+                className="p-5 rounded-2xl bg-[#141419] border border-[#58413f]/40 hover:border-[#fabc4d]/40 transition-all flex gap-4 items-start"
+              >
+                <span className="w-9 h-9 rounded-xl bg-[#9e2a2b] text-[#f7f4eb] font-cinzel text-sm font-bold flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(158,42,43,0.5)]">
+                  {scene.number}
                 </span>
-              </div>
-              <h3 className="font-cinzel text-3xl sm:text-4xl text-[#f7f4eb] font-bold uppercase tracking-tight">
-                Para Rescatarnos del Olvido
-              </h3>
-              <p className="font-epilogue text-base sm:text-lg text-[#efbf67] font-light">
-                Dramaturgia de cámara sobre el duelo, la memoria y la mitología criolla
-              </p>
-              <p className="font-jakarta text-sm text-[#dfbfbc] leading-relaxed">
-                Una versión depurada y concentrada para salas teatrales tradicionales. La dramaturgia profundiza en la cosmogonía argentina y la técnica psicomágica sin el componente festivo bailable posterior. Un viaje lírico de 75 minutos a oscuras, atravesado por arquetipos del campo, espectros familiares y cánticos chamánicos.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-xl bg-[#141419] border border-[#58413f]/40 space-y-1">
-                  <Sparkles className="w-5 h-5 text-[#ffb3ae] mb-1" />
-                  <h5 className="font-jakarta text-xs font-bold text-[#f7f4eb] uppercase">
-                    Psicomagia Activa
-                  </h5>
-                  <p className="text-xs text-[#dfbfbc]">
-                    Acciones físicas que disuelven nudos ancestrales y memorias heredadas.
-                  </p>
-                </div>
-                <div className="p-4 rounded-xl bg-[#141419] border border-[#58413f]/40 space-y-1">
-                  <Shield className="w-5 h-5 text-[#fabc4d] mb-1" />
-                  <h5 className="font-jakarta text-xs font-bold text-[#f7f4eb] uppercase">
-                    Mitología Criolla
-                  </h5>
-                  <p className="text-xs text-[#dfbfbc]">
-                    Arquetipos del payador espectral, el lobisón y la Salamanca nocturna.
+                <div className="space-y-1">
+                  <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#f7f4eb]">
+                    Escena {scene.number}: {scene.name}
+                  </h4>
+                  <p className="font-jakarta text-xs text-[#dfbfbc] leading-relaxed">
+                    {scene.desc}
                   </p>
                 </div>
               </div>
-
-              <div className="pt-2 flex flex-col sm:flex-row gap-4 items-center">
-                <button
-                  onClick={() => setIsRitualModalOpen(true)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#9e2a2b] text-[#f7f4eb] font-jakarta text-xs uppercase tracking-wider font-bold shadow-[0_0_20px_rgba(158,42,43,0.5)] hover:bg-[#c1383a] transition-all"
-                >
-                  <Ticket className="w-4 h-4 text-[#fabc4d]" />
-                  Reservar en Espacio Callejón
-                </button>
-                <div className="inline-flex items-center px-4 py-2.5 rounded-xl bg-[#141419] border border-[#58413f]/40 text-xs text-[#dfbfbc]">
-                  <span className="w-2 h-2 rounded-full bg-[#fabc4d] mr-2"></span>
-                  Funciones los Jueves 20:30 hs
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-6 relative">
-              <div className="relative rounded-2xl bg-[#141419] border border-[#fabc4d]/30 p-6 sm:p-8 shadow-2xl bg-noise space-y-6">
-                <div className="flex items-center justify-between pb-4 border-b border-[#58413f]/30">
-                  <span className="font-jakarta text-xs uppercase tracking-widest text-[#dfbfbc]">
-                    Ficha Técnica Destacada
-                  </span>
-                  <span className="font-jakarta text-xs text-[#ffb3ae] uppercase font-bold bg-[#9e2a2b]/30 px-2.5 py-1 rounded border border-[#9e2a2b]">
-                    75 Minutos de Cámara
-                  </span>
-                </div>
-
-                <blockquote className="font-jakarta text-base italic text-[#efbf67] border-l-2 border-[#fabc4d] pl-4 py-1 leading-relaxed">
-                  "No venimos a contar un cuento sobre el pasado, sino a exhumar las palabras vivas que dejamos pudrir bajo el asfalto de la ciudad."
-                </blockquote>
-
-                <div className="space-y-3 text-xs text-[#dfbfbc]">
-                  <p>
-                    <strong className="text-[#f7f4eb]">Dramaturgia & Puesta:</strong> Colectivo Escénico Fiesta Pagana
-                  </p>
-                  <p>
-                    <strong className="text-[#f7f4eb]">Espacio Sonoro:</strong> Bandoneón electroacústico & caja bagualera
-                  </p>
-                  <p>
-                    <strong className="text-[#f7f4eb]">Diseño de Iluminación:</strong> Claroscuros teatrales al sodio
-                  </p>
-                  <p>
-                    <strong className="text-[#f7f4eb]">Disposición:</strong> Escenario circular 360° en penumbra
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         )}
       </div>

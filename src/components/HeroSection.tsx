@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, Ticket, PlayCircle, MapPin, Clock, Compass, ShieldCheck, Flame, Volume2, VolumeX } from "lucide-react";
+import { Sparkles, Ticket, PlayCircle, MapPin, Clock, Compass, ShieldCheck, Flame, Volume2, VolumeX, BookOpen } from "lucide-react";
 import RitualModal from "./RitualModal";
 
 export default function HeroSection() {
   const [isRitualModalOpen, setIsRitualModalOpen] = useState(false);
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   return (
     <section className="relative w-full overflow-hidden bg-[#0e0e11] -mt-20 pt-36 sm:pt-44 pb-20 lg:pb-32 bg-noise">
@@ -24,25 +23,30 @@ export default function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1f1f22]/90 border border-[#fabc4d]/40 text-[#fabc4d] shadow-[0_0_20px_rgba(250,188,77,0.25)] mb-6 animate-pulse">
             <Sparkles className="w-4 h-4 text-[#fabc4d]" />
             <span className="font-jakarta text-xs uppercase tracking-[0.2em] font-bold">
-              UN EVENTO PSICO-MÁGICO • TEMPORADA 2025
+              OBRA TEATRAL RITUAL & FARSA FILOSÓFICA • TEMPORADA ENERO-MARZO
             </span>
             <Sparkles className="w-4 h-4 text-[#fabc4d]" />
           </div>
 
-          {/* Monumental Hero Headline with Cinzel Decorative */}
+          {/* Monumental Hero Headline */}
           <h1 className="font-cinzel text-4xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-wider text-[#f7f4eb] mb-4 drop-shadow-[0_4px_35px_rgba(158,42,43,0.7)] leading-[1.05] font-extrabold">
-            Fiesta Pagana
+            Fiesta Pagana en Teatros
           </h1>
 
-          {/* Subtitle with Crimson Dots */}
-          <p className="font-epilogue text-lg sm:text-2xl md:text-3xl text-[#efbf67] font-light tracking-wide max-w-2xl mb-6">
-            Teatro foro <span className="text-[#ffb3ae] font-bold mx-1">•</span> Bandas en vivo{" "}
-            <span className="text-[#ffb3ae] font-bold mx-1">•</span> Fiesta
+          {/* Script Lyric / Subtitle */}
+          <p className="font-epilogue text-lg sm:text-2xl md:text-3xl text-[#efbf67] font-light tracking-wide max-w-2xl mb-4 italic">
+            "Argentina, ¿qué pasa con tu voz? ¿Por qué tanto dolor? ¿Quién habla por los dos?"
           </p>
 
-          {/* Core Descriptive Text */}
+          {/* Subtitle with Crimson Dots */}
+          <p className="font-jakarta text-xs sm:text-sm md:text-base text-[#ffb3ae] font-semibold tracking-wider uppercase max-w-xl mb-6">
+            Teatro foro <span className="text-[#fabc4d] font-bold mx-1.5">•</span> Bandoneón & Bombo Legüero{" "}
+            <span className="text-[#fabc4d] font-bold mx-1.5">•</span> Grotesco Criollo & Rock
+          </p>
+
+          {/* Core Descriptive Text based on the Script */}
           <p className="font-jakarta text-sm sm:text-base md:text-lg text-[#dfbfbc] max-w-2xl mb-10 leading-relaxed font-normal">
-            Una liturgia nocturna donde la barrera entre escenario y platea se consume. Mitología porteña, máscaras arquetípicas, catarsis polifónica y celebración ritual hasta el amanecer.
+            Una liturgia escénica donde la Argentina se mira al espejo: la manzana en el centro del altar, el niño que digitó el código 616, el show televisivo de la libertad, el reclamo de la Salamanca criolla y la revelación del secreto primordial de <em>Argentum</em>.
           </p>
 
           {/* CTA Buttons */}
@@ -56,19 +60,19 @@ export default function HeroSection() {
             </button>
 
             <a
-              href="#manifiesto-ritual"
+              href="#textos-sagrados"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#1f1f22]/90 border border-[#fabc4d]/30 text-[#fabc4d] hover:bg-[#2a2a2d] hover:text-[#f7f4eb] font-jakarta text-xs uppercase tracking-wider font-semibold transition-all duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]"
             >
-              <PlayCircle className="w-4 h-4 text-[#fabc4d]" />
-              Ver Teaser / Manifiesto
+              <BookOpen className="w-4 h-4 text-[#fabc4d]" />
+              El Secreto de Argentum
             </a>
           </div>
 
-          {/* Audio Ambiance Ambient Toggle */}
-          <div className="mt-8 flex items-center gap-2 text-xs text-[#dfbfbc] bg-[#141419]/70 px-3 py-1.5 rounded-full border border-[#58413f]/40">
+          {/* Script Quote Pill */}
+          <div className="mt-8 flex items-center gap-2 text-xs text-[#dfbfbc] bg-[#141419]/80 px-4 py-2 rounded-full border border-[#58413f]/40">
             <Flame className="w-3.5 h-3.5 text-[#fabc4d]" />
             <span className="font-jakarta text-[11px] tracking-wide">
-              Música ceremonial por <strong className="text-[#f7f4eb]">Olmo Masini</strong> & <strong className="text-[#f7f4eb]">Ninio Ancestral</strong>
+              "Hazte de plata y espeja el oro de las alturas y verdaderamente serás un argentino."
             </span>
           </div>
         </div>
@@ -77,28 +81,28 @@ export default function HeroSection() {
         <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-6 rounded-2xl bg-[#141419]/80 border border-[#58413f]/40 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
           <div className="flex flex-col items-center justify-center p-3 text-center border-r border-[#58413f]/20 last:border-none">
             <span className="font-jakarta text-[10px] sm:text-xs uppercase tracking-widest text-[#dfbfbc] font-medium">
-              Ubicación
+              Estructura
             </span>
             <span className="font-epilogue text-sm sm:text-base md:text-lg text-[#f7f4eb] font-semibold mt-1">
-              Buenos Aires, CABA
+              10 Escenas & Himno
             </span>
           </div>
 
           <div className="flex flex-col items-center justify-center p-3 text-center border-r border-[#58413f]/20 last:border-none">
             <span className="font-jakarta text-[10px] sm:text-xs uppercase tracking-widest text-[#dfbfbc] font-medium">
-              Duración Total
+              Universo Dramático
             </span>
             <span className="font-epilogue text-sm sm:text-base md:text-lg text-[#efbf67] font-semibold mt-1">
-              5 Horas de Trance
+              Grotesco, Mito & Farsa
             </span>
           </div>
 
           <div className="flex flex-col items-center justify-center p-3 text-center border-r border-[#58413f]/20 last:border-none">
             <span className="font-jakarta text-[10px] sm:text-xs uppercase tracking-widest text-[#dfbfbc] font-medium">
-              Modalidad
+              Música Escénica
             </span>
             <span className="font-epilogue text-sm sm:text-base md:text-lg text-[#f7f4eb] font-semibold mt-1">
-              Inmersiva & Colectiva
+              Bandoneón, Coplas & Rock
             </span>
           </div>
 

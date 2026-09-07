@@ -14,75 +14,74 @@ interface SacredManuscript {
   ritualInstruction: string;
 }
 
-const SACRED_TEXTS: SacredManuscript[] = [
+const SCRIPT_SACRED_TEXTS: SacredManuscript[] = [
   {
-    id: "liturgia-noche",
+    id: "secreto-argentum",
     number: "I",
-    title: "Liturgia de la Noche Sin Tiempo",
-    subtitle: "Invocación inicial y quebrantamiento del reloj civil",
-    author: "El Guía Psicomágico & Ensamble Sagrado",
-    excerpt: "Nadie que cruce el umbral conservará las horas que marca la ciudad. Aquí el tiempo no transcurre: se quema en el fogón central.",
+    title: "El Secreto de Argentum: Argentina es una Civilización",
+    subtitle: "El rezo primordial y el destino del nombre nacional",
+    author: "El Niño Gabriel & Elenco Sagrado (Escena 9)",
+    excerpt: "Hazte de plata y espeja el oro que se da en las alturas y verdaderamente serás un argentino. Al recibir un nombre se recibe un destino.",
     sacredPassage: [
-      "Pronunciamos la primera palabra que deshace el calendario. Que caigan los títulos de propiedad, los relojes de pulsera, las urgencias inventadas por la prisa.",
-      "Entregamos la carne a la percusión del bombo legüero; dejamos que el bandoneón corte el aire como un cuchillo de agua bendita.",
-      "Si el miedo asoma, míralo a los ojos y pídele que baile. Nada de lo que sangra puede quedar fuera de la consagración.",
+      "Yo tengo el secreto. Yo sé por qué todos los argentinos están peleados y unos se cuerean con otros: pasa en toda familia. Pero no se los puedo decir porque hay ochenta micrófonos grabando.",
+      "Todos estos artilugios que está haciendo el mundo moderno es para que nos olvidemos quiénes somos. Para que nos creamos reemplazables, replicables, editables, o que creamos que somos un holograma.",
+      "Tenemos que recordarnos quiénes somos porque el nombre de nuestra Patria viene de Argentum: 'Hazte de plata y espeja el oro que se da en las alturas y verdaderamente serás un argentino'.",
     ],
-    ritualInstruction: "Debe ser recitado al unísono por todos los asistentes sosteniendo la máscara a la altura del pecho antes del primer acorde.",
+    ritualInstruction: "Los actores reparten tarjetas al oído del público que rezan 'Argentina es una civilización' y entonan el rezo en loop circular.",
   },
   {
-    id: "tratado-puertas",
+    id: "biblia-hombre-robot",
     number: "II",
-    title: "Tratado Psicomágico de las Cuatro Puertas",
-    subtitle: "Las fases de la transmutación teatral en el Galpón",
-    author: "Colectivo Escénico Fiesta Pagana",
-    excerpt: "La primera puerta despoja; la segunda convoca; la tercera confronta; la cuarta libera en la comunión del baile.",
+    title: "La Falsa Biblia del Hombre Robot & El Demonio Algorítmico",
+    subtitle: "La advertencia contra el vaciamiento del misterio humano",
+    author: "El Niño Gabriel (Escena 9: El Secreto)",
+    excerpt: "El robot es un demonio disimulado: está vacío, no tiene tiempo, ni atención, ni misterio primordial. Come nuestra vida en forma de beats y vomita respuestas huecas.",
     sacredPassage: [
-      "Puerta del Silencio: Se ingresa en penumbra. El espectador intercambia una mirada sin palabras con un clown de rostro pálido.",
-      "Puerta del Fuelle: Olmo Masini despierta los fantasmas del Río de la Plata a través de un lamento disonante de bandoneón procesado.",
-      "Puerta del Foro: El conflicto escénico se detiene. Se invita al iniciado a irrumpir en escena y torcer el destino de los personajes trágicos.",
-      "Puerta del Festejo: Se desmorona el decorado. Comienza la fiesta donde el sudor común purifica cualquier herida previa.",
+      "Estamos en la empresa civilizatoria de construir al hombre robot. Estamos escribiendo una nueva biblia que dice: 'Hagamos un robot a nuestra imagen y semejanza'.",
+      "Y ciñendo los laureles robados de una musa, los amamantó en sus pechos agrios de algoritmos. El hombre que construye robots necesita primero ser un robot él mismo: podarse y desvestirse de todo su misterio primordial.",
+      "Nos maravillan con el aparato que come nuestra vida en forma de beats y nos vomita respuestas huecas para que olvidemos el fuego y la verdad.",
     ],
-    ritualInstruction: "Cada puerta requiere una ofrenda simbólica: una verdad no dicha, un paso de danza o una carcajada colectiva.",
+    ritualInstruction: "Pronunciar de frente a la platea bajo luz cenital cortante, exhibiendo la tarjeta de crédito y la falsa biblia digital.",
   },
   {
-    id: "juramento-sin-rostro",
+    id: "salamanca-criolla",
     number: "III",
-    title: "El Juramento de los Sin Rostro",
-    subtitle: "Pacto de fraternidad e inmunidad teatral",
-    author: "La Guardiana del Fuego",
-    excerpt: "Bajo la máscara todos somos reyes y mendigos; nadie juzgará el llanto ni censurará la risa.",
+    title: "Tratado de la Salamanca & La Sabiduría Criolla",
+    subtitle: "Por qué desenterramos el carnaval y liberamos al demonio",
+    author: "El Gaucho / Coya Leguizamón (Escena 4)",
+    excerpt: "El hombre criollo hace de su casi ignorancia de las leyes del centro europeo una sabiduría única e irrepetible.",
     sacredPassage: [
-      "Juro por la noche porteña no revelar la identidad de quien lloró a mi lado en la oscuridad del galpón.",
-      "Juro no mirar con ojos de juez a quien dejó caer sus defensas para cantar con voz desgarrada.",
-      "Lo que ocurre en la Fiesta Pagana pertenece al fuego y a la ceniza; vuelve al mundo profano únicamente transmutado en coraje.",
+      "En el norte argentino, y en todo el continente americano, tenemos una concepción diferente del demonio. La Salamanca justamente es liberada para que no ande suelta en tiempos donde no debe andar.",
+      "El hombre criollo es más inocente y suelta a la Salamanca con pretensiones de divertimento. Antes de la Pascua liberamos el demonio por las dudas: desenterramos el carnaval, lo bailamos y después lo enterramos para volver a los deberes.",
+      "¿Acaso el hombre criollo no se hace las mismas grandes preguntas universales de los filósofos? ¿Acaso cuando libera esa Salamanca todos los veranos no está buscando la verdadera libertad?",
     ],
-    ritualInstruction: "Se sella pasando la mano por el humo del sahumerio de quebracho y romero bendito.",
+    ritualInstruction: "Entonar con poncho al hombro y bombo legüero al fondo, precediendo la farsa del show televisivo.",
   },
   {
-    id: "canto-duende",
+    id: "los-musicardi",
     number: "IV",
-    title: "Canto de Invocación al Duende Porteño",
-    subtitle: "Coplas para despertar la raíz telúrica y pagana",
-    author: "Ninio Ancestral & La Cantora del Trance",
-    excerpt: "Bajo el asfalto de Corrientes late una quebrada milenaria; bajo el tango brilla un aquelarre que no ha muerto.",
+    title: "Génesis Popular & La Gran Familia Argentina",
+    subtitle: "El grotesco familiar, el karma político y la terapia colectiva",
+    author: "La Madre & La Comparsa del Norte (Escenas 7 y 8)",
+    excerpt: "¡Somos hermanos, carajo! ¡Somos los Musicardi! ¡Una gran familia de apellido Argentina! Me parece que tenemos que ir a terapia... ¡pero todo el país!",
     sacredPassage: [
-      "Vidalita de la sombra, llévate mi desazón; que en el medio de la pista va a nacer un nuevo sol.",
-      "No hay demonio que resista cuando canta la hermandad; que revienten los cerrojos de la vieja soledad.",
-      "Venga el vino, venga el bombo, venga el santo pecador; que esta noche en Chacarita somos todos un clamor.",
+      "Somos los indios del norte, no nos vamos a olvidar: con la garganta del Inca hoy venimo' a cantar que la tierra es la mamita y arriba el Padre Sol.",
+      "¡Yo hago puchero, ella hace puchero! ¡Yo hago ravioles, ella hace ravioles! Ante la desgracia, ante la muerte, la familia tiene que ser un bloque de dignidad. No importan los rencores: en este momento somos una gran familia de apellido Argentina.",
+      "Hace cuánto tiempo venimos repitiendo la historia como un karma familiar: el dólar, la hiperinflación, los buitres del FMI... Los conservadores dicen que el rock ya se murió, pero está renaciendo siempre como nosotros.",
     ],
-    ritualInstruction: "Entonar con percusión en el pecho a compás de chacarera trunca acelerada.",
+    ritualInstruction: "Coro polifónico con redoblante, bajo y bandoneón, que desemboca en falso disturbio de precios y abrazo catártico colectivo.",
   },
 ];
 
 export default function SacredTextsSection() {
   const [isVeilUnlocked, setIsVeilUnlocked] = useState(false);
-  const [activeTextId, setActiveTextId] = useState("liturgia-noche");
+  const [activeTextId, setActiveTextId] = useState("secreto-argentum");
   const [copied, setCopied] = useState(false);
 
-  const activeManuscript = SACRED_TEXTS.find((t) => t.id === activeTextId) || SACRED_TEXTS[0];
+  const activeManuscript = SCRIPT_SACRED_TEXTS.find((t) => t.id === activeTextId) || SCRIPT_SACRED_TEXTS[0];
 
   const handleCopy = () => {
-    const fullText = `${activeManuscript.title}\n${activeManuscript.subtitle}\n\n${activeManuscript.sacredPassage.join("\n\n")}\n\nInstrucción: ${activeManuscript.ritualInstruction}`;
+    const fullText = `${activeManuscript.title}\n${activeManuscript.subtitle}\n\n${activeManuscript.sacredPassage.join("\n\n")}\n\nInstrucción Escénica: ${activeManuscript.ritualInstruction}`;
     navigator.clipboard.writeText(fullText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -99,13 +98,13 @@ export default function SacredTextsSection() {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fabc4d]/10 border border-[#fabc4d]/30 text-[#fabc4d] text-xs uppercase tracking-[0.2em] font-bold mb-4">
             <Scroll className="w-3.5 h-3.5" />
-            <span>Manuscritos & Liturgia Secreta</span>
+            <span>Manuscritos & Pasajes del Guión</span>
           </div>
           <h2 className="font-cinzel text-3xl sm:text-4xl lg:text-5xl text-[#f7f4eb] uppercase font-bold tracking-tight">
-            Textos Sagrados del Ritual
+            Textos Sagrados & Monólogos Clave
           </h2>
           <p className="font-jakarta text-sm sm:text-base text-[#dfbfbc] mt-3 leading-relaxed">
-            Las escrituras y tratados psicomágicos que rigen cada acto escénico. El conocimiento iniciático permanece bajo el Velo del Silencio hasta que el visitante consagre su pacto.
+            Las doctrinas, monólogos y revelaciones que articulan <em>Fiesta Pagana en Teatros</em>: desde la profecía de Argentum hasta el grotesco de los Musicardi y la Salamanca criolla.
           </p>
 
           {/* Interactive Veil Toggle Button */}
@@ -127,7 +126,7 @@ export default function SacredTextsSection() {
               ) : (
                 <>
                   <Flame className="w-4 h-4 text-[#fabc4d] animate-pulse" />
-                  <span>Quebrantar el Velo del Silencio</span>
+                  <span>Quebrantar el Velo del Silencio & Revelar Textos</span>
                   <Lock className="w-4 h-4 text-[#ffdad7]" />
                 </>
               )}
@@ -140,9 +139,9 @@ export default function SacredTextsSection() {
           {/* Left Column: Manuscript Index */}
           <div className="lg:col-span-4 space-y-3">
             <span className="font-jakarta text-xs uppercase tracking-widest text-[#efbf67] font-bold block px-2">
-              Índice Litúrgico
+              Índice de Pasajes Dramáticos
             </span>
-            {SACRED_TEXTS.map((item) => (
+            {SCRIPT_SACRED_TEXTS.map((item) => (
               <button
                 key={item.id}
                 onClick={() => setActiveTextId(item.id)}
@@ -173,7 +172,7 @@ export default function SacredTextsSection() {
             ))}
           </div>
 
-          {/* Right Column: Parchment / Altar Display */}
+          {/* Right Column: Parchment Display */}
           <div className="lg:col-span-8 relative">
             <div className="relative rounded-2xl bg-[#0e0e11] border border-[#fabc4d]/30 p-6 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.9)] bg-noise overflow-hidden">
               {/* Top Parchment Ribbon */}
@@ -181,7 +180,7 @@ export default function SacredTextsSection() {
                 <div className="space-y-1">
                   <div className="inline-flex items-center gap-2 text-xs text-[#fabc4d] font-bold uppercase tracking-wider">
                     <Feather className="w-3.5 h-3.5" />
-                    <span>Tratado {activeManuscript.number} • {activeManuscript.author}</span>
+                    <span>Pasaje {activeManuscript.number} • {activeManuscript.author}</span>
                   </div>
                   <h3 className="font-cinzel text-xl sm:text-3xl font-bold uppercase text-[#f7f4eb]">
                     {activeManuscript.title}
@@ -217,10 +216,10 @@ export default function SacredTextsSection() {
                       <Lock className="w-6 h-6" />
                     </div>
                     <h4 className="font-cinzel text-lg sm:text-xl font-bold uppercase tracking-wide text-[#f7f4eb] mb-2">
-                      Velo de Secreto Iniciático
+                      El Velo del Silencio
                     </h4>
                     <p className="text-xs sm:text-sm text-[#dfbfbc] max-w-md mb-6 leading-relaxed">
-                      Este manuscrito contiene los pasajes y cánticos exactos que se consagran durante la función. Haz clic abajo para romper el velo y acceder al texto completo.
+                      Este manuscrito contiene los pasajes del guión teatral original. Haz clic abajo para levantar el velo y acceder a las líneas sagradas.
                     </p>
                     <button
                       onClick={() => setIsVeilUnlocked(true)}
@@ -256,7 +255,7 @@ export default function SacredTextsSection() {
                     <Flame className="w-5 h-5 text-[#fabc4d] shrink-0 mt-0.5" />
                     <div className="space-y-1 text-xs">
                       <span className="font-bold uppercase tracking-wider text-[#fabc4d] block">
-                        Instrucción Psicomágica
+                        Instrucción Escénica del Guión
                       </span>
                       <p className="text-[#dfbfbc] leading-relaxed">
                         {activeManuscript.ritualInstruction}
