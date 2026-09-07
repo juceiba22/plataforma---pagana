@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Sparkles, Compass, MapPin, Mail, Flame, ScrollText } from "lucide-react";
+import { Sparkles, MapPin, Mail, Flame } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -11,7 +11,7 @@ export default function Footer() {
 
       <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-[#58413f]/30">
-          {/* Brand & Manifesto quote */}
+          {/* Brand & Subtitle */}
           <div className="md:col-span-6 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-[#9e2a2b]/30 border border-[#9e2a2b] flex items-center justify-center text-[#fabc4d]">
@@ -22,14 +22,14 @@ export default function Footer() {
               </span>
             </div>
             <p className="font-jakarta text-xs uppercase tracking-[0.18em] text-[#fabc4d] font-semibold">
-              DRAMATURGIA DE LA TRANSMUTACIÓN NOCTURNA
+              Teatro foro • Bandoneón & Bombo Legüero • Grotesco Criollo & Rock
             </p>
             <p className="font-jakarta text-sm text-[#dfbfbc] max-w-md leading-relaxed">
-              Un territorio escénico donde la realidad se desvanece en rito. Actos psicomágicos, ensamble polifónico y catarsis colectiva en el circuito subterráneo de Buenos Aires.
+              Una liturgia escénica donde la Argentina se mira al espejo
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#1f1f22] border border-[#58413f]/50 text-xs text-[#efbf67]">
               <Flame className="w-3.5 h-3.5 text-[#fabc4d]" />
-              <span>Temporada MMXXV • Galpón de Guevara & Espacio Callejón</span>
+              <span>Temporada 2025 • Teatro El Deseo & Teatro El Portal</span>
             </div>
           </div>
 
@@ -41,13 +41,13 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-[#dfbfbc]">
               <li>
                 <a
-                  href="https://www.alternativateatral.com"
+                  href="https://www.alternativateatral.com/obra102861-fiesta-pagana-una-obra-para-rescatarnos-del-olvido"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#fabc4d] transition-colors underline decoration-[#58413f] flex items-center gap-1.5"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-[#fabc4d]" />
-                  Alternativa Teatral • Localidades
+                  Alternativa Teatral • Boletería
                 </a>
               </li>
               <li>
@@ -57,12 +57,12 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#formatos-escenicos" className="hover:text-[#fabc4d] transition-colors">
-                  Dispositivos: Completo vs Reducido
+                  La Puesta en Escena
                 </a>
               </li>
               <li>
                 <a href="#textos-sagrados" className="hover:text-[#fabc4d] transition-colors">
-                  Protocolo de Ingreso & Velo
+                  Textos Sagrados & Monólogos
                 </a>
               </li>
             </ul>
@@ -76,7 +76,7 @@ export default function Footer() {
             <div className="space-y-2 text-sm text-[#dfbfbc]">
               <p className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#efbf67] shrink-0" />
-                <span>Espacio Callejón / Galpón de Guevara • CABA</span>
+                <span>Teatro El Deseo / Teatro El Portal • CABA</span>
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#efbf67] shrink-0" />
@@ -98,11 +98,11 @@ export default function Footer() {
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left text-xs text-[#dfbfbc]/80">
           <p>© 2025 Compañía Escénica Fiesta Pagana. Todos los derechos reservados bajo licencia ritual.</p>
           <div className="flex items-center gap-6">
-            <a href="#manifiesto-ritual" className="text-[#efbf67] hover:text-[#fabc4d] transition-colors uppercase tracking-widest font-semibold">
-              Manifiesto Teatral
+            <a href="#textos-sagrados" className="text-[#efbf67] hover:text-[#fabc4d] transition-colors uppercase tracking-widest font-semibold">
+              Textos & Monólogos
             </a>
             <a href="#personajes-ritual" className="hover:text-[#f7f4eb] transition-colors uppercase tracking-widest font-semibold">
-              Ficha Técnica
+              Personajes
             </a>
           </div>
         </div>

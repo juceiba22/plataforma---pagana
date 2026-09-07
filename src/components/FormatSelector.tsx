@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, Flame, BookOpen, Clock, Music, Users, Ticket, ArrowRight, Shield, Theater, ScrollText } from "lucide-react";
+import Link from "next/link";
+import { Sparkles, Flame, BookOpen, Clock, Music, Users, Ticket, ArrowRight, Shield, Theater, Lock } from "lucide-react";
 import RitualModal from "./RitualModal";
 
 export default function FormatSelector() {
@@ -32,7 +33,7 @@ export default function FormatSelector() {
     {
       number: "5",
       name: "¡Viva la Libertad Carajo! (El Show de Televisión)",
-      desc: "Farsa mediática: el Presentador reparte libertades ficticias a Daiana de La Matanza, Edwin el repartidor y Juan Salteño, mientras José Mercado impone el poder del dinero.",
+      desc: "Farsa mediática: el Presentador reparte libertades ficticias a Daiana de La Matanza y a Edwin el Venezolano, mientras José Mercado impone el poder del dinero.",
     },
     {
       number: "6",
@@ -103,7 +104,7 @@ export default function FormatSelector() {
         {/* VIEW 1: Obra Completa */}
         {activeFormat === "obra-completa" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center animate-fadeIn">
-            {/* Ceremonial Placard Frame without mock image */}
+            {/* Ceremonial Placard Frame */}
             <div className="lg:col-span-5 relative flex justify-center">
               <div className="relative w-full max-w-sm p-6 sm:p-8 rounded-2xl bg-[#141419] border border-[#fabc4d]/40 shadow-[0_0_40px_rgba(250,188,77,0.15)] bg-noise flex flex-col justify-between min-h-[380px]">
                 <div className="flex items-center justify-between pb-4 border-b border-[#58413f]/30">
@@ -143,10 +144,10 @@ export default function FormatSelector() {
                   </span>
                 </div>
                 <h3 className="font-cinzel text-2xl sm:text-3xl text-[#f7f4eb] font-bold uppercase tracking-tight">
-                  De la Pampa al Altiplano, del Algoritmo a la Identidad
+                  Argentina, ¿qué pasa con tu voz?
                 </h3>
-                <p className="font-jakarta text-sm text-[#dfbfbc] mt-2 leading-relaxed">
-                  <em>Fiesta Pagana en Teatros</em> desarticula las certezas de la modernidad a través de un viaje coral que entrelaza la física cuántica con la Salamanca, el grotesco familiar de <em>Esperando la Carroza</em> con la parodia de los medios masivos, y culmina en la proclamación de la Argentina como destino civilizatorio.
+                <p className="font-jakarta text-sm sm:text-base text-[#dfbfbc] mt-2 leading-relaxed">
+                  ¿Qué pasaría si se encontraran en un mismo mundo, lo grotesco de esperando la carroza, la cultura del norte argentino y los idearios de libertad anglosajones? Venite a la Fiesta Pagana, mi rey.
                 </p>
               </div>
 
@@ -174,13 +175,15 @@ export default function FormatSelector() {
               </div>
 
               <div className="pt-2">
-                <button
-                  onClick={() => setIsRitualModalOpen(true)}
+                <a
+                  href="https://www.alternativateatral.com/obra102861-fiesta-pagana-una-obra-para-rescatarnos-del-olvido"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#fabc4d] text-[#281900] font-jakarta text-xs uppercase tracking-wider font-bold shadow-[0_0_20px_rgba(250,188,77,0.4)] hover:brightness-110 transition-all"
                 >
                   <Ticket className="w-4 h-4" />
                   Conseguir Entradas en Alternativa Teatral
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -209,6 +212,36 @@ export default function FormatSelector() {
             ))}
           </div>
         )}
+
+        {/* Staff Only Restricted Notice Banner */}
+        <div className="mt-12 p-4 rounded-2xl bg-[#141419] border border-[#9e2a2b]/40 flex flex-col sm:flex-row items-center justify-between gap-4 bg-noise">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#9e2a2b]/20 border border-[#9e2a2b] flex items-center justify-center text-[#fabc4d] shrink-0">
+              <Lock className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#ffb3ae] font-jakarta">
+                  Acceso Restringido • Área Técnica
+                </span>
+                <span className="px-2 py-0.5 rounded bg-[#9e2a2b] text-[#fabc4d] text-[10px] font-bold uppercase">
+                  Sólo disponible para el staff
+                </span>
+              </div>
+              <p className="text-xs text-[#dfbfbc] mt-0.5">
+                Los guiones con acotaciones de dirección, diagramas lumínicos y partituras completas se gestionan en el Portal de Elenco.
+              </p>
+            </div>
+          </div>
+
+          <Link
+            href="/portal"
+            className="px-4 py-2 rounded-xl bg-[#1f1f22] hover:bg-[#28282d] border border-[#58413f] text-[#fabc4d] text-xs font-bold uppercase tracking-wider font-jakarta transition-all shrink-0 flex items-center gap-1.5"
+          >
+            <span>Ingresar al Portal de Staff</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
       </div>
 
       <RitualModal isOpen={isRitualModalOpen} onClose={() => setIsRitualModalOpen(false)} />

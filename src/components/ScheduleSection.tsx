@@ -1,54 +1,41 @@
 "use client";
 
 import React, { useState } from "react";
-import { Calendar, MapPin, Clock, Ticket, AlertTriangle, ArrowRight } from "lucide-react";
+import { Calendar, MapPin, Clock, Ticket, ExternalLink, Sparkles } from "lucide-react";
 import RitualModal from "./RitualModal";
 
 export default function ScheduleSection() {
   const [isRitualModalOpen, setIsRitualModalOpen] = useState(false);
-  const [selectedInitialDate, setSelectedInitialDate] = useState<string>("19-abr");
-
-  const openBooking = (dateId: string) => {
-    setSelectedInitialDate(dateId);
-    setIsRitualModalOpen(true);
-  };
+  const [selectedInitialDate, setSelectedInitialDate] = useState<string>("26-sep");
 
   const dates = [
     {
-      id: "19-abr",
-      month: "ABRIL",
-      day: "19",
-      weekday: "SÁB",
-      formatBadge: "Formato Completo (Ritual Integral)",
-      badgeColor: "primary",
-      venue: "Galpón de Guevara • Chacarita, Buenos Aires",
-      details: "21:00 hs • Bandas: Olmo Masini + Ninio Ancestral + Fiesta",
-      capacityLabel: "Últimos 28 lugares",
-      capacityColor: "text-[#efbf67]",
-    },
-    {
-      id: "26-abr",
-      month: "ABRIL",
+      id: "26-sep",
+      month: "SEPTIEMBRE",
       day: "26",
-      weekday: "SÁB",
-      formatBadge: "Formato Completo (Ritual Integral)",
-      badgeColor: "primary",
-      venue: "Galpón de Guevara • Chacarita, Buenos Aires",
-      details: "21:00 hs • Acto Psicomágico + Artistas Invitados + DJ Set",
-      capacityLabel: "Disponible",
-      capacityColor: "text-[#fabc4d]",
+      weekday: "VIE",
+      formatBadge: "Versión Teatral de la Fiesta Pagana",
+      badgeColor: "secondary",
+      venue: "Teatro El Deseo • Saavedra 569, Balvanera",
+      details: "Duración 50 minutos • Obra ritual en espacio íntimo • Cupos limitados",
+      capacityLabel: "Cupos Estrictamente Limitados",
+      capacityColor: "text-[#efbf67]",
+      price: "Alternativa Teatral",
+      link: "https://www.alternativateatral.com/obra102861-fiesta-pagana-una-obra-para-rescatarnos-del-olvido",
     },
     {
-      id: "08-may",
-      month: "MAYO",
-      day: "08",
+      id: "06-nov",
+      month: "NOVIEMBRE",
+      day: "06",
       weekday: "JUE",
-      formatBadge: "Versión Reducida (Para rescatarnos del olvido)",
-      badgeColor: "secondary",
-      venue: "Espacio Callejón • Almagro, Buenos Aires",
-      details: "20:30 hs • Obra de Cámara • 75 min sin fiesta posterior",
-      capacityLabel: "Sala Íntima (60 butacas)",
+      formatBadge: "Evento Completo • Puesta Total & Fiesta",
+      badgeColor: "primary",
+      venue: "Teatro El Portal • Buenos Aires",
+      details: "Payasos + Bandas en Vivo + Obra de Teatro + Fiesta con DJ",
+      capacityLabel: "Entradas Disponibles",
       capacityColor: "text-[#fabc4d]",
+      price: "$25.000 ARS",
+      link: "https://www.alternativateatral.com/obra102861-fiesta-pagana-una-obra-para-rescatarnos-del-olvido",
     },
   ];
 
@@ -59,13 +46,13 @@ export default function ScheduleSection() {
         <div className="max-w-2xl mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fabc4d]/10 border border-[#fabc4d]/30 text-[#fabc4d] text-xs uppercase tracking-[0.2em] font-bold mb-3">
             <Calendar className="w-3.5 h-3.5" />
-            <span>Convocatoria • Temporada 2025</span>
+            <span>Convocatoria • Temporada Oficial</span>
           </div>
           <h2 className="font-cinzel text-3xl sm:text-4xl lg:text-5xl text-[#f7f4eb] uppercase font-bold tracking-tight">
             Próximas Fechas & Boletos
           </h2>
           <p className="font-jakarta text-sm sm:text-base text-[#dfbfbc] mt-2 leading-relaxed">
-            Capacidad estrictamente limitada por función debido a la disposición ceremonial del espacio. Recomendamos reservar anticipadamente.
+            Localidades oficiales a través de <strong>Alternativa Teatral</strong>. Capacidad estrictamente limitada por función.
           </p>
         </div>
 
@@ -81,7 +68,7 @@ export default function ScheduleSection() {
                 {/* Visual Calendar Block */}
                 <div className="flex flex-col items-center justify-center w-20 h-20 rounded-xl bg-[#0b0b0e] border border-[#58413f]/40 text-center p-2 shrink-0">
                   <span className="font-jakarta text-[10px] uppercase text-[#fabc4d] font-bold tracking-wider">
-                    {item.month}
+                    {item.month.slice(0, 3)}
                   </span>
                   <span className="font-cinzel text-2xl font-bold text-[#f7f4eb] leading-none my-0.5">
                     {item.day}
@@ -93,14 +80,19 @@ export default function ScheduleSection() {
 
                 {/* Details */}
                 <div className="space-y-1.5">
-                  <div
-                    className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] uppercase font-semibold ${
-                      item.badgeColor === "primary"
-                        ? "bg-[#9e2a2b]/30 text-[#ffb3ae] border border-[#9e2a2b]/50"
-                        : "bg-[#bd8718]/20 text-[#efbf67] border border-[#bd8718]/40"
-                    }`}
-                  >
-                    {item.formatBadge}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] uppercase font-semibold ${
+                        item.badgeColor === "primary"
+                          ? "bg-[#9e2a2b]/30 text-[#ffb3ae] border border-[#9e2a2b]/50"
+                          : "bg-[#bd8718]/20 text-[#efbf67] border border-[#bd8718]/40"
+                      }`}
+                    >
+                      {item.formatBadge}
+                    </span>
+                    <span className="text-xs text-[#fabc4d] font-bold">
+                      {item.price}
+                    </span>
                   </div>
 
                   <h3 className="font-epilogue text-base sm:text-lg text-[#f7f4eb] font-bold">
@@ -124,13 +116,16 @@ export default function ScheduleSection() {
                   </span>
                 </div>
 
-                <button
-                  onClick={() => openBooking(item.id)}
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#9e2a2b] hover:bg-[#c1383a] text-[#f7f4eb] font-jakarta text-xs uppercase tracking-wider font-bold shadow-[0_0_16px_rgba(158,42,43,0.4)] transition-all border-t border-white/20"
                 >
                   <Ticket className="w-3.5 h-3.5 text-[#fabc4d]" />
                   <span>Reservar en Alternativa</span>
-                </button>
+                  <ExternalLink className="w-3 h-3 text-[#dfbfbc]" />
+                </a>
               </div>
             </div>
           ))}

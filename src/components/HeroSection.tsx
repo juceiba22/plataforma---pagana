@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, Ticket, PlayCircle, MapPin, Clock, Compass, ShieldCheck, Flame, Volume2, VolumeX, BookOpen } from "lucide-react";
+import { Sparkles, Ticket, BookOpen, Flame } from "lucide-react";
 import RitualModal from "./RitualModal";
 
 export default function HeroSection() {
@@ -23,20 +23,15 @@ export default function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1f1f22]/90 border border-[#fabc4d]/40 text-[#fabc4d] shadow-[0_0_20px_rgba(250,188,77,0.25)] mb-6 animate-pulse">
             <Sparkles className="w-4 h-4 text-[#fabc4d]" />
             <span className="font-jakarta text-xs uppercase tracking-[0.2em] font-bold">
-              OBRA TEATRAL RITUAL & FARSA FILOSÓFICA • TEMPORADA ENERO-MARZO
+              OBRA TEATRAL RITUAL & FARSA FILOSÓFICA • BUENOS AIRES
             </span>
             <Sparkles className="w-4 h-4 text-[#fabc4d]" />
           </div>
 
           {/* Monumental Hero Headline */}
-          <h1 className="font-cinzel text-4xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-wider text-[#f7f4eb] mb-4 drop-shadow-[0_4px_35px_rgba(158,42,43,0.7)] leading-[1.05] font-extrabold">
+          <h1 className="font-cinzel text-4xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-wider text-[#f7f4eb] mb-5 drop-shadow-[0_4px_35px_rgba(158,42,43,0.7)] leading-[1.05] font-extrabold">
             Fiesta Pagana en Teatros
           </h1>
-
-          {/* Script Lyric / Subtitle */}
-          <p className="font-epilogue text-lg sm:text-2xl md:text-3xl text-[#efbf67] font-light tracking-wide max-w-2xl mb-4 italic">
-            "Argentina, ¿qué pasa con tu voz? ¿Por qué tanto dolor? ¿Quién habla por los dos?"
-          </p>
 
           {/* Subtitle with Crimson Dots */}
           <p className="font-jakarta text-xs sm:text-sm md:text-base text-[#ffb3ae] font-semibold tracking-wider uppercase max-w-xl mb-6">
@@ -44,20 +39,22 @@ export default function HeroSection() {
             <span className="text-[#fabc4d] font-bold mx-1.5">•</span> Grotesco Criollo & Rock
           </p>
 
-          {/* Core Descriptive Text based on the Script */}
-          <p className="font-jakarta text-sm sm:text-base md:text-lg text-[#dfbfbc] max-w-2xl mb-10 leading-relaxed font-normal">
-            Una liturgia escénica donde la Argentina se mira al espejo: la manzana en el centro del altar, el niño que digitó el código 616, el show televisivo de la libertad, el reclamo de la Salamanca criolla y la revelación del secreto primordial de <em>Argentum</em>.
+          {/* Core Descriptive Text */}
+          <p className="font-jakarta text-base sm:text-lg md:text-xl text-[#dfbfbc] max-w-2xl mb-10 leading-relaxed font-normal">
+            Un acto escénico en donde la Argentina se mira al espejo: la manzana en el centro del altar, el niño que digitó el código 616, el show televisivo de la libertad, el reclamo de la Salamanca criolla y la revelación del secreto primordial de <em>Argentum</em>.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
-            <button
-              onClick={() => setIsRitualModalOpen(true)}
+            <a
+              href="https://www.alternativateatral.com/obra102861-fiesta-pagana-una-obra-para-rescatarnos-del-olvido"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#9e2a2b] text-[#f7f4eb] font-jakarta text-xs uppercase tracking-[0.18em] font-bold shadow-[0_0_30px_rgba(158,42,43,0.7)] hover:bg-[#c1383a] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 border-t border-white/25"
             >
               <Ticket className="w-4 h-4 text-[#fabc4d]" />
               Conseguir Entradas
-            </button>
+            </a>
 
             <a
               href="#textos-sagrados"

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, Eye, Flame, Music, Feather, Shield, ChevronRight, Image as ImageIcon } from "lucide-react";
+import { Sparkles, ChevronRight, Image as ImageIcon } from "lucide-react";
 import CharacterModal, { CharacterData } from "./CharacterModal";
 
 export const SCRIPT_CHARACTERS: CharacterData[] = [
@@ -97,17 +97,17 @@ export const SCRIPT_CHARACTERS: CharacterData[] = [
     frequency: "639 Hz • Fuerza colectiva, dignidad y pertenencia de barrio.",
   },
   {
-    id: "juan-salteno",
-    name: "Juan Salteño",
-    archetype: "El Cantor Psicomágico • El Artista",
-    element: "Guitarra, Zamba & Teatro",
-    performer: "Juan / Ensamble Musical",
+    id: "edwin-el-venezolano",
+    name: "Edwin el Venezolano",
+    archetype: "El Repartidor & Hermandad Latinoamericana",
+    element: "La Moto, La Calle & El Trance",
+    performer: "Edwin / Actor",
     image: "",
-    quote: "A mí me gustaría armar una gran compañía teatral para hacer actos psicomágicos a través de los símbolos... y cantar en Cosquín la Zamba para olvidar.",
-    description: "El artista popular salteño que busca trascender la mera industria comercial del folclore para convertir su canto en medicina y memoria escénica.",
-    psychomagicFunction: "Sanación del olvido a través de la Zamba y la poesía del norte.",
-    ritualMask: "Poncho salteño rojo y negro, guitarra criolla de cedro.",
-    frequency: "432 Hz • Armónicos de zamba y vidala andina.",
+    quote: "Llegué en moto cruzando toda América para repartir en las noches de Buenos Aires. Entre el asfalto y las luces, encontré en la Fiesta Pagana una hermandad que no tiene fronteras.",
+    description: "Representa al trabajador migrante y la fuerza viva que une a los pueblos de América Latina. Su presencia en la farsa mediática y en el ritual rompe la soledad del delivery urbano.",
+    psychomagicFunction: "Integración de la hermandad latinoamericana y dignificación del trabajo popular.",
+    ritualMask: "Casco de delivery con símbolos ancestrales y caja térmica iluminada.",
+    frequency: "528 Hz • Frecuencia de unión, hermandad y pulso urbano.",
   },
   {
     id: "las-cantoras",
@@ -154,7 +154,7 @@ export default function CharacterGrid() {
               Personajes de la Obra
             </h2>
             <p className="font-jakarta text-sm sm:text-base text-[#dfbfbc] mt-2 max-w-2xl leading-relaxed">
-              Las figuras que encarnan la farsa, el mito y el secreto de <em>Fiesta Pagana en Teatros</em>: desde el niño que digitó el 616 hasta José Mercado y las cantoras del origen.
+              Las figuras que encarnan la farsa, el mito y el secreto de <em>Fiesta Pagana en Teatros</em>: desde el niño que digitó el 616 hasta José Mercado, Edwin el Venezolano y las cantoras del origen.
             </p>
           </div>
 

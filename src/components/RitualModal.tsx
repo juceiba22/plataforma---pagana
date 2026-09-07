@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, Calendar, MapPin, Clock, Ticket, Check, ExternalLink, Flame, ShieldAlert } from "lucide-react";
+import { X, Calendar, MapPin, Clock, Ticket, Check, ExternalLink, Flame } from "lucide-react";
 
 interface RitualModalProps {
   isOpen: boolean;
@@ -10,46 +10,38 @@ interface RitualModalProps {
 }
 
 export default function RitualModal({ isOpen, onClose, initialDate }: RitualModalProps) {
-  const [selectedDate, setSelectedDate] = useState(initialDate || "19-abr");
+  const [selectedDate, setSelectedDate] = useState(initialDate || "26-sep");
   const [ticketCount, setTicketCount] = useState(2);
-  const [tier, setTier] = useState<"integral" | "camara">("integral");
   const [confirmed, setConfirmed] = useState(false);
 
   if (!isOpen) return null;
 
   const datesInfo = [
     {
-      id: "19-abr",
-      day: "19",
-      month: "ABRIL",
-      weekday: "SÁB",
-      time: "21:00 hs",
-      venue: "Galpón de Guevara (Chacarita)",
-      type: "Formato Completo • Ritual & Fiesta",
-      available: 28,
-      price: "$12.000 ARS",
-    },
-    {
-      id: "26-abr",
+      id: "26-sep",
       day: "26",
-      month: "ABRIL",
-      weekday: "SÁB",
+      month: "SEPTIEMBRE",
+      weekday: "VIE",
       time: "21:00 hs",
-      venue: "Galpón de Guevara (Chacarita)",
-      type: "Formato Completo • Ritual & Fiesta",
-      available: 45,
-      price: "$12.000 ARS",
+      venue: "Teatro El Deseo (Saavedra 569, Balvanera)",
+      type: "Versión Teatral de la Fiesta Pagana",
+      details: "Duración 50 minutos • Cupos limitados",
+      available: "Últimos lugares",
+      price: "Alternativa Teatral",
+      link: "https://www.alternativateatral.com/obra102861-fiesta-pagana-una-obra-para-rescatarnos-del-olvido",
     },
     {
-      id: "08-may",
-      day: "08",
-      month: "MAYO",
+      id: "06-nov",
+      day: "06",
+      month: "NOVIEMBRE",
       weekday: "JUE",
       time: "20:30 hs",
-      venue: "Espacio Callejón (Almagro)",
-      type: "Versión Reducida • Obra de Cámara",
-      available: 16,
-      price: "$9.500 ARS",
+      venue: "Teatro El Portal (Buenos Aires)",
+      type: "Evento Completo • Puesta Total & Fiesta",
+      details: "Payasos + Bandas en Vivo + Obra + Fiesta con DJ",
+      available: "Disponible",
+      price: "$25.000 ARS",
+      link: "https://www.alternativateatral.com/obra102861-fiesta-pagana-una-obra-para-rescatarnos-del-olvido",
     },
   ];
 
@@ -59,11 +51,11 @@ export default function RitualModal({ isOpen, onClose, initialDate }: RitualModa
     e.preventDefault();
     setConfirmed(true);
     setTimeout(() => {
-      // Direct to Alternativa Teatral
-      window.open("https://www.alternativateatral.com", "_blank");
+      // Direct to Alternativa Teatral official listing
+      window.open(currentSelection.link, "_blank");
       setConfirmed(false);
       onClose();
-    }, 1800);
+    }, 1200);
   };
 
   return (
@@ -87,10 +79,10 @@ export default function RitualModal({ isOpen, onClose, initialDate }: RitualModa
           </div>
           <div>
             <h3 className="font-cinzel text-xl font-bold uppercase tracking-wider text-[#f7f4eb]">
-              Reserva de Pase Ceremonial
+              Reserva de Entradas Oficiales
             </h3>
             <p className="text-xs text-[#efbf67] font-jakarta tracking-wide">
-              Boletería Oficial integrada con Alternativa Teatral
+              Boletería integrada con Alternativa Teatral
             </p>
           </div>
         </div>
@@ -101,10 +93,10 @@ export default function RitualModal({ isOpen, onClose, initialDate }: RitualModa
               <Check className="w-8 h-8" />
             </div>
             <h4 className="font-cinzel text-2xl font-bold text-[#f7f4eb]">
-              Iniciando Transacción Segura
+              Redirigiendo a Alternativa Teatral
             </h4>
             <p className="text-sm text-[#dfbfbc] max-w-sm mx-auto">
-              Te estamos redirigiendo a la plataforma oficial de Alternativa Teatral para emitir tus credenciales con código QR nominativo.
+              Te estamos conectando con la boletería oficial de la obra en Alternativa Teatral para emitir tus localidades.
             </p>
           </div>
         ) : (
@@ -113,15 +105,15 @@ export default function RitualModal({ isOpen, onClose, initialDate }: RitualModa
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#fabc4d] font-bold mb-3 flex items-center gap-1.5">
                 <Calendar className="w-4 h-4" />
-                1. Selecciona la Fecha del Trance
+                1. Selecciona la Función
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {datesInfo.map((item) => (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => setSelectedDate(item.id)}
-                    className={`p-3 rounded-xl border text-left transition-all relative ${
+                    className={`p-3.5 rounded-xl border text-left transition-all relative ${
                       selectedDate === item.id
                         ? "bg-[#9e2a2b]/30 border-[#fabc4d] shadow-[0_0_15px_rgba(250,188,77,0.3)]"
                         : "bg-[#0e0e11] border-[#58413f]/40 hover:border-[#58413f]"
@@ -135,10 +127,11 @@ export default function RitualModal({ isOpen, onClose, initialDate }: RitualModa
                         {item.weekday}
                       </span>
                     </div>
-                    <p className="text-[11px] text-[#dfbfbc] line-clamp-1">{item.venue}</p>
-                    <div className="mt-2 flex items-center justify-between text-[10px]">
-                      <span className="text-[#efbf67] font-semibold">{item.price}</span>
-                      <span className="text-[#ffb3ae]">{item.available} cupos</span>
+                    <p className="text-xs font-semibold text-[#f7f4eb]">{item.type}</p>
+                    <p className="text-[11px] text-[#dfbfbc] line-clamp-1 mt-0.5">{item.venue}</p>
+                    <div className="mt-2.5 flex items-center justify-between text-[11px]">
+                      <span className="text-[#fabc4d] font-bold">{item.price}</span>
+                      <span className="text-[#ffb3ae] text-[10px]">{item.available}</span>
                     </div>
                   </button>
                 ))}
@@ -159,6 +152,7 @@ export default function RitualModal({ isOpen, onClose, initialDate }: RitualModa
                 <MapPin className="w-3.5 h-3.5 text-[#fabc4d]" />
                 <span>{currentSelection.venue}</span>
               </div>
+              <p className="text-[11px] text-[#8a877e]">{currentSelection.details}</p>
             </div>
 
             {/* Step 2: Number of Tickets */}
@@ -187,20 +181,12 @@ export default function RitualModal({ isOpen, onClose, initialDate }: RitualModa
               </div>
             </div>
 
-            {/* Ritual Protocol Warning */}
-            <div className="p-3 rounded-xl bg-[#1f1f22]/60 border border-[#58413f]/30 flex items-start gap-2 text-[11px] text-[#dfbfbc]">
-              <Flame className="w-4 h-4 text-[#fabc4d] shrink-0 mt-0.5" />
-              <span>
-                <strong className="text-[#f7f4eb]">Protocolo Inmersivo:</strong> Se solicita puntualidad estricta. Una vez iniciado el rito de apertura y entrega de máscaras, no se permitirá el ingreso a la sala.
-              </span>
-            </div>
-
             {/* Action button */}
             <button
               type="submit"
               className="w-full py-3.5 rounded-xl bg-[#9e2a2b] hover:bg-[#c1383a] text-[#f7f4eb] font-bold text-xs uppercase tracking-widest shadow-[0_0_24px_rgba(158,42,43,0.6)] transition-all flex items-center justify-center gap-2 border-t border-white/20"
             >
-              <span>Continuar en Alternativa Teatral</span>
+              <span>Ir a Alternativa Teatral</span>
               <ExternalLink className="w-4 h-4 text-[#fabc4d]" />
             </button>
           </form>
