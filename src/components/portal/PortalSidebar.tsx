@@ -16,6 +16,7 @@ import {
   X,
   Sparkles,
   Layers,
+  User,
 } from "lucide-react";
 
 export default function PortalSidebar() {
@@ -129,11 +130,9 @@ export default function PortalSidebar() {
         {/* Bottom Profile & Return to public site */}
         <div className="px-4 space-y-4">
           <div className="p-3 rounded-xl bg-[#141419]/80 border border-[#58413f]/30 flex items-center gap-3">
-            <img
-              alt="Profile"
-              className="w-9 h-9 rounded-full object-cover ring-1 ring-[#fabc4d]/50"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4AxDnqmXvbMLeNcWb4KsMTGKpwwJfWzqcK39TJfLpkd9jPgElmdZOsH8KAUIyVUiPwl3SvwrL20QMmNZwpxGuXvm5JG45VJb75VRinFbHGzwjsOcnhQUpTBINvysbCEfien4VKhYAcAWuKt6sK3GSa28UpB3FSBhxEsHcv5AWjMQF-hhjvqKhxTFPVIGk-AdUBRRTvGSJ0loFb--BrrOIsZX5LqfJeReIvu2risbDyKwQKTWozzy__w"
-            />
+            <div className="w-9 h-9 rounded-full bg-[#9e2a2b]/30 border border-[#fabc4d]/50 flex items-center justify-center text-[#fabc4d]">
+              <User className="w-4 h-4" />
+            </div>
             <div className="flex flex-col min-w-0">
               <span className="font-jakarta text-xs text-[#f7f4eb] truncate font-semibold">
                 Dirección General

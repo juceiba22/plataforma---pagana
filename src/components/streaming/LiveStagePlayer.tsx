@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Video,
   Play,
@@ -21,6 +21,10 @@ import {
   Globe,
   ExternalLink,
   Copy,
+  PlusCircle,
+  Loader2,
+  Film,
+  Disc,
 } from "lucide-react";
 import StageSettingsModal from "./StageSettingsModal";
 
@@ -35,16 +39,40 @@ export default function LiveStagePlayer() {
   const [resolution, setResolution] = useState("1080p");
   const [viewerCount, setViewerCount] = useState(64);
 
-  // Streaming & Production State (Mux & Google Meet)
+  // Mux & Google Meet Streaming State
   const [broadcastMode, setBroadcastMode] = useState<"mux" | "meet">("mux");
-  const [muxStreamKey, setMuxStreamKey] = useState("live_mux_prod_fiesta_pagana_98b3");
+  const [muxStreamKey, setMuxStreamKey] = useState("live_sk_fp_production_98a7");
   const [muxPlaybackId, setMuxPlaybackId] = useState("DS00Spx1CV902MCtP7GsWm0147LnFiNo00k");
   const [meetUrl, setMeetUrl] = useState("https://meet.google.com/fp-teatro-ritual");
+  const [isCreatingMuxStream, setIsCreatingMuxStream] = useState(false);
+  const [streamCreatedAlert, setStreamCreatedAlert] = useState(false);
 
   const toggleBroadcast = () => {
     setIsBroadcasting(!isBroadcasting);
     if (!isBroadcasting) {
       setViewerCount((prev) => prev + 1);
+    }
+  };
+
+  const handleCreateNewMuxStream = async () => {
+    setIsCreatingMuxStream(true);
+    try {
+      const res = await fetch("/api/mux/live-stream", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: "Fiesta Pagana - Transmisión en Directo" }),
+      });
+      const data = await res.json();
+      if (data?.stream) {
+        if (data.stream.stream_key) setMuxStreamKey(data.stream.stream_key);
+        if (data.stream.playback_ids?.[0]?.id) setMuxPlaybackId(data.stream.playback_ids[0].id);
+        setStreamCreatedAlert(true);
+        setTimeout(() => setStreamCreatedAlert(false), 3000);
+      }
+    } catch (err) {
+      console.error("Error creating Mux live stream:", err);
+    } finally {
+      setIsCreatingMuxStream(false);
     }
   };
 
@@ -67,7 +95,7 @@ export default function LiveStagePlayer() {
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2.5 h-2.5 rounded-full bg-[#ffb3ae] animate-ping"></span>
               <span className="font-jakarta text-xs text-[#ffb3ae] uppercase tracking-[0.2em] font-bold">
-                {broadcastMode === "mux" ? "Cámara Negra • Emisión OBS MUX" : "Sala en Vivo • Google Meet"}
+                {broadcastMode === "mux" ? "Cámara Negra • Emisión OBS - MUX (Grabación VOD Activa)" : "Sala en Vivo • Google Meet"}
               </span>
             </div>
             <h1 className="font-cinzel text-3xl sm:text-4xl text-[#f7f4eb] tracking-tight font-bold">
@@ -103,20 +131,44 @@ export default function LiveStagePlayer() {
               </button>
             </div>
 
+            {/* Create new live stream on Mux */}
+            <button
+              onClick={handleCreateNewMuxStream}
+              disabled={isCreatingMuxStream}
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#fabc4d] text-[#281900] hover:brightness-110 font-jakarta text-xs font-bold transition-all shadow-[0_0_15px_rgba(250,188,77,0.3)]"
+            >
+              {isCreatingMuxStream ? (
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              ) : (
+                <PlusCircle className="w-3.5 h-3.5" />
+              )}
+              <span>{isCreatingMuxStream ? "Generando..." : "Nueva Emisión MUX"}</span>
+            </button>
+
             <button
               onClick={() => setIsSettingsOpen(true)}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141419] border border-[#58413f]/50 text-[#dfbfbc] hover:text-[#f7f4eb] hover:border-[#fabc4d]/40 font-jakarta text-xs font-semibold transition-all"
             >
               <Settings className="w-4 h-4 text-[#fabc4d]" />
-              <span>Configurar OBS / Meet</span>
+              <span>Ajustes OBS / Meet</span>
             </button>
           </div>
         </div>
 
-        {/* Video Canvas Container (16:9 Aspect Ratio) */}
-        <div className="relative w-full aspect-video rounded-2xl bg-[#0e0e11] overflow-hidden shadow-2xl border border-[#58413f]/40 group flex flex-col justify-between">
+        {streamCreatedAlert && (
+          <div className="p-3.5 rounded-xl bg-[#9e2a2b]/30 border border-[#fabc4d] text-xs text-[#f7f4eb] flex items-center justify-between animate-fadeIn">
+            <span className="flex items-center gap-2 font-jakarta">
+              <Check className="w-4 h-4 text-emerald-400" />
+              Nueva transmisión MUX configurada con grabación automática de VOD.
+            </span>
+            <span className="font-mono text-[#efbf67]">Stream Key & Playback ID actualizados</span>
+          </div>
+        )}
+
+        {/* Video Canvas Container (16:9 Aspect Ratio) - Clean dark stage canvas without mock images */}
+        <div className="relative w-full aspect-video rounded-2xl bg-[#09090c] overflow-hidden shadow-2xl border border-[#58413f]/40 group flex flex-col justify-between">
           {broadcastMode === "meet" ? (
-            /* Google Meet Embed / Launch Screen */
+            /* Google Meet Mode */
             <div className="absolute inset-0 bg-[#0e0e11] flex flex-col items-center justify-center p-6 text-center z-10">
               <div className="w-16 h-16 rounded-2xl bg-[#9e2a2b]/30 border border-[#fabc4d] flex items-center justify-center text-[#fabc4d] mb-4 shadow-[0_0_30px_rgba(250,188,77,0.4)]">
                 <Globe className="w-8 h-8" />
@@ -126,7 +178,7 @@ export default function LiveStagePlayer() {
                 Sala Interactiva de Google Meet
               </h2>
               <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] max-w-md mb-6 leading-relaxed">
-                Sesión abierta para actores, músicos y directores. Podés unirte directamente con cámara y micrófono habilitados.
+                Sesión en vivo para actores, músicos y directores. Podés ingresar con cámara y micrófono habilitados.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-3">
@@ -153,19 +205,11 @@ export default function LiveStagePlayer() {
               </div>
             </div>
           ) : (
-            /* Mux / OBS Live Feed Screen */
+            /* Mux Live Stream Stage Canvas */
             <>
-              {/* Live Feed Simulated Background */}
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{
-                  backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuB-vrWjlzCmj_urRsf4vgfYtqeWWbMxLFv0oQ2meaiWBMULKQQ_TkgHIK9RprNvc5Ba2mtBEShz-MZsS-johUxMLU-i9YLnLPLR-D5v2RvvG0JozUcq9whSEE2lbOEF8S2rpfsUTPq6ZsbPH0MYxlU-0223l7V8m2SgT6_cDtiMUpJMc0N3d2TAIorR1h26kXVBIWq5fO-DztgqMZtdN9LAgdzENUpq2n0mOxh3w-iZ2n4XaROaEAxDVQ')`,
-                }}
-              ></div>
-
-              {/* Gradients & Scrim Overlays */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e11] via-[#0e0e11]/25 to-[#0e0e11]/70 pointer-events-none"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0e0e11]/60 via-transparent to-[#0e0e11]/40 pointer-events-none"></div>
+              {/* Dynamic Aura & Dark Scrim */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e11] via-[#0e0e11]/60 to-[#0e0e11]/80 pointer-events-none"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[20rem] bg-[#9e2a2b]/20 rounded-full blur-[120px] pointer-events-none"></div>
 
               {/* Top Overlays Bar */}
               <div className="relative z-20 p-4 sm:p-5 flex items-center justify-between">
@@ -175,13 +219,18 @@ export default function LiveStagePlayer() {
                     OBS • MUX LIVE
                   </span>
 
-                  <span className="px-3 py-1 rounded-md bg-[#141419]/80 backdrop-blur-md text-[#efbf67] font-jakarta text-[11px] font-semibold tracking-wider border border-[#58413f]/40">
-                    1080p60 • RTMP FEED
+                  <span className="px-3 py-1 rounded-md bg-[#141419]/85 backdrop-blur-md text-[#efbf67] font-jakarta text-[11px] font-semibold tracking-wider border border-[#58413f]/40">
+                    RTMP: global-live.mux.com
                   </span>
 
-                  <span className="px-3 py-1 rounded-md bg-[#141419]/80 backdrop-blur-md text-[#dfbfbc] font-jakarta text-[11px] flex items-center gap-1.5 border border-[#58413f]/40">
+                  <span className="px-3 py-1 rounded-md bg-[#141419]/85 backdrop-blur-md text-[#dfbfbc] font-jakarta text-[11px] flex items-center gap-1.5 border border-[#58413f]/40">
+                    <Disc className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
+                    <span>Grabación VOD Automática</span>
+                  </span>
+
+                  <span className="px-3 py-1 rounded-md bg-[#141419]/85 backdrop-blur-md text-[#dfbfbc] font-jakarta text-[11px] flex items-center gap-1.5 border border-[#58413f]/40">
                     <Eye className="w-3.5 h-3.5 text-[#fabc4d]" />
-                    <span>{viewerCount} espectadores</span>
+                    <span>{viewerCount} en sala</span>
                   </span>
                 </div>
 
@@ -197,23 +246,26 @@ export default function LiveStagePlayer() {
               </div>
 
               {/* Center Stage Focus Info */}
-              <div className="relative z-10 mx-auto flex flex-col items-center justify-center text-center px-4 max-w-xl pointer-events-none">
-                <div className="w-14 h-14 rounded-full bg-[#9e2a2b]/50 border border-[#fabc4d]/40 backdrop-blur-md flex items-center justify-center text-[#fabc4d] mb-3 shadow-[0_0_25px_rgba(158,42,43,0.6)] animate-pulse">
-                  <Sparkles className="w-7 h-7" />
+              <div className="relative z-10 mx-auto flex flex-col items-center justify-center text-center px-4 max-w-xl pointer-events-none py-10">
+                <div className="w-16 h-16 rounded-full bg-[#9e2a2b]/40 border border-[#fabc4d]/50 backdrop-blur-md flex items-center justify-center text-[#fabc4d] mb-3 shadow-[0_0_30px_rgba(158,42,43,0.6)] animate-pulse">
+                  <Radio className="w-8 h-8" />
                 </div>
                 <p className="font-jakarta text-xs text-[#fabc4d] uppercase tracking-[0.2em] font-bold">
-                  Transmisión en Producción
+                  Transmisión en Vivo • Mux Ingest
                 </p>
                 <h2 className="font-cinzel text-xl sm:text-2xl lg:text-3xl text-[#f7f4eb] font-bold mt-1 drop-shadow-lg">
-                  La Batalla Celeste y Terrestre de Marechal
+                  Fiesta Pagana en Teatros
                 </h2>
+                <span className="font-mono text-xs text-[#dfbfbc] mt-2 bg-[#0b0b0e]/80 px-3 py-1 rounded border border-[#58413f]/40">
+                  Playback ID: {muxPlaybackId}
+                </span>
               </div>
 
               {/* Player Controls Dock */}
               <div className="relative z-20 p-4 sm:p-5 bg-gradient-to-t from-[#0e0e11] to-transparent flex flex-col gap-2">
                 {/* Timeline Scrub bar */}
                 <div className="w-full h-1.5 bg-[#2a2a2d] rounded-full cursor-pointer relative group/timeline">
-                  <div className="h-full bg-[#9e2a2b] rounded-full w-[84%] relative">
+                  <div className="h-full bg-[#9e2a2b] rounded-full w-[88%] relative">
                     <span className="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#fabc4d] opacity-0 group-hover/timeline:opacity-100 transition-opacity shadow-md"></span>
                   </div>
                 </div>
@@ -255,7 +307,7 @@ export default function LiveStagePlayer() {
                     </div>
 
                     <span className="font-jakarta text-xs text-[#dfbfbc]">
-                      01:32:10 / <strong className="text-[#ffb3ae]">DIRECTO MUX</strong>
+                      01:45:20 / <strong className="text-[#ffb3ae]">MUX BROADCAST</strong>
                     </span>
                   </div>
 
@@ -287,31 +339,24 @@ export default function LiveStagePlayer() {
           )}
         </div>
 
-        {/* Instructor Dossier Strip */}
+        {/* Instructor & Transmission Dossier Strip without mock image */}
         <div className="p-5 sm:p-6 rounded-2xl bg-[#141419] border border-[#58413f]/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 bg-noise">
           <div className="flex items-center gap-4">
-            <div className="relative">
-              <img
-                alt="Director Escénico"
-                className="w-16 h-16 rounded-2xl object-cover ring-2 ring-[#fabc4d]/50 shadow-[0_0_16px_rgba(250,188,77,0.3)]"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4AxDnqmXvbMLeNcWb4KsMTGKpwwJfWzqcK39TJfLpkd9jPgElmdZOsH8KAUIyVUiPwl3SvwrL20QMmNZwpxGuXvm5JG45VJb75VRinFbHGzwjsOcnhQUpTBINvysbCEfien4VKhYAcAWuKt6sK3GSa28UpB3FSBhxEsHcv5AWjMQF-hhjvqKhxTFPVIGk-AdUBRRTvGSJ0loFb--BrrOIsZX5LqfJeReIvu2risbDyKwQKTWozzy__w"
-              />
-              <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#fabc4d] flex items-center justify-center text-[#281900] text-xs font-bold shadow-md">
-                ★
-              </span>
+            <div className="w-14 h-14 rounded-2xl bg-[#9e2a2b]/30 border border-[#fabc4d] flex items-center justify-center text-[#fabc4d] shadow-[0_0_15px_rgba(250,188,77,0.3)] shrink-0">
+              <Theater className="w-7 h-7" />
             </div>
 
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <h3 className="font-cinzel text-lg sm:text-xl font-bold text-[#f7f4eb]">
-                  Valentin Ramos Cárdenas
+                  Dirección Escénica & Transmisión
                 </h3>
                 <span className="px-2 py-0.5 rounded bg-[#bd8718]/20 border border-[#bd8718]/40 text-[#fabc4d] font-jakarta text-[10px] uppercase font-bold">
-                  Director General
+                  Mux Production VOD
                 </span>
               </div>
               <p className="font-jakarta text-xs text-[#dfbfbc] mt-0.5 max-w-lg">
-                Dramaturgia mística y escenificación épica en Fiesta Pagana.
+                Señal de video transmitida por OBS vía RTMP y archivada automáticamente en los servidores de Mux para reproducción bajo demanda.
               </p>
             </div>
           </div>

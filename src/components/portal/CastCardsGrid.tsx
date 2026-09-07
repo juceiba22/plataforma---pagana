@@ -13,7 +13,10 @@ import {
   Image as ImageIcon,
   Shield,
   Layers,
+  Loader2,
+  CloudUpload,
 } from "lucide-react";
+import { uploadImageToSupabase } from "@/lib/supabase";
 
 export interface CastMember {
   id: string;
@@ -35,8 +38,7 @@ const INITIAL_CAST: CastMember[] = [
     characterTitle: "El que despertó al demonio con el código 616",
     archetype: "Oráculo Digital & Vidente",
     bio: "Digitó el código 616 en la tarjeta de crédito de sus padres jugando videojuegos. Custodio del secreto primordial: 'Argentina es una civilización'. Enfrenta al hombre-robot algorítmico.",
-    photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCsflbwK8N7xrmAZNR5DO6vSuetzhGlCIVlIQBtWq0O-O9PxJwwZ_PEE1dm78WKiMqDXlkvuLxgMOIUNw0NKw7pS31nhFxYJVy-tA8TKYXve7xXX5W8pieSHDUlgJbXJ5D0KRnszl7yHyjCMVJ5npCO7MJ-1hZBMoFOFsqsJ-Munks8XbIULVaJq9rnQ5hChTUBsoL8S0m9PxlzfvpZagzEJth4lWZ63sGI7Er61SPegvWVWq0IJXBcOw",
+    photoUrl: "",
     scenes: ["Escena 3: Gabriel y la Madre", "Escena 6: El Olvido", "Escena 9: El Secreto de Argentum"],
     roleColor: "border-[#fabc4d] text-[#fabc4d]",
   },
@@ -47,8 +49,7 @@ const INITIAL_CAST: CastMember[] = [
     characterTitle: "Matriarca del Grotesco & La Familia Musicardi",
     archetype: "Tierra & Realidad Cotidiana",
     bio: "Exige que Gabriel deje TikTok y haga la tarea sin ChatGPT. Encarna la histeria del hogar argentino: '¡Yo hago ravioles, ella hace ravioles! ¡Somos los Musicardi, una gran familia!'.",
-    photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBDVK18okmiTLrsL4KN3z0AyZrWSIibc4NbnNq-p27AjRbrCsPzcEJ14SybTyhLe7CjC4PtWeB6xbVytQWskBfB9srNgcXp1coyoEmOkluJ805K4bhO8YG1zWJmRmCiejUZk1d-Jn0mnFVexBfjXDO2W4cd35KXNxagQ7Xg5wCxlEcgZgJdkD5KDcqMvfeEkA8MTAiH0pDipcWROEaDq0Etx_2A7QlnDBZimjpAGjuHqHJkhBjWj6-n9g",
+    photoUrl: "",
     scenes: ["Escena 3: Gabriel y la Madre", "Escena 8: Bloque Musical Musicardi"],
     roleColor: "border-[#ffb3ae] text-[#ffb3ae]",
   },
@@ -59,8 +60,7 @@ const INITIAL_CAST: CastMember[] = [
     characterTitle: "Filósofo del Espacio-Tiempo & La Manzana",
     archetype: "Sabiduría Andina",
     bio: "Abre la metafísica tras las cantoras: en el siglo XXI pasamos a la era del espacio-tiempo, la materia no existe (E=mc²). Muerde la manzana de la discordia en el centro del altar.",
-    photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDCg_8fADmKyzMRR_mKHXuIaxrV69zviLZdeq3yKs8C8T6KExLZEebYSK-3FcuB78lQqCY7_XElf0PkhrC9ew9gYa2AP4ch_unLN6DgmNIK-fDzkKNvIHCZSyBAKMZ0fGJfwGe1o6ZXp0aRI46N68z24bqRqFjWMtslN8b1nD4uvqhka4Q6J1-LCddcgO-rZCCRout_blqth4Xk44gFPjBK1tam7VAJxwtAQF19DXOO1i60z97TGlRKWA",
+    photoUrl: "",
     scenes: ["Escena 2: La Búsqueda de la Verdad", "Escena 7: La Comparsa"],
     roleColor: "border-[#efbf67] text-[#efbf67]",
   },
@@ -71,8 +71,7 @@ const INITIAL_CAST: CastMember[] = [
     characterTitle: "Custodio de la Salamanca Criolla",
     archetype: "El Filósofo del Monte",
     bio: "Explica la diferencia entre el demonio europeo y la Salamanca criolla: liberamos el demonio en carnaval para que no ande suelto el resto del año. Cuestiona la falsa libertad mediática.",
-    photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB-vrWjlzCmj_urRsf4vgfYtqeWWbMxLFv0oQ2meaiWBMULKQQ_TkgHIK9RprNvc5Ba2mtBEShz-MZsS-johUxMLU-i9YLnLPLR-D5v2RvvG0JozUcq9whSEE2lbOEF8S2rpfsUTPq6ZsbPH0MYxlU-0223l7V8m2SgT6_cDtiMUpJMc0N3d2TAIorR1h26kXVBIWq5fO-DztgqMZtdN9LAgdzENUpq2n0mOxh3w-iZ2n4XaROaEAxDVQ",
+    photoUrl: "",
     scenes: ["Escena 4: El Demonio Criollo", "Escena 7: La Comparsa"],
     roleColor: "border-[#9e2a2b] text-[#ffb3ae]",
   },
@@ -83,8 +82,7 @@ const INITIAL_CAST: CastMember[] = [
     characterTitle: "Conductor del Show Mediático '¡Viva la Libertad!'",
     archetype: "Bufón Televisivo",
     bio: "Encabeza la parodia televisiva repartiendo 'libertades absolutas' (de las leyes, del pasado y de la gravedad de Newton) a Daiana, Edwin y Juan Salteño.",
-    photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB4AxDnqmXvbMLeNcWb4KsMTGKpwwJfWzqcK39TJfLpkd9jPgElmdZOsH8KAUIyVUiPwl3SvwrL20QMmNZwpxGuXvm5JG45VJb75VRinFbHGzwjsOcnhQUpTBINvysbCEfien4VKhYAcAWuKt6sK3GSa28UpB3FSBhxEsHcv5AWjMQF-hhjvqKhxTFPVIGk-AdUBRRTvGSJ0loFb--BrrOIsZX5LqfJeReIvu2risbDyKwQKTWozzy__w",
+    photoUrl: "",
     scenes: ["Escena 5: ¡Viva la Libertad Carajo!"],
     roleColor: "border-[#fabc4d] text-[#fabc4d]",
   },
@@ -95,8 +93,7 @@ const INITIAL_CAST: CastMember[] = [
     characterTitle: "El Titiritero de la Biyuya & El Billetín",
     archetype: "El Mercado Financiero",
     bio: "Decide quién cobra y quién no. Factura 700 millones de euros en la Champions pero ofrece un millón de pesos para el fútbol femenino. Primo de Raúl Estado y socio de Javier Petróleo.",
-    photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCdZhLf6PlMIY9ZK_btiq1zbQVOBk5ksf-swM6hHa6CChNXkdnQ2P0yAQ3axzC6IxyxNRPD7q9HqLIVmHaD9Hu5ViFHedb06bt_j9NZIeqNJrGcXlW2_gifRnXHoFKtQsIxu-tliNBDsEf2EAcoO9O2j-DPwfgia0xnojZGBpimYith8kT949DGshHdvwoT1hWqetlZ5GHFFRnVMJvm-vODWCmqL5FvGZ7lY4DB-PTLKIWtBUl4etJB8A",
+    photoUrl: "",
     scenes: ["Escena 5: ¡Viva la Libertad Carajo!"],
     roleColor: "border-[#9e2a2b] text-[#ffb3ae]",
   },
@@ -107,8 +104,7 @@ const INITIAL_CAST: CastMember[] = [
     characterTitle: "Administrativa de Fábrica & Futbolista de Boca",
     archetype: "La Dignidad Trabajadora",
     bio: "Trabaja en la Fábrica de Sueños en La Matanza. Confronta a José Mercado con valentía: '¿De dónde salieron esos 22 pares de huevos? Salieron de una cachucha'.",
-    photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAkj_mnBEhgY8r6ZIiSZ4SBc491464gDVPGv0QiuYlUGkq5cEIy_cdiFV5JEni2LTp04WEMnc9nHcSdzlF8SbjiF_pKwvLotKuzwRwRSzXb9egonyMFCV8HKtF3qoh9ETdAiUvhM_ii-IofswPq5FjpYDfKi-kMwKaTbnLam5KH0fDuRzQPSeeeWlemTSeY0wqSywbobnnOw9kvun63B1LeZixjNfmaAhVS4Spvo85T0fflWY28aq3rhm4fYxFIqcmjLt4",
+    photoUrl: "",
     scenes: ["Escena 5: ¡Viva la Libertad Carajo!"],
     roleColor: "border-[#fabc4d] text-[#fabc4d]",
   },
@@ -119,8 +115,7 @@ const INITIAL_CAST: CastMember[] = [
     characterTitle: "El Cantor Teatrista de Salta",
     archetype: "El Poeta & La Memoria",
     bio: "Quiere armar una compañía teatral para hacer actos psicomágicos a través de los símbolos. José Mercado le da una guitarra para Cosquín y entona la Zamba para olvidar con todo el elenco.",
-    photoUrl:
-      "https://lh3.googleusercontent.com/aida/AEtjO1X4p4gVHON_LlbC1QFQ3d27pnxEJbs7tF2KGI4VV-SBUn47FzGOCqtomDy-SGgOx8Dmd7j8TBGIuV4tnL6n7MDZiikPPFGzh466Tg8k4ki8ykpr3bfpa-Ru-02u9FD82pyUAsUx7lGim7ILc1evat2c_quVrS-rasO3HKlbuZTe342O3ZDp9c97yobHEvvEpoXvdwM21Qqh5XFOahiKhz_0ZT3KD4qqsimBEsVkJQ0e9TbZZWpTjEOiySeG",
+    photoUrl: "",
     scenes: ["Escena 5: ¡Viva la Libertad Carajo!", "Escena 8: Bloque Musical"],
     roleColor: "border-[#efbf67] text-[#efbf67]",
   },
@@ -131,8 +126,7 @@ const INITIAL_CAST: CastMember[] = [
     characterTitle: "Voces de la Patria & Cabelleras Eternas",
     archetype: "Sirenas Ancestrales",
     bio: "Ubicadas en los extremos del escenario con cabello largo sostenido por un monje y un diablo norteño. Abren y cierran el ritual: 'Argentina, ¿qué pasa con tu voz?'.",
-    photoUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCPStdwIZHlBiVIZjUR8gBS3kWa5k-4kQ1DSd-A53kwvwW76um7wYebIszzWgq_8Q1lB2eVnaAQddSqLEqD1fKBnw6LSuy-3MLZxgzy2hX1y5VANK6AxZeO4o8jctgBaJjoeSJx1pj-KNCnzC4bkzItMXfzB7pd_93bvLRhfK75jcTBQNr1fnP6GHTY_90dtVcZTenrkMJKi1VnMxwVk3-mt3gl61nqMmn6psjernnBSbgLMO-guFEyQg",
+    photoUrl: "",
     scenes: ["Escena 1: Las Cantoras & La Manzana", "Escena 7: Coplas del Olvido", "Escena 10: Himno"],
     roleColor: "border-[#bd8718] text-[#fabc4d]",
   },
@@ -146,7 +140,9 @@ export default function CastCardsGrid() {
   // Upload modal state
   const [targetMemberId, setTargetMemberId] = useState<string | null>(null);
   const [uploadedImagePreview, setUploadedImagePreview] = useState<string>("");
-  const [customPhotoUrl, setCustomPhotoUrl] = useState<string>("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isUploadingToSupabase, setIsUploadingToSupabase] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // New Actor form state
@@ -155,13 +151,14 @@ export default function CastCardsGrid() {
   const [newCharTitle, setNewCharTitle] = useState("");
   const [newArchetype, setNewArchetype] = useState("");
   const [newBio, setNewBio] = useState("");
-  const [newPhotoUrl, setNewPhotoUrl] = useState("");
   const [newScenes, setNewScenes] = useState("Escena 1, Escena 5");
 
   // Handle file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedFile(file);
+      setUploadError(null);
       const reader = new FileReader();
       reader.onloadend = () => {
         setUploadedImagePreview(reader.result as string);
@@ -174,17 +171,38 @@ export default function CastCardsGrid() {
     setTargetMemberId(memberId);
     const member = cast.find((m) => m.id === memberId);
     setUploadedImagePreview(member ? member.photoUrl : "");
-    setCustomPhotoUrl("");
+    setSelectedFile(null);
+    setUploadError(null);
     setIsUploadModalOpen(true);
   };
 
-  const saveUploadedPhoto = () => {
-    const finalUrl = customPhotoUrl.trim() || uploadedImagePreview;
-    if (targetMemberId && finalUrl) {
+  const saveUploadedPhoto = async () => {
+    if (!targetMemberId) return;
+
+    if (selectedFile) {
+      setIsUploadingToSupabase(true);
+      setUploadError(null);
+      const { url, error } = await uploadImageToSupabase(selectedFile, "elenco");
+      setIsUploadingToSupabase(false);
+
+      if (error) {
+        setUploadError(`Error de subida a Supabase: ${error}`);
+        return;
+      }
+
+      if (url) {
+        setCast((prev) =>
+          prev.map((m) => (m.id === targetMemberId ? { ...m, photoUrl: url } : m))
+        );
+      }
+    } else if (uploadedImagePreview) {
       setCast((prev) =>
-        prev.map((m) => (m.id === targetMemberId ? { ...m, photoUrl: finalUrl } : m))
+        prev.map((m) =>
+          m.id === targetMemberId ? { ...m, photoUrl: uploadedImagePreview } : m
+        )
       );
     }
+
     setIsUploadModalOpen(false);
     setTargetMemberId(null);
   };
@@ -200,10 +218,7 @@ export default function CastCardsGrid() {
       characterTitle: newCharTitle || "Personaje de Fiesta Pagana",
       archetype: newArchetype || "Dionisíaco / Criollo",
       bio: newBio || "Ficha actoral adaptada al guión oficial.",
-      photoUrl:
-        newPhotoUrl.trim() ||
-        uploadedImagePreview ||
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuCsflbwK8N7xrmAZNR5DO6vSuetzhGlCIVlIQBtWq0O-O9PxJwwZ_PEE1dm78WKiMqDXlkvuLxgMOIUNw0NKw7pS31nhFxYJVy-tA8TKYXve7xXX5W8pieSHDUlgJbXJ5D0KRnszl7yHyjCMVJ5npCO7MJ-1hZBMoFOFsqsJ-Munks8XbIULVaJq9rnQ5hChTUBsoL8S0m9PxlzfvpZagzEJth4lWZ63sGI7Er61SPegvWVWq0IJXBcOw",
+      photoUrl: "",
       scenes: newScenes.split(",").map((s) => s.trim()),
       roleColor: "border-[#fabc4d] text-[#fabc4d]",
     };
@@ -215,8 +230,6 @@ export default function CastCardsGrid() {
     setNewCharTitle("");
     setNewArchetype("");
     setNewBio("");
-    setNewPhotoUrl("");
-    setUploadedImagePreview("");
   };
 
   const handleDeleteMember = (id: string, e: React.MouseEvent) => {
@@ -236,10 +249,10 @@ export default function CastCardsGrid() {
             </span>
           </div>
           <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#f7f4eb]">
-            Panel de Elenco • Personajes del Guión
+            Panel de Elenco • Fichas de Personaje
           </h2>
           <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] mt-1 max-w-xl">
-            Fichas de presentación del elenco adaptadas al guión de <em>Fiesta Pagana en Teatros</em>. Podés hacer clic en cada foto para actualizarla o cargar una nueva desde tu equipo.
+            Espacios listos para la carga de fotografías mediante <strong>Supabase Storage</strong>. Hacé clic en cualquier tarjeta para subir la foto oficial de cada actor.
           </p>
         </div>
 
@@ -254,51 +267,71 @@ export default function CastCardsGrid() {
         </div>
       </div>
 
-      {/* Grid of Actor / Character Cards */}
+      {/* Grid of Actor / Character Cards (Empty slot frames ready for Supabase upload) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {cast.map((member) => (
           <div
             key={member.id}
             className="group relative flex flex-col rounded-2xl bg-[#141419] border border-[#58413f]/40 overflow-hidden shadow-xl hover:border-[#fabc4d]/60 transition-all duration-300 hover:-translate-y-1 bg-noise"
           >
-            {/* Photo Container with direct hover upload overlay */}
-            <div className="relative w-full aspect-[4/3] bg-[#0b0b0e] overflow-hidden">
-              <img
-                src={member.photoUrl}
-                alt={member.characterName}
-                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
-              />
+            {/* Empty or Loaded Photo Slot Container */}
+            <div className="relative w-full aspect-[4/3] bg-[#0b0b0e] overflow-hidden border-b border-[#58413f]/30">
+              {member.photoUrl ? (
+                <img
+                  src={member.photoUrl}
+                  alt={member.characterName}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                />
+              ) : (
+                /* Empty Placeholder Slot Frame */
+                <div
+                  onClick={() => openUploadModal(member.id)}
+                  className="w-full h-full flex flex-col items-center justify-center p-6 text-center border-2 border-dashed border-[#58413f]/50 hover:border-[#fabc4d]/70 transition-colors cursor-pointer bg-[#0e0e11]/80 group/slot"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-[#141419] border border-[#58413f]/60 flex items-center justify-center text-[#dfbfbc] group-hover/slot:text-[#fabc4d] group-hover/slot:border-[#fabc4d] transition-colors mb-2.5 shadow-inner">
+                    <ImageIcon className="w-6 h-6" />
+                  </div>
+                  <span className="font-jakarta text-xs font-semibold text-[#f7f4eb] block">
+                    Espacio para Foto del Actor
+                  </span>
+                  <span className="font-jakarta text-[11px] text-[#efbf67] mt-1 flex items-center gap-1 font-medium">
+                    <CloudUpload className="w-3 h-3" /> Cargar en Supabase Storage
+                  </span>
+                </div>
+              )}
 
               {/* Atmospheric Gradient Scrim */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#141419] via-transparent to-black/40 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141419] via-transparent to-black/30 pointer-events-none"></div>
 
               {/* Badges on top */}
-              <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                <span className="px-3 py-1 rounded-md bg-[#0b0b0e]/80 backdrop-blur-md text-[#fabc4d] font-jakarta text-[11px] font-bold uppercase tracking-wider border border-[#fabc4d]/30">
+              <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                <span className="px-3 py-1 rounded-md bg-[#0b0b0e]/85 backdrop-blur-md text-[#fabc4d] font-jakarta text-[11px] font-bold uppercase tracking-wider border border-[#fabc4d]/30 pointer-events-auto">
                   {member.archetype}
                 </span>
 
                 <button
                   onClick={(e) => handleDeleteMember(member.id, e)}
                   title="Eliminar del Panel"
-                  className="p-1.5 rounded-lg bg-[#0b0b0e]/80 text-[#dfbfbc] hover:text-[#ffb4ab] border border-[#58413f]/40 hover:bg-[#9e2a2b] transition-colors"
+                  className="p-1.5 rounded-lg bg-[#0b0b0e]/85 text-[#dfbfbc] hover:text-[#ffb4ab] border border-[#58413f]/40 hover:bg-[#9e2a2b] transition-colors pointer-events-auto"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
               </div>
 
               {/* Photo Upload Overlay Button on Hover */}
-              <button
-                onClick={() => openUploadModal(member.id)}
-                className="absolute inset-0 flex flex-col items-center justify-center bg-black/65 backdrop-blur-xs text-[#f7f4eb] opacity-0 group-hover:opacity-100 transition-opacity duration-300 gap-2 cursor-pointer"
-              >
-                <div className="w-12 h-12 rounded-full bg-[#9e2a2b]/80 border border-[#fabc4d] flex items-center justify-center text-[#fabc4d] shadow-[0_0_20px_rgba(250,188,77,0.5)]">
-                  <Camera className="w-6 h-6" />
-                </div>
-                <span className="font-jakarta text-xs uppercase tracking-wider font-bold text-[#f7f4eb] bg-[#0b0b0e]/80 px-3 py-1 rounded-full border border-white/20">
-                  Cambiar / Cargar Foto
-                </span>
-              </button>
+              {member.photoUrl && (
+                <button
+                  onClick={() => openUploadModal(member.id)}
+                  className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 backdrop-blur-xs text-[#f7f4eb] opacity-0 group-hover:opacity-100 transition-opacity duration-300 gap-2 cursor-pointer"
+                >
+                  <div className="w-12 h-12 rounded-full bg-[#9e2a2b]/80 border border-[#fabc4d] flex items-center justify-center text-[#fabc4d] shadow-[0_0_20px_rgba(250,188,77,0.5)]">
+                    <Camera className="w-6 h-6" />
+                  </div>
+                  <span className="font-jakarta text-xs uppercase tracking-wider font-bold text-[#f7f4eb] bg-[#0b0b0e]/90 px-3 py-1 rounded-full border border-white/20">
+                    Cambiar Foto (Supabase)
+                  </span>
+                </button>
+              )}
             </div>
 
             {/* Character & Actor Dossier */}
@@ -352,7 +385,7 @@ export default function CastCardsGrid() {
                     className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#1f1f22] hover:bg-[#28282d] border border-[#58413f]/50 text-[#f7f4eb] font-jakarta text-xs font-semibold transition-colors"
                   >
                     <Upload className="w-3.5 h-3.5 text-[#fabc4d]" />
-                    <span>Cargar Foto</span>
+                    <span>{member.photoUrl ? "Cambiar Foto" : "Cargar Foto en Supabase"}</span>
                   </button>
 
                   <button
@@ -369,7 +402,7 @@ export default function CastCardsGrid() {
         ))}
       </div>
 
-      {/* MODAL 1: CARGAR / ACTUALIZAR FOTO */}
+      {/* MODAL: CARGAR FOTO DIRECTAMENTE A SUPABASE STORAGE */}
       {isUploadModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
           <div className="relative w-full max-w-lg bg-[#141419] border border-[#fabc4d]/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(158,42,43,0.6)] bg-noise text-[#f7f4eb]">
@@ -382,34 +415,40 @@ export default function CastCardsGrid() {
 
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-xl bg-[#9e2a2b]/30 border border-[#9e2a2b] flex items-center justify-center text-[#fabc4d]">
-                <Camera className="w-5 h-5" />
+                <CloudUpload className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="font-cinzel text-xl font-bold uppercase tracking-wider text-[#f7f4eb]">
-                  Cargar Foto de Actor / Personaje
+                  Subir Foto a Supabase Storage
                 </h3>
                 <p className="text-xs text-[#efbf67] font-jakarta">
-                  Seleccioná una imagen desde tu dispositivo o ingresá un enlace web
+                  Bucket: <code className="bg-[#0b0b0e] px-1.5 py-0.5 rounded text-[#fabc4d]">fiesta-pagana/elenco</code>
                 </p>
               </div>
             </div>
 
+            {uploadError && (
+              <div className="p-3 mb-4 rounded-xl bg-[#93000a]/30 border border-[#ffb4ab] text-xs text-[#ffdad6]">
+                {uploadError}
+              </div>
+            )}
+
             {/* Preview Box */}
             <div className="relative w-full h-56 rounded-xl bg-[#0b0b0e] border-2 border-dashed border-[#58413f] flex flex-col items-center justify-center overflow-hidden mb-5 group">
-              {uploadedImagePreview || customPhotoUrl ? (
+              {uploadedImagePreview ? (
                 <>
                   <img
-                    src={customPhotoUrl || uploadedImagePreview}
+                    src={uploadedImagePreview}
                     alt="Preview"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
                       className="px-4 py-2 rounded-xl bg-[#9e2a2b] text-xs font-bold font-jakarta text-[#f7f4eb]"
                     >
-                      Seleccionar Otra Imagen
+                      Elegir Otro Archivo
                     </button>
                   </div>
                 </>
@@ -420,10 +459,10 @@ export default function CastCardsGrid() {
                 >
                   <Upload className="w-8 h-8 text-[#fabc4d]" />
                   <span className="font-jakarta text-xs font-semibold">
-                    Hacé clic acá para seleccionar una foto de tu computadora
+                    Hacé clic acá para seleccionar una foto de tu equipo
                   </span>
                   <span className="font-jakarta text-[11px] text-[#8a877e]">
-                    Soporta JPG, PNG, WEBP (Max 10MB)
+                    JPG, PNG, WEBP, GIF (Se almacena en Supabase Storage)
                   </span>
                 </div>
               )}
@@ -438,23 +477,6 @@ export default function CastCardsGrid() {
               className="hidden"
             />
 
-            {/* Alternative: URL Input */}
-            <div className="space-y-2 mb-6">
-              <label className="block text-xs uppercase tracking-wider text-[#efbf67] font-bold">
-                O ingresá la URL directa de la imagen:
-              </label>
-              <input
-                type="url"
-                value={customPhotoUrl}
-                onChange={(e) => {
-                  setCustomPhotoUrl(e.target.value);
-                  setUploadedImagePreview(e.target.value);
-                }}
-                placeholder="https://ejemplo.com/foto-personaje.jpg"
-                className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
-              />
-            </div>
-
             {/* Action buttons */}
             <div className="flex items-center justify-end gap-3">
               <button
@@ -466,18 +488,28 @@ export default function CastCardsGrid() {
               </button>
               <button
                 type="button"
+                disabled={isUploadingToSupabase || !uploadedImagePreview}
                 onClick={saveUploadedPhoto}
-                className="px-6 py-2.5 rounded-xl bg-[#9e2a2b] hover:bg-[#c1383a] text-[#f7f4eb] text-xs font-bold uppercase tracking-wider font-jakarta shadow-[0_0_15px_rgba(158,42,43,0.5)] transition-all flex items-center gap-2"
+                className="px-6 py-2.5 rounded-xl bg-[#9e2a2b] hover:bg-[#c1383a] disabled:opacity-50 text-[#f7f4eb] text-xs font-bold uppercase tracking-wider font-jakarta shadow-[0_0_15px_rgba(158,42,43,0.5)] transition-all flex items-center gap-2"
               >
-                <Check className="w-4 h-4 text-[#fabc4d]" />
-                <span>Guardar Foto</span>
+                {isUploadingToSupabase ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-[#fabc4d]" />
+                    <span>Guardando en Supabase...</span>
+                  </>
+                ) : (
+                  <>
+                    <Check className="w-4 h-4 text-[#fabc4d]" />
+                    <span>Guardar Imagen</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* MODAL 2: AGREGAR NUEVO ACTOR / PERSONAJE */}
+      {/* MODAL: AGREGAR NUEVO ACTOR */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
           <div className="relative w-full max-w-xl bg-[#141419] border border-[#fabc4d]/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(158,42,43,0.6)] bg-noise text-[#f7f4eb] max-h-[90vh] overflow-y-auto">
@@ -583,19 +615,6 @@ export default function CastCardsGrid() {
                   value={newScenes}
                   onChange={(e) => setNewScenes(e.target.value)}
                   placeholder="Escena 5: ¡Viva la Libertad!, Escena 8: Musicardi"
-                  className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-[#fabc4d] uppercase">
-                  URL de la Foto o Imagen
-                </label>
-                <input
-                  type="url"
-                  value={newPhotoUrl}
-                  onChange={(e) => setNewPhotoUrl(e.target.value)}
-                  placeholder="https://images.unsplash.com/photo-..."
                   className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-xl px-4 py-2.5 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
                 />
               </div>

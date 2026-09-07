@@ -18,6 +18,7 @@ import {
   Share2,
   Bookmark,
   Filter,
+  User,
 } from "lucide-react";
 
 export interface ForumComment {
@@ -37,7 +38,6 @@ export interface StreamingThread {
   title: string;
   author: string;
   authorRole: string;
-  authorAvatar: string;
   timeAgo: string;
   content: string;
   likes: number;
@@ -53,8 +53,6 @@ const INITIAL_SCRIPT_THREADS: StreamingThread[] = [
     title: "El Secreto de Argentum y el hombre-robot: ¿por qué los algoritmos intentan que olvidemos quiénes somos?",
     author: "Gabriel (Actor Central)",
     authorRole: "Elenco • El Niño Gabriel",
-    authorAvatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCsflbwK8N7xrmAZNR5DO6vSuetzhGlCIVlIQBtWq0O-O9PxJwwZ_PEE1dm78WKiMqDXlkvuLxgMOIUNw0NKw7pS31nhFxYJVy-tA8TKYXve7xXX5W8pieSHDUlgJbXJ5D0KRnszl7yHyjCMVJ5npCO7MJ-1hZBMoFOFsqsJ-Munks8XbIULVaJq9rnQ5hChTUBsoL8S0m9PxlzfvpZagzEJth4lWZ63sGI7Er61SPegvWVWq0IJXBcOw",
     timeAgo: "hace 2 horas",
     content:
       "En el monólogo de la Escena 9 planteamos que el robot es un demonio disimulado porque no tiene tiempo ni misterio primordial, come de nuestra atención y nos vomita respuestas huecas. ¿Cómo podemos hacer que en la sala el público sienta ese despertar de Argentum cuando repartimos las tarjetas?",
@@ -87,8 +85,6 @@ const INITIAL_SCRIPT_THREADS: StreamingThread[] = [
     title: "La Salamanca liberada en Carnaval: la búsqueda de la libertad criolla frente al dogma europeo",
     author: "Ulises (El Gaucho)",
     authorRole: "Elenco • Coya Leguizamón",
-    authorAvatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB-vrWjlzCmj_urRsf4vgfYtqeWWbMxLFv0oQ2meaiWBMULKQQ_TkgHIK9RprNvc5Ba2mtBEShz-MZsS-johUxMLU-i9YLnLPLR-D5v2RvvG0JozUcq9whSEE2lbOEF8S2rpfsUTPq6ZsbPH0MYxlU-0223l7V8m2SgT6_cDtiMUpJMc0N3d2TAIorR1h26kXVBIWq5fO-DztgqMZtdN9LAgdzENUpq2n0mOxh3w-iZ2n4XaROaEAxDVQ",
     timeAgo: "hace 4 horas",
     content:
       "El punto clave del texto es que el hombre criollo no tiene la culpa medieval del europeo: suelta la Salamanca en enero y febrero para que no ande suelta cuando no debe. Desenterramos el carnaval buscando la libertad real, no la libertad vacía que nos vende el Presentador mediático.",
@@ -113,8 +109,6 @@ const INITIAL_SCRIPT_THREADS: StreamingThread[] = [
     title: "El grotesco de los Musicardi y la terapia nacional: '¡Yo hago ravioles, ella hace ravioles!'",
     author: "Flor Darío",
     authorRole: "Elenco • La Madre",
-    authorAvatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBDVK18okmiTLrsL4KN3z0AyZrWSIibc4NbnNq-p27AjRbrCsPzcEJ14SybTyhLe7CjC4PtWeB6xbVytQWskBfB9srNgcXp1coyoEmOkluJ805K4bhO8YG1zWJmRmCiejUZk1d-Jn0mnFVexBfjXDO2W4cd35KXNxagQ7Xg5wCxlEcgZgJdkD5KDcqMvfeEkA8MTAiH0pDipcWROEaDq0Etx_2A7QlnDBZimjpAGjuHqHJkhBjWj6-n9g",
     timeAgo: "hace 6 horas",
     content:
       "La energía de la Escena 8 necesita desbordar el escenario. El monólogo de los Musicardi refleja la neurosis argentina donde nos peleamos por los precios y la política pero somos una misma familia. El remate '¡Tenemos que ir a terapia todo el país!' rompe la cuarta pared por completo.",
@@ -138,8 +132,6 @@ const INITIAL_SCRIPT_THREADS: StreamingThread[] = [
     title: "La iluminación de la manzana en la Escena 1 y los cenitales de Gabriel y la Madre",
     author: "Rocío Medina",
     authorRole: "Jefa de Iluminación & Puesta",
-    authorAvatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB4AxDnqmXvbMLeNcWb4KsMTGKpwwJfWzqcK39TJfLpkd9jPgElmdZOsH8KAUIyVUiPwl3SvwrL20QMmNZwpxGuXvm5JG45VJb75VRinFbHGzwjsOcnhQUpTBINvysbCEfien4VKhYAcAWuKt6sK3GSa28UpB3FSBhxEsHcv5AWjMQF-hhjvqKhxTFPVIGk-AdUBRRTvGSJ0loFb--BrrOIsZX5LqfJeReIvu2risbDyKwQKTWozzy__w",
     timeAgo: "hace 1 día",
     content:
       "En el guión está marcado que las luces de las cantoras deben atenuarse gradualmente mientras sube la luz cenital sobre la manzana en la mesa negra. En la Escena 3, Gabriel y la Madre no se miran entre sí: cada uno tiene un haz propio recortado de frente al público.",
@@ -216,8 +208,6 @@ export default function StreamingForum() {
       title: newTitle,
       author: newAuthor || "Oficiante de la Comunidad",
       authorRole: newRole,
-      authorAvatar:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuCsflbwK8N7xrmAZNR5DO6vSuetzhGlCIVlIQBtWq0O-O9PxJwwZ_PEE1dm78WKiMqDXlkvuLxgMOIUNw0NKw7pS31nhFxYJVy-tA8TKYXve7xXX5W8pieSHDUlgJbXJ5D0KRnszl7yHyjCMVJ5npCO7MJ-1hZBMoFOFsqsJ-Munks8XbIULVaJq9rnQ5hChTUBsoL8S0m9PxlzfvpZagzEJth4lWZ63sGI7Er61SPegvWVWq0IJXBcOw",
       timeAgo: "hace unos segundos",
       content: newContent,
       likes: 1,
@@ -342,13 +332,11 @@ export default function StreamingForum() {
                     </span>
                   </div>
 
-                  {/* Author Header */}
+                  {/* Author Header (Stylized badge without mock image) */}
                   <div className="flex items-center gap-3">
-                    <img
-                      src={thread.authorAvatar}
-                      alt={thread.author}
-                      className="w-10 h-10 rounded-full object-cover ring-1 ring-[#fabc4d]/50"
-                    />
+                    <div className="w-10 h-10 rounded-full bg-[#9e2a2b]/30 border border-[#fabc4d]/50 flex items-center justify-center text-[#fabc4d]">
+                      <User className="w-5 h-5" />
+                    </div>
                     <div>
                       <h4 className="font-jakarta text-sm font-bold text-[#f7f4eb]">
                         {thread.author}
@@ -474,7 +462,7 @@ export default function StreamingForum() {
         )}
       </div>
 
-      {/* MODAL: NUEVO DEBATE / COMENTARIO */}
+      {/* MODAL: NUEVO DEBATE */}
       {isNewThreadOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
           <div className="relative w-full max-w-xl bg-[#141419] border border-[#fabc4d]/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(158,42,43,0.6)] bg-noise text-[#f7f4eb]">

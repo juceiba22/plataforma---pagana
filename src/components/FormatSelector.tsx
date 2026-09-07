@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, Flame, BookOpen, Clock, Music, Users, Ticket, ArrowRight, Shield, Theater } from "lucide-react";
+import { Sparkles, Flame, BookOpen, Clock, Music, Users, Ticket, ArrowRight, Shield, Theater, ScrollText } from "lucide-react";
 import RitualModal from "./RitualModal";
 
 export default function FormatSelector() {
@@ -103,22 +103,31 @@ export default function FormatSelector() {
         {/* VIEW 1: Obra Completa */}
         {activeFormat === "obra-completa" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center animate-fadeIn">
-            {/* Ceremonial Flyer Display */}
+            {/* Ceremonial Placard Frame without mock image */}
             <div className="lg:col-span-5 relative flex justify-center">
-              <div className="relative w-full max-w-sm p-3 rounded-2xl bg-[#141419] border border-[#fabc4d]/40 shadow-[0_0_40px_rgba(250,188,77,0.15)] bg-noise group">
-                <div className="absolute -top-3 -left-3 px-3 py-1 rounded bg-[#fabc4d] text-[#281900] font-jakarta text-xs uppercase tracking-widest font-bold z-20 shadow-lg">
-                  Guión Oficial
+              <div className="relative w-full max-w-sm p-6 sm:p-8 rounded-2xl bg-[#141419] border border-[#fabc4d]/40 shadow-[0_0_40px_rgba(250,188,77,0.15)] bg-noise flex flex-col justify-between min-h-[380px]">
+                <div className="flex items-center justify-between pb-4 border-b border-[#58413f]/30">
+                  <span className="px-3 py-1 rounded bg-[#fabc4d] text-[#281900] font-jakarta text-xs uppercase tracking-widest font-bold shadow-md">
+                    Guión Oficial
+                  </span>
+                  <span className="font-mono text-xs text-[#ffb3ae]">10 Escenas</span>
                 </div>
-                <div className="overflow-hidden rounded-xl">
-                  <img
-                    alt="Fiesta Pagana en Teatros"
-                    className="w-full h-auto rounded-xl object-cover shadow-2xl group-hover:scale-105 transition-transform duration-700"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkj_mnBEhgY8r6ZIiSZ4SBc491464gDVPGv0QiuYlUGkq5cEIy_cdiFV5JEni2LTp04WEMnc9nHcSdzlF8SbjiF_pKwvLotKuzwRwRSzXb9egonyMFCV8HKtF3qoh9ETdAiUvhM_ii-IofswPq5FjpYDfKi-kMwKaTbnLam5KH0fDuRzQPSeeeWlemTSeY0wqSywbobnnOw9kvun63B1LeZixjNfmaAhVS4Spvo85T0fflWY28aq3rhm4fYxFIqcmjLt4"
-                  />
+
+                <div className="py-8 text-center space-y-4 my-auto">
+                  <div className="w-16 h-16 rounded-2xl bg-[#9e2a2b]/30 border border-[#fabc4d] text-[#fabc4d] flex items-center justify-center mx-auto shadow-[0_0_25px_rgba(158,42,43,0.5)]">
+                    <Theater className="w-8 h-8" />
+                  </div>
+                  <h4 className="font-cinzel text-xl font-bold uppercase text-[#f7f4eb] tracking-wide">
+                    Fiesta Pagana en Teatros
+                  </h4>
+                  <p className="font-jakarta text-xs text-[#dfbfbc] leading-relaxed italic">
+                    "Argentina, ¿qué pasa con tu voz? Melodías que me cuentan quién sos."
+                  </p>
                 </div>
-                <div className="p-3 text-center">
-                  <span className="font-jakarta text-xs uppercase tracking-widest text-[#efbf67] font-semibold block">
-                    10 Escenas • Farsa, Mito & Rock
+
+                <div className="pt-4 border-t border-[#58413f]/30 text-center">
+                  <span className="font-jakarta text-[11px] uppercase tracking-widest text-[#efbf67] font-semibold block">
+                    Grotesco, Mito, Bandoneón & Rock
                   </span>
                 </div>
               </div>

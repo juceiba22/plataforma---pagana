@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Video, Download, Headphones, FileText, Sparkles, Flame, Check, Play } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Video, Download, Headphones, FileText, Sparkles, Flame, Check, Play, Film, Disc } from "lucide-react";
 
 export interface VideoClass {
   id: string;
@@ -10,12 +10,12 @@ export interface VideoClass {
   duration: string;
   title: string;
   description: string;
-  thumbnail: string;
   badgeBg: string;
+  playbackId?: string;
   attachments: { name: string; type: "pdf" | "audio" | "image" }[];
 }
 
-export const ACADEMY_CLASSES: VideoClass[] = [
+export const SCRIPT_MASTERCLASSES: VideoClass[] = [
   {
     id: "1",
     category: "marechal",
@@ -24,9 +24,8 @@ export const ACADEMY_CLASSES: VideoClass[] = [
     title: "La Batalla Celeste y Terrestre de Marechal",
     description:
       "Exploración de la poética mística de Leopoldo Marechal, la tensión entre lo divino y lo terrenal, el código 616 y la revelación del secreto de Argentum en el cuerpo del actor.",
-    thumbnail:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCsflbwK8N7xrmAZNR5DO6vSuetzhGlCIVlIQBtWq0O-O9PxJwwZ_PEE1dm78WKiMqDXlkvuLxgMOIUNw0NKw7pS31nhFxYJVy-tA8TKYXve7xXX5W8pieSHDUlgJbXJ5D0KRnszl7yHyjCMVJ5npCO7MJ-1hZBMoFOFsqsJ-Munks8XbIULVaJq9rnQ5hChTUBsoL8S0m9PxlzfvpZagzEJth4lWZ63sGI7Er61SPegvWVWq0IJXBcOw",
     badgeBg: "bg-[#bd8718] text-[#281900]",
+    playbackId: "DS00Spx1CV902MCtP7GsWm0147LnFiNo00k",
     attachments: [
       { name: "Guion_Batalla_Celeste_Marechal.pdf", type: "pdf" },
       { name: "Analisis_Metateatral_Argentum.pdf", type: "pdf" },
@@ -40,9 +39,8 @@ export const ACADEMY_CLASSES: VideoClass[] = [
     title: "La Demonología Europea vs la Demonología Criolla",
     description:
       "El contraste entre el pacto notarial fáustico y el desborde carnavalesco de la Salamanca: por qué el hombre criollo libera el demonio antes de la Pascua y qué busca en esa libertad.",
-    thumbnail:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB-vrWjlzCmj_urRsf4vgfYtqeWWbMxLFv0oQ2meaiWBMULKQQ_TkgHIK9RprNvc5Ba2mtBEShz-MZsS-johUxMLU-i9YLnLPLR-D5v2RvvG0JozUcq9whSEE2lbOEF8S2rpfsUTPq6ZsbPH0MYxlU-0223l7V8m2SgT6_cDtiMUpJMc0N3d2TAIorR1h26kXVBIWq5fO-DztgqMZtdN9LAgdzENUpq2n0mOxh3w-iZ2n4XaROaEAxDVQ",
     badgeBg: "bg-[#9e2a2b] text-[#f7f4eb]",
+    playbackId: "DS00Spx1CV902MCtP7GsWm0147LnFiNo00k",
     attachments: [
       { name: "Bestiario_Salamanca_Carnaval.pdf", type: "pdf" },
       { name: "Canto_Coplas_del_Averno.wav", type: "audio" },
@@ -56,9 +54,8 @@ export const ACADEMY_CLASSES: VideoClass[] = [
     title: "La Comunicación y las Escenas en Teatro",
     description:
       "Dinámicas de grotesco criollo en la familia Musicardi, el show televisivo de la libertad, la réplica obrera de Daiana y el pacto confidencial de Gabriel con la platea.",
-    thumbnail:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDCg_8fADmKyzMRR_mKHXuIaxrV69zviLZdeq3yKs8C8T6KExLZEebYSK-3FcuB78lQqCY7_XElf0PkhrC9ew9gYa2AP4ch_unLN6DgmNIK-fDzkKNvIHCZSyBAKMZ0fGJfwGe1o6ZXp0aRI46N68z24bqRqFjWMtslN8b1nD4uvqhka4Q6J1-LCddcgO-rZCCRout_blqth4Xk44gFPjBK1tam7VAJxwtAQF19DXOO1i60z97TGlRKWA",
     badgeBg: "bg-[#bd8718] text-[#281900]",
+    playbackId: "DS00Spx1CV902MCtP7GsWm0147LnFiNo00k",
     attachments: [
       { name: "Manual_Grotesco_Musicardi.pdf", type: "pdf" },
       { name: "Partituras_Show_Televisivo.pdf", type: "pdf" },
@@ -72,9 +69,8 @@ export const ACADEMY_CLASSES: VideoClass[] = [
     title: "La Técnica de Luces en Teatro",
     description:
       "Penumbras sobre la manzana oculta, cenitales exclusivos para Gabriel y la Madre, reflectores de show mediático para el Presentador y atmósfera de trance para la comparsa.",
-    thumbnail:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCdZhLf6PlMIY9ZK_btiq1zbQVOBk5ksf-swM6hHa6CChNXkdnQ2P0yAQ3axzC6IxyxNRPD7q9HqLIVmHaD9Hu5ViFHedb06bt_j9NZIeqNJrGcXlW2_gifRnXHoFKtQsIxu-tliNBDsEf2EAcoO9O2j-DPwfgia0xnojZGBpimYith8kT949DGshHdvwoT1hWqetlZ5GHFFRnVMJvm-vODWCmqL5FvGZ7lY4DB-PTLKIWtBUl4etJB8A",
     badgeBg: "bg-[#353438] text-[#f7f4eb]",
+    playbackId: "DS00Spx1CV902MCtP7GsWm0147LnFiNo00k",
     attachments: [
       { name: "Planta_Luces_Manzana_Penumbras.pdf", type: "pdf" },
       { name: "Diagrama_Cenitales_Gabriel_Madre.png", type: "image" },
@@ -85,11 +81,12 @@ export const ACADEMY_CLASSES: VideoClass[] = [
 export default function AcademyArchive() {
   const [filter, setFilter] = useState<string>("all");
   const [downloadedFile, setDownloadedFile] = useState<string | null>(null);
+  const [selectedVideoModal, setSelectedVideoModal] = useState<VideoClass | null>(null);
 
   const filteredClasses =
     filter === "all"
-      ? ACADEMY_CLASSES
-      : ACADEMY_CLASSES.filter((c) => c.category === filter);
+      ? SCRIPT_MASTERCLASSES
+      : SCRIPT_MASTERCLASSES.filter((c) => c.category === filter);
 
   const handleDownload = (name: string) => {
     setDownloadedFile(name);
@@ -104,14 +101,14 @@ export default function AcademyArchive() {
           <div className="flex items-center gap-2 mb-1">
             <Video className="w-4 h-4 text-[#fabc4d]" />
             <span className="font-jakarta text-xs text-[#efbf67] uppercase tracking-[0.2em] font-bold">
-              Archivo de Formación & Masterclasses del Guión
+              Archivo MUX VOD • Grabaciones de Transmisiones
             </span>
           </div>
           <h2 className="font-cinzel text-2xl sm:text-3xl lg:text-4xl text-[#f7f4eb] tracking-tight font-bold">
-            Biblioteca de Clases & Ensayos
+            Biblioteca de Clases & Ensayos Grabados
           </h2>
           <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] mt-1 max-w-lg">
-            Accedé a los registros grabados de las masterclasses teóricas, dramaturgia mística y técnicas escénicas del universo de <em>Fiesta Pagana en Teatros</em>.
+            Las emisiones y masterclasses grabadas en Mux quedan archivadas para repaso del elenco y consulta teórica de la comunidad.
           </p>
         </div>
 
@@ -139,29 +136,32 @@ export default function AcademyArchive() {
         </div>
       </div>
 
-      {/* Video Grid */}
+      {/* Video Grid (Clean frames with Mux VOD indicator and no mock images) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {filteredClasses.map((item) => (
           <div
             key={item.id}
             className="flex flex-col rounded-2xl bg-[#141419] border border-[#58413f]/40 overflow-hidden hover:-translate-y-1 transition-all duration-300 shadow-xl group hover:border-[#fabc4d]/40"
           >
-            {/* Thumbnail */}
-            <div className="relative aspect-video w-full overflow-hidden bg-[#0b0b0e]">
-              <div
-                className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
-                style={{ backgroundImage: `url('${item.thumbnail}')` }}
-              ></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#141419] via-transparent to-transparent"></div>
+            {/* Clean Video Stage Card Header (Empty/Stylized without mock image) */}
+            <div className="relative aspect-video w-full overflow-hidden bg-[#09090c] flex flex-col items-center justify-center p-4 border-b border-[#58413f]/30">
+              <div className="w-12 h-12 rounded-2xl bg-[#141419] border border-[#58413f] flex items-center justify-center text-[#fabc4d] group-hover:scale-110 transition-transform shadow-inner">
+                <Film className="w-6 h-6 opacity-75 group-hover:opacity-100" />
+              </div>
+
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141419] via-transparent to-transparent pointer-events-none"></div>
 
               {/* Play Overlay Button */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black/40 backdrop-blur-xs transition-opacity">
+              <button
+                onClick={() => setSelectedVideoModal(item)}
+                className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black/50 backdrop-blur-xs transition-opacity cursor-pointer"
+              >
                 <div className="w-12 h-12 rounded-full bg-[#9e2a2b] border border-[#fabc4d] flex items-center justify-center text-[#fabc4d] shadow-[0_0_15px_rgba(250,188,77,0.5)]">
                   <Play className="w-5 h-5 fill-current ml-0.5" />
                 </div>
-              </div>
+              </button>
 
-              <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-[#0b0b0e]/80 text-[#f7f4eb] font-jakarta text-[10px] backdrop-blur-md border border-[#58413f]/40">
+              <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-[#0b0b0e]/90 text-[#f7f4eb] font-jakarta text-[10px] backdrop-blur-md border border-[#58413f]/40">
                 {item.duration}
               </span>
 
@@ -187,7 +187,7 @@ export default function AcademyArchive() {
               <div className="p-3 rounded-xl bg-[#0b0b0e] border border-[#58413f]/30 flex flex-col gap-1.5">
                 <span className="font-jakarta text-[10px] text-[#efbf67] font-bold uppercase tracking-wider flex items-center gap-1">
                   <FileText className="w-3 h-3 text-[#fabc4d]" />
-                  Materiales Descargables
+                  Materiales del Guión
                 </span>
                 {item.attachments.map((att, i) => (
                   <button
@@ -210,6 +210,45 @@ export default function AcademyArchive() {
           </div>
         ))}
       </div>
+
+      {/* VOD Player Modal */}
+      {selectedVideoModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
+          <div className="relative w-full max-w-3xl bg-[#141419] border border-[#fabc4d]/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(158,42,43,0.6)] bg-noise text-[#f7f4eb]">
+            <button
+              onClick={() => setSelectedVideoModal(null)}
+              className="absolute top-5 right-5 text-[#dfbfbc] hover:text-[#fabc4d] transition-colors p-1.5 rounded-lg bg-[#1f1f22]"
+            >
+              ✕
+            </button>
+
+            <div className="mb-4">
+              <span className="text-xs uppercase font-bold text-[#efbf67] font-jakarta">
+                Grabación VOD MUX
+              </span>
+              <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-[#f7f4eb]">
+                {selectedVideoModal.title}
+              </h3>
+            </div>
+
+            <div className="relative aspect-video w-full rounded-xl bg-[#09090c] border border-[#58413f] flex flex-col items-center justify-center p-6 text-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-[#9e2a2b]/40 border border-[#fabc4d] flex items-center justify-center text-[#fabc4d] mb-3 animate-pulse">
+                <Play className="w-8 h-8 fill-current ml-1" />
+              </div>
+              <p className="font-cinzel text-lg font-bold text-[#f7f4eb]">
+                Reproducción de Masterclass Grabada
+              </p>
+              <span className="font-mono text-xs text-[#efbf67] mt-1">
+                Mux Playback ID: {selectedVideoModal.playbackId}
+              </span>
+            </div>
+
+            <p className="font-jakarta text-xs text-[#dfbfbc] leading-relaxed">
+              {selectedVideoModal.description}
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Sparkles, Shield, Bell } from "lucide-react";
+import { Sparkles, Shield, Bell, User } from "lucide-react";
 
 export default function PortalHeader() {
   return (
@@ -14,7 +14,7 @@ export default function PortalHeader() {
         </span>
       </div>
 
-      {/* Right status & Profile */}
+      {/* Right status & Profile Badge */}
       <div className="flex items-center gap-3 sm:gap-4">
         <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#9e2a2b]/20 border border-[#9e2a2b] text-[#ffb3ae] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
           <span className="w-2 h-2 rounded-full bg-[#fabc4d] animate-pulse"></span>
@@ -23,11 +23,9 @@ export default function PortalHeader() {
           </span>
         </div>
 
-        <img
-          alt="Profile"
-          className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover ring-2 ring-[#fabc4d]/50 shadow-[0_0_12px_rgba(250,188,77,0.3)]"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4AxDnqmXvbMLeNcWb4KsMTGKpwwJfWzqcK39TJfLpkd9jPgElmdZOsH8KAUIyVUiPwl3SvwrL20QMmNZwpxGuXvm5JG45VJb75VRinFbHGzwjsOcnhQUpTBINvysbCEfien4VKhYAcAWuKt6sK3GSa28UpB3FSBhxEsHcv5AWjMQF-hhjvqKhxTFPVIGk-AdUBRRTvGSJ0loFb--BrrOIsZX5LqfJeReIvu2risbDyKwQKTWozzy__w"
-        />
+        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#9e2a2b]/30 border border-[#fabc4d]/50 flex items-center justify-center text-[#fabc4d] shadow-[0_0_12px_rgba(250,188,77,0.3)]">
+          <User className="w-4 h-4" />
+        </div>
       </div>
     </header>
   );

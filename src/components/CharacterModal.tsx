@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { X, Sparkles, Flame, Music, Feather, Shield, Eye } from "lucide-react";
+import { X, Sparkles, Flame, Music, Feather, Shield, Eye, Image as ImageIcon } from "lucide-react";
 
 export interface CharacterData {
   id: string;
@@ -9,7 +9,7 @@ export interface CharacterData {
   archetype: string;
   element: string;
   performer: string;
-  image: string;
+  image?: string;
   quote: string;
   description: string;
   psychomagicFunction: string;
@@ -39,16 +39,9 @@ export default function CharacterModal({ character, onClose }: CharacterModalPro
           <X className="w-5 h-5" />
         </button>
 
-        {/* Hero image header */}
-        <div className="relative h-64 sm:h-72 w-full overflow-hidden">
-          <img
-            src={character.image}
-            alt={character.name}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#141419] via-[#141419]/50 to-transparent"></div>
-
-          <div className="absolute bottom-4 left-6 right-6 flex flex-wrap items-end justify-between gap-2">
+        {/* Header (Clean stylized banner without mock image) */}
+        <div className="relative h-48 sm:h-56 w-full bg-gradient-to-b from-[#1f1f22] to-[#141419] flex flex-col justify-end p-6 border-b border-[#58413f]/40">
+          <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#9e2a2b]/80 border border-[#9e2a2b] text-[#ffdad7] text-[11px] uppercase tracking-wider font-semibold mb-2">
                 <Sparkles className="w-3 h-3 text-[#fabc4d]" />
@@ -129,7 +122,7 @@ export default function CharacterModal({ character, onClose }: CharacterModalPro
               onClick={onClose}
               className="w-full py-3 rounded-xl bg-[#1f1f22] hover:bg-[#2a2a2d] text-[#f7f4eb] font-semibold text-xs uppercase tracking-widest border border-[#58413f] transition-colors"
             >
-              Cerrar Dossier Arquetípico
+              Cerrar Ficha del Personaje
             </button>
           </div>
         </div>
