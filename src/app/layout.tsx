@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: "Fiesta Pagana en Teatros • Obra Ritual & Farsa Filosófica",
@@ -36,9 +37,11 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark scroll-smooth">
       <body className="bg-[#0b0b0e] text-[#f7f4eb] font-jakarta antialiased selection:bg-[#9e2a2b] selection:text-[#ffdad7] bg-noise min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-grow pt-20">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <main className="flex-grow pt-20">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

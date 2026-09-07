@@ -3,7 +3,7 @@
   "/api/mux/live-stream/route": "app/api/mux/live-stream/route.js",
   "/page": "app/page.js",
   "/api/mux/assets/route": "app/api/mux/assets/route.js",
-  "/comunidad/page": "app/comunidad/page.js",
   "/portal/page": "app/portal/page.js",
-  "/streaming/page": "app/streaming/page.js"
+  "/streaming/page": "app/streaming/page.js",
+  "/comunidad/page": "app/comunidad/page.js"
 }

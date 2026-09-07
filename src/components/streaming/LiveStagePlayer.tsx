@@ -7,8 +7,6 @@ import {
   Pause,
   Volume2,
   VolumeX,
-  Maximize2,
-  Minimize2,
   Sparkles,
   Flame,
   Settings,
@@ -20,15 +18,18 @@ import {
   Radio,
   Globe,
   ExternalLink,
-  Copy,
   PlusCircle,
   Loader2,
-  Film,
   Disc,
+  Shield,
+  Lock,
 } from "lucide-react";
 import StageSettingsModal from "./StageSettingsModal";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LiveStagePlayer() {
+  const { user, profile, role, isAdmin, isStaff } = useAuth();
+
   const [isPlaying, setIsPlaying] = useState(true);
   const [isBroadcasting, setIsBroadcasting] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
@@ -47,14 +48,8 @@ export default function LiveStagePlayer() {
   const [isCreatingMuxStream, setIsCreatingMuxStream] = useState(false);
   const [streamCreatedAlert, setStreamCreatedAlert] = useState(false);
 
-  const toggleBroadcast = () => {
-    setIsBroadcasting(!isBroadcasting);
-    if (!isBroadcasting) {
-      setViewerCount((prev) => prev + 1);
-    }
-  };
-
   const handleCreateNewMuxStream = async () => {
+    if (!isAdmin) return;
     setIsCreatingMuxStream(true);
     try {
       const res = await fetch("/api/mux/live-stream", {
@@ -95,7 +90,9 @@ export default function LiveStagePlayer() {
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2.5 h-2.5 rounded-full bg-[#ffb3ae] animate-ping"></span>
               <span className="font-jakarta text-xs text-[#ffb3ae] uppercase tracking-[0.2em] font-bold">
-                {broadcastMode === "mux" ? "Cámara Negra • Emisión OBS - MUX (Grabación VOD Activa)" : "Sala en Vivo • Google Meet"}
+                {broadcastMode === "mux"
+                  ? "Cámara Negra • Emisión OBS - MUX (Grabación VOD Activa)"
+                  : "Sala en Vivo • Google Meet"}
               </span>
             </div>
             <h1 className="font-cinzel text-3xl sm:text-4xl text-[#f7f4eb] tracking-tight font-bold">
@@ -103,55 +100,64 @@ export default function LiveStagePlayer() {
             </h1>
           </div>
 
-          {/* Broadcast Mode Selector & Actions */}
+          {/* Controls: Admin vs Viewer */}
           <div className="flex flex-wrap items-center gap-3">
-            {/* Quick Switch between OBS-Mux & Meet */}
-            <div className="flex items-center p-1 rounded-xl bg-[#141419] border border-[#58413f]/50">
-              <button
-                onClick={() => setBroadcastMode("mux")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-jakarta font-bold transition-all ${
-                  broadcastMode === "mux"
-                    ? "bg-[#9e2a2b] text-[#f7f4eb] shadow-[0_0_10px_rgba(158,42,43,0.5)]"
-                    : "text-[#dfbfbc] hover:text-[#f7f4eb]"
-                }`}
-              >
-                <Radio className="w-3.5 h-3.5 text-[#fabc4d]" />
-                <span>OBS (Mux)</span>
-              </button>
-              <button
-                onClick={() => setBroadcastMode("meet")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-jakarta font-bold transition-all ${
-                  broadcastMode === "meet"
-                    ? "bg-[#9e2a2b] text-[#f7f4eb] shadow-[0_0_10px_rgba(158,42,43,0.5)]"
-                    : "text-[#dfbfbc] hover:text-[#f7f4eb]"
-                }`}
-              >
-                <Globe className="w-3.5 h-3.5 text-[#efbf67]" />
-                <span>Google Meet</span>
-              </button>
-            </div>
+            {isAdmin ? (
+              <>
+                {/* Admin Mode Selector: OBS vs Meet */}
+                <div className="flex items-center p-1 rounded-xl bg-[#141419] border border-[#58413f]/50">
+                  <button
+                    onClick={() => setBroadcastMode("mux")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-jakarta font-bold transition-all ${
+                      broadcastMode === "mux"
+                        ? "bg-[#9e2a2b] text-[#f7f4eb] shadow-[0_0_10px_rgba(158,42,43,0.5)]"
+                        : "text-[#dfbfbc] hover:text-[#f7f4eb]"
+                    }`}
+                  >
+                    <Radio className="w-3.5 h-3.5 text-[#fabc4d]" />
+                    <span>OBS (Mux)</span>
+                  </button>
+                  <button
+                    onClick={() => setBroadcastMode("meet")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-jakarta font-bold transition-all ${
+                      broadcastMode === "meet"
+                        ? "bg-[#9e2a2b] text-[#f7f4eb] shadow-[0_0_10px_rgba(158,42,43,0.5)]"
+                        : "text-[#dfbfbc] hover:text-[#f7f4eb]"
+                    }`}
+                  >
+                    <Globe className="w-3.5 h-3.5 text-[#efbf67]" />
+                    <span>Google Meet</span>
+                  </button>
+                </div>
 
-            {/* Create new live stream on Mux */}
-            <button
-              onClick={handleCreateNewMuxStream}
-              disabled={isCreatingMuxStream}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#fabc4d] text-[#281900] hover:brightness-110 font-jakarta text-xs font-bold transition-all shadow-[0_0_15px_rgba(250,188,77,0.3)]"
-            >
-              {isCreatingMuxStream ? (
-                <Loader2 className="w-3.5 h-3.5 animate-spin" />
-              ) : (
-                <PlusCircle className="w-3.5 h-3.5" />
-              )}
-              <span>{isCreatingMuxStream ? "Generando..." : "Nueva Emisión MUX"}</span>
-            </button>
+                {/* Create new live stream on Mux (Admin only) */}
+                <button
+                  onClick={handleCreateNewMuxStream}
+                  disabled={isCreatingMuxStream}
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#fabc4d] text-[#281900] hover:brightness-110 font-jakarta text-xs font-bold transition-all shadow-[0_0_15px_rgba(250,188,77,0.3)]"
+                >
+                  {isCreatingMuxStream ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <PlusCircle className="w-3.5 h-3.5" />
+                  )}
+                  <span>{isCreatingMuxStream ? "Generando..." : "Nueva Emisión MUX"}</span>
+                </button>
 
-            <button
-              onClick={() => setIsSettingsOpen(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141419] border border-[#58413f]/50 text-[#dfbfbc] hover:text-[#f7f4eb] hover:border-[#fabc4d]/40 font-jakarta text-xs font-semibold transition-all"
-            >
-              <Settings className="w-4 h-4 text-[#fabc4d]" />
-              <span>Ajustes OBS / Meet</span>
-            </button>
+                <button
+                  onClick={() => setIsSettingsOpen(true)}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#141419] border border-[#58413f]/50 text-[#dfbfbc] hover:text-[#f7f4eb] hover:border-[#fabc4d]/40 font-jakarta text-xs font-semibold transition-all"
+                >
+                  <Settings className="w-4 h-4 text-[#fabc4d]" />
+                  <span>Ajustes OBS / Meet</span>
+                </button>
+              </>
+            ) : (
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#141419] border border-[#58413f]/40 text-xs text-[#dfbfbc]">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Modo Espectador • Transmisión Activa</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -165,7 +171,7 @@ export default function LiveStagePlayer() {
           </div>
         )}
 
-        {/* Video Canvas Container (16:9 Aspect Ratio) - Clean dark stage canvas without mock images */}
+        {/* Video Canvas Container (16:9 Aspect Ratio) */}
         <div className="relative w-full aspect-video rounded-2xl bg-[#09090c] overflow-hidden shadow-2xl border border-[#58413f]/40 group flex flex-col justify-between">
           {broadcastMode === "meet" ? (
             /* Google Meet Mode */
@@ -192,12 +198,14 @@ export default function LiveStagePlayer() {
                   <span>Unirse al Google Meet</span>
                 </a>
 
-                <button
-                  onClick={() => setIsSettingsOpen(true)}
-                  className="px-5 py-3 rounded-xl bg-[#1f1f22] border border-[#58413f] text-[#dfbfbc] hover:text-[#f7f4eb] font-jakarta text-xs font-bold transition-colors"
-                >
-                  Cambiar Enlace de Meet
-                </button>
+                {isAdmin && (
+                  <button
+                    onClick={() => setIsSettingsOpen(true)}
+                    className="px-5 py-3 rounded-xl bg-[#1f1f22] border border-[#58413f] text-[#dfbfbc] hover:text-[#f7f4eb] font-jakarta text-xs font-bold transition-colors"
+                  >
+                    Cambiar Enlace de Meet
+                  </button>
+                )}
               </div>
 
               <div className="mt-8 px-4 py-2 rounded-lg bg-[#141419] border border-[#58413f]/40 font-mono text-xs text-[#efbf67]">
@@ -219,10 +227,6 @@ export default function LiveStagePlayer() {
                     OBS • MUX LIVE
                   </span>
 
-                  <span className="px-3 py-1 rounded-md bg-[#141419]/85 backdrop-blur-md text-[#efbf67] font-jakarta text-[11px] font-semibold tracking-wider border border-[#58413f]/40">
-                    RTMP: global-live.mux.com
-                  </span>
-
                   <span className="px-3 py-1 rounded-md bg-[#141419]/85 backdrop-blur-md text-[#dfbfbc] font-jakarta text-[11px] flex items-center gap-1.5 border border-[#58413f]/40">
                     <Disc className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
                     <span>Grabación VOD Automática</span>
@@ -234,15 +238,17 @@ export default function LiveStagePlayer() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setIsSettingsOpen(true)}
-                    className="p-2 rounded-lg bg-[#141419]/80 text-[#dfbfbc] hover:text-[#f7f4eb] border border-[#58413f]/40 hover:bg-[#9e2a2b] transition-colors"
-                    title="Configuración de Servidor MUX"
-                  >
-                    <Settings className="w-4 h-4" />
-                  </button>
-                </div>
+                {isAdmin && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setIsSettingsOpen(true)}
+                      className="p-2 rounded-lg bg-[#141419]/80 text-[#dfbfbc] hover:text-[#f7f4eb] border border-[#58413f]/40 hover:bg-[#9e2a2b] transition-colors"
+                      title="Configuración de Servidor MUX"
+                    >
+                      <Settings className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Center Stage Focus Info */}
@@ -325,13 +331,15 @@ export default function LiveStagePlayer() {
                       </select>
                     </div>
 
-                    <button
-                      onClick={() => setIsSettingsOpen(true)}
-                      className="p-1.5 text-[#f7f4eb] hover:text-[#fabc4d] transition-colors"
-                      title="Configuración de Mux"
-                    >
-                      <Settings className="w-4 h-4" />
-                    </button>
+                    {isAdmin && (
+                      <button
+                        onClick={() => setIsSettingsOpen(true)}
+                        className="p-1.5 text-[#f7f4eb] hover:text-[#fabc4d] transition-colors"
+                        title="Configuración de Mux"
+                      >
+                        <Settings className="w-4 h-4" />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -339,7 +347,7 @@ export default function LiveStagePlayer() {
           )}
         </div>
 
-        {/* Instructor & Transmission Dossier Strip without mock image */}
+        {/* Instructor & Transmission Dossier Strip */}
         <div className="p-5 sm:p-6 rounded-2xl bg-[#141419] border border-[#58413f]/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 bg-noise">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-[#9e2a2b]/30 border border-[#fabc4d] flex items-center justify-center text-[#fabc4d] shadow-[0_0_15px_rgba(250,188,77,0.3)] shrink-0">

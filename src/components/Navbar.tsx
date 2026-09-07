@@ -2,14 +2,17 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Sparkles, Shield, User, Menu, X, Ticket } from "lucide-react";
+import { Sparkles, Shield, User, Menu, X, Ticket, LogIn, Crown, UserCheck } from "lucide-react";
 import AccessModal from "./AccessModal";
 import RitualModal from "./RitualModal";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const [isAccessModalOpen, setIsAccessModalOpen] = useState(false);
   const [isRitualModalOpen, setIsRitualModalOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const { user, profile, role, isAdmin, isStaff, isPublic } = useAuth();
 
   return (
     <>
@@ -34,7 +37,7 @@ export default function Navbar() {
           <nav className="hidden lg:flex items-center gap-1.5">
             <Link
               href="/"
-              className="px-3.5 py-2 text-xs uppercase tracking-wider font-semibold rounded-lg transition-all bg-[#9e2a2b] text-[#f7f4eb] shadow-[0_0_14px_rgba(158,42,43,0.5)] border-t border-white/20"
+              className="px-3.5 py-2 text-xs uppercase tracking-wider font-semibold rounded-lg transition-all text-[#dfbfbc] hover:text-[#f7f4eb] hover:bg-[#1f1f22]"
             >
               Experiencia & Obra
             </Link>
@@ -43,7 +46,11 @@ export default function Navbar() {
               className="px-3.5 py-2 text-xs uppercase tracking-wider font-semibold text-[#dfbfbc] hover:text-[#f7f4eb] hover:bg-[#1f1f22] transition-colors rounded-lg flex items-center gap-1.5"
             >
               <span>Portal Elenco</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#fabc4d] animate-pulse"></span>
+              {isAdmin ? (
+                <span className="px-1.5 py-0.2 text-[9px] rounded bg-[#9e2a2b] text-[#fabc4d] font-bold">ADMIN</span>
+              ) : isStaff ? (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#fabc4d] animate-pulse"></span>
+              ) : null}
             </Link>
             <Link
               href="/streaming"
@@ -72,21 +79,59 @@ export default function Navbar() {
             </a>
           </nav>
 
-          {/* Right Action & Privileged Badge */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            <Link
-              href="/portal"
-              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#9e2a2b]/20 border border-[#9e2a2b]/80 text-[#ffb3ae] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] hover:bg-[#9e2a2b]/30 transition-all text-xs"
-            >
-              <span className="w-2 h-2 rounded-full bg-[#fabc4d] animate-pulse"></span>
-              <span className="tracking-wider uppercase font-semibold text-[#ffdad7] font-jakarta">
-                Modo Elenco Privilegiado
-              </span>
-            </Link>
+          {/* Right Actions: Auth Status & Ticket Button */}
+          <div className="flex items-center gap-2.5 sm:gap-4">
+            {/* User status button / Access trigger */}
+            {user ? (
+              <button
+                onClick={() => setIsAccessModalOpen(true)}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1c1a20] border border-[#58413f] hover:border-[#fabc4d] transition-all text-xs text-[#f7f4eb]"
+              >
+                {profile?.avatar_url ? (
+                  <img
+                    src={profile.avatar_url}
+                    alt={profile.full_name || "Avatar"}
+                    className="w-5 h-5 rounded-full object-cover border border-[#fabc4d]"
+                  />
+                ) : (
+                  <div className="w-5 h-5 rounded-full bg-[#9e2a2b]/30 flex items-center justify-center text-[#fabc4d] text-[10px] font-bold">
+                    {profile?.full_name?.charAt(0) || user.email?.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <span className="hidden sm:inline font-medium text-xs max-w-[100px] truncate">
+                  {profile?.full_name || user.email?.split("@")[0]}
+                </span>
+                {isAdmin && (
+                  <span className="px-1.5 py-0.5 rounded bg-[#9e2a2b] text-[#fabc4d] text-[9px] font-bold uppercase tracking-wider">
+                    Admin
+                  </span>
+                )}
+                {role === "staff" && (
+                  <span className="px-1.5 py-0.5 rounded bg-[#fabc4d]/20 text-[#fabc4d] text-[9px] font-bold uppercase tracking-wider">
+                    Staff
+                  </span>
+                )}
+                {isPublic && (
+                  <span className="hidden md:inline px-1.5 py-0.5 rounded bg-white/10 text-[#dfbfbc] text-[9px] font-bold uppercase tracking-wider">
+                    Público
+                  </span>
+                )}
+              </button>
+            ) : (
+              <button
+                onClick={() => setIsAccessModalOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1f1f22] border border-[#58413f]/60 hover:border-[#fabc4d]/60 text-[#dfbfbc] hover:text-[#f7f4eb] transition-all text-xs font-semibold uppercase tracking-wider"
+              >
+                <LogIn className="w-3.5 h-3.5 text-[#fabc4d]" />
+                <span className="hidden sm:inline">Ingresar / Elenco</span>
+                <span className="sm:hidden">Ingreso</span>
+              </button>
+            )}
 
+            {/* Ritual Pass / Tickets */}
             <button
               onClick={() => setIsRitualModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#fabc4d] text-[#281900] font-jakarta text-xs uppercase tracking-wider font-bold shadow-[0_0_16px_rgba(250,188,77,0.4)] hover:brightness-110 hover:shadow-[0_0_24px_rgba(250,188,77,0.6)] transition-all"
+              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-lg bg-[#fabc4d] text-[#281900] font-jakarta text-xs uppercase tracking-wider font-bold shadow-[0_0_16px_rgba(250,188,77,0.4)] hover:brightness-110 hover:shadow-[0_0_24px_rgba(250,188,77,0.6)] transition-all"
             >
               <Ticket className="w-4 h-4" />
               <span className="hidden xs:inline">Pase Ritual</span>
@@ -120,7 +165,11 @@ export default function Navbar() {
               className="w-full text-left px-3 py-2 text-sm uppercase tracking-wider font-semibold text-[#dfbfbc] hover:text-[#f7f4eb] hover:bg-[#1f1f22] rounded-lg flex items-center justify-between"
             >
               <span>Portal Elenco & Staff</span>
-              <span className="w-2 h-2 rounded-full bg-[#fabc4d]"></span>
+              {isAdmin ? (
+                <span className="px-1.5 py-0.5 rounded bg-[#9e2a2b] text-[#fabc4d] text-[10px] font-bold">ADMIN</span>
+              ) : (
+                <span className="w-2 h-2 rounded-full bg-[#fabc4d]"></span>
+              )}
             </Link>
             <Link
               href="/streaming"
@@ -152,15 +201,18 @@ export default function Navbar() {
             >
               Próximas Fechas & Boletos
             </a>
+
             <div className="pt-2 border-t border-[#58413f]/20">
-              <Link
-                href="/portal"
-                onClick={() => setMobileMenuOpen(false)}
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setIsAccessModalOpen(true);
+                }}
                 className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-[#9e2a2b]/20 border border-[#9e2a2b] text-[#ffdad7] text-xs uppercase font-semibold"
               >
                 <Shield className="w-4 h-4 text-[#fabc4d]" />
-                Acceso Elenco Privilegiado
-              </Link>
+                {user ? `Sesión: ${profile?.full_name || user.email}` : "Ingreso Elenco / Google"}
+              </button>
             </div>
           </div>
         )}
