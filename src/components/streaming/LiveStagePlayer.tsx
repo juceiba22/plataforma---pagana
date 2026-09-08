@@ -23,8 +23,11 @@ import {
   Disc,
   Shield,
   Lock,
+  Upload,
+  HardDrive,
 } from "lucide-react";
 import StageSettingsModal from "./StageSettingsModal";
+import UploadBroadcastModal from "./UploadBroadcastModal";
 import { useAuth } from "@/context/AuthContext";
 
 export default function LiveStagePlayer() {
@@ -37,6 +40,7 @@ export default function LiveStagePlayer() {
   const [isSaved, setIsSaved] = useState(false);
   const [isShared, setIsShared] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [resolution, setResolution] = useState("1080p");
   const [viewerCount, setViewerCount] = useState(64);
 
@@ -129,6 +133,15 @@ export default function LiveStagePlayer() {
                     <span>Google Meet</span>
                   </button>
                 </div>
+
+                {/* Upload & Host in Supabase Storage */}
+                <button
+                  onClick={() => setIsUploadOpen(true)}
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#9e2a2b] hover:bg-[#c1383a] text-[#f7f4eb] font-jakarta text-xs font-bold transition-all shadow-[0_0_15px_rgba(158,42,43,0.4)] border-t border-white/20"
+                >
+                  <HardDrive className="w-3.5 h-3.5 text-[#fabc4d]" />
+                  <span>Alojar Video en Supabase</span>
+                </button>
 
                 {/* Create new live stream on Mux (Admin only) */}
                 <button
@@ -413,6 +426,17 @@ export default function LiveStagePlayer() {
         setMeetUrl={setMeetUrl}
         broadcastMode={broadcastMode}
         setBroadcastMode={setBroadcastMode}
+      />
+
+      <UploadBroadcastModal
+        isOpen={isUploadOpen}
+        onClose={() => setIsUploadOpen(false)}
+        onVideoUploaded={(newVideo) => {
+          // Trigger custom event or notification
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("pagana_video_uploaded", { detail: newVideo }));
+          }
+        }}
       />
     </>
   );
