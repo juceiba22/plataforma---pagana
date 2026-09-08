@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StreamingForum from "@/components/comunidad/StreamingForum";
+import ActorGate from "@/components/ActorGate";
 
 export const metadata: Metadata = {
-  title: "Ágora & Foro de Transmisiones • Fiesta Pagana",
+  title: "Ágora & Foro de Actores • Fiesta Pagana",
   description:
-    "Foro de debate y análisis escénico sobre las transmisiones, ensayos y clases de Fiesta Pagana.",
+    "Foro de debate interno y análisis escénico sobre las transmisiones, ensayos y clases de Fiesta Pagana.",
 };
 
 export default function CommunityPage() {
@@ -16,9 +17,14 @@ export default function CommunityPage() {
       {/* Platform Public Navbar */}
       <Navbar />
 
-      {/* Main Streaming Forum Content */}
+      {/* Main Streaming Forum Content Gated for Actors */}
       <main className="flex-grow pt-28 pb-16">
-        <StreamingForum />
+        <ActorGate
+          sectionTitle="Ágora & Foro Reservado de Actores"
+          sectionSubtitle="Este espacio de discusión y análisis escénico es de acceso exclusivo para el elenco, músicos y equipo artístico de Fiesta Pagana."
+        >
+          <StreamingForum />
+        </ActorGate>
       </main>
 
       {/* Footer */}

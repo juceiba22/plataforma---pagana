@@ -82,11 +82,11 @@ const INITIAL_SCRIPT_THREADS: StreamingThread[] = [
     videoTitle: "La Demonología Europea vs la Demonología Criolla",
     timestamp: "54:40",
     title: "La Salamanca liberada en Carnaval: la búsqueda de la libertad criolla frente al dogma europeo",
-    author: "Ulises (El Gaucho)",
-    authorRole: "Elenco • Coya Leguizamón",
+    author: "Ulises / Aixa (La Chola)",
+    authorRole: "Elenco • La Chola (Baila Zamba)",
     timeAgo: "hace 4 horas",
     content:
-      "El punto clave del texto es que el hombre criollo no tiene la culpa medieval del europeo: suelta la Salamanca en enero y febrero para que no ande suelta cuando no debe. Desenterramos el carnaval buscando la libertad real, no la libertad vacía que nos vende el Presentador mediático.",
+      "El punto clave del texto y la danza es que el hombre criollo no tiene la culpa medieval del europeo: suelta la Salamanca en enero y febrero para que no ande suelta cuando no debe. Desenterramos el carnaval buscando la libertad real con el pañuelo en alto y la zamba viva.",
     likes: 42,
     comments: [
       {

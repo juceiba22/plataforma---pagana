@@ -41,7 +41,7 @@ export default function HeroSection() {
 
           {/* Core Descriptive Text */}
           <p className="font-jakarta text-base sm:text-lg md:text-xl text-[#dfbfbc] max-w-2xl mb-10 leading-relaxed font-normal">
-            Un acto escénico en donde la Argentina se mira al espejo: la manzana en el centro del altar, el niño que digitó el código 616, el show televisivo de la libertad, el reclamo de la Salamanca criolla y la revelación del secreto primordial de <em>Argentum</em>.
+            Un acto escénico en donde la Argentina se mira al espejo
           </p>
 
           {/* CTA Buttons */}

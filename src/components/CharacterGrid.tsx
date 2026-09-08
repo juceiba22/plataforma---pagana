@@ -45,32 +45,6 @@ export const SCRIPT_CHARACTERS: CharacterData[] = [
     frequency: "528 Hz • Frecuencia de transmutación y resonancia cósmica.",
   },
   {
-    id: "el-gaucho",
-    name: "El Gaucho (Coya Leguizamón)",
-    archetype: "El Filósofo del Monte & La Salamanca",
-    element: "Coplas, Carnaval & Barro",
-    performer: "Ulises / Aixa",
-    image: "",
-    quote: "En el norte liberamos la Salamanca para que no ande suelta en tiempos donde no debe andar. ¿Acaso el hombre criollo no está buscando la libertad?",
-    description: "Portador de la sabiduría telúrica. Explica por qué el hombre criollo desentierra el carnaval antes de la Pascua y cuestiona la libertad vacía del dogma europeo.",
-    psychomagicFunction: "Reconciliación con la sombra criolla y el festejo sagrado de la tierra.",
-    ritualMask: "Sombrero de gaucho de ala ancha, poncho al hombro y ramita de albahaca.",
-    frequency: "396 Hz • Liberación de culpas importadas y arraigo a la tierra.",
-  },
-  {
-    id: "el-periodista",
-    name: "El Presentador de la Libertad",
-    archetype: "Bufón Mediático • Showman",
-    element: "Televisión & Gritos de Libertad",
-    performer: "Martina / Actor Invitado",
-    image: "",
-    quote: "¡Viva la libertad carajo! Yo te libero de los municipios, de las familias, del pasado y de la gravedad de Newton.",
-    description: "El conductor de un show televisivo grotesco que promete libertad absoluta a cambio de nada, hasta que la realidad económica de José Mercado lo pone en jaque.",
-    psychomagicFunction: "Exorcismo de la farsa discursiva contemporánea mediante la sátira.",
-    ritualMask: "Peluca platinada estrafalaria, saco brillante y micrófono dorado.",
-    frequency: "741 Hz • Ruptura de espejismos y exposición de la comedia política.",
-  },
-  {
     id: "jose-mercado",
     name: "José Mercado",
     archetype: "El Titiritero Financiero • El Mercado",
@@ -84,17 +58,43 @@ export const SCRIPT_CHARACTERS: CharacterData[] = [
     frequency: "110 Hz • El pulso denso de la transacción y el morlaco.",
   },
   {
-    id: "daiana-matancera",
-    name: "Daiana (La Matancera)",
-    archetype: "La Clase Trabajadora • Futbolista",
-    element: "Fábrica de Sueños & Pelota",
-    performer: "Sofía V. / Actriz",
+    id: "la-chola",
+    name: "La Chola",
+    archetype: "Danza Telúrica • Baila Zamba",
+    element: "Zamba, Pañuelo & Tierra",
+    performer: "Elenco Danza / Actriz",
     image: "",
-    quote: "Trabajo en la Fábrica de Sueños de La Matanza. ¿De dónde salieron esos 22 pares de huevos? Salieron de una cachucha. ¡Sin cachucha no hay jugadores ni nada!",
-    description: "Administrativa de fábrica de colchones y jugadora de cuatro en el fútbol femenino. Enfrenta a José Mercado con la verdad biológica y popular del trabajo.",
-    psychomagicFunction: "Reivindicación de la fuerza femenina obrera y el derecho al goce.",
-    ritualMask: "Camiseta de fútbol con franjas azules y doradas, botines embarrados.",
-    frequency: "639 Hz • Fuerza colectiva, dignidad y pertenencia de barrio.",
+    quote: "Con el pañuelo en el aire y la cadencia de la zamba, la tierra despierta el amor y la memoria viva que ningún algoritmo puede apagar.",
+    description: "Baila zamba encarnando el latido del norte y la resistencia de la tierra. Con su danza sagrada y su pañuelo en vuelo, desafía el olvido y convoca el fuego del carnaval.",
+    psychomagicFunction: "Sanación y elevación a través de la danza ritual y el compás de la zamba criolla.",
+    ritualMask: "Pollera norteña tradicional, pañuelo de seda y flores en el cabello.",
+    frequency: "432 Hz • Frecuencia telúrica de la zamba y el movimiento sagrado.",
+  },
+  {
+    id: "la-tanguera",
+    name: "La Tanguera",
+    archetype: "Nostalgia Urbana • Compás Porteño",
+    element: "Bandoneón, Asfalto & Corte",
+    performer: "Actriz / Bailarina",
+    image: "",
+    quote: "El tango no es un lamento del pasado, es el abrazo urgente en medio de la tormenta porteña.",
+    description: "La fuerza poética y nocturna de las calles de Buenos Aires. En su abrazo y en su taco sobre el escenario, dialoga con el bandoneón para desarmar la farsa y rescatar la voz de la ciudad.",
+    psychomagicFunction: "Alquimia del desgarro urbano en belleza y dignidad escénica.",
+    ritualMask: "Vestido de milonga con bordados carmesí, zapatos de tango y mirada penetrante.",
+    frequency: "528 Hz • Resonancia del bandoneón y pasión del arrabal.",
+  },
+  {
+    id: "la-sahumadora",
+    name: "La Sahumadora",
+    archetype: "Guardián del Humo Sagrado • Purificación",
+    element: "Copla, Humo Sagrado & Resinas",
+    performer: "Actriz / Sahumadora Ceremonial",
+    image: "",
+    quote: "Que el humo del copal y las hierbas serranas limpie el aire y abra el camino para que la verdad sea dicha en el altar.",
+    description: "Portadora de la brasa y las hierbas sagradas que purifican el espacio escénico. Su presencia disipa las sombras y prepara el altar para la revelación primordial de Argentum.",
+    psychomagicFunction: "Purificación energética del espacio escénico y consagración del rito.",
+    ritualMask: "Sahumador de barro cocido con humo de copal y hierbas autóctonas, manto ceremonial.",
+    frequency: "639 Hz • Armonización, limpieza sutil y apertura de portales.",
   },
   {
     id: "edwin-el-venezolano",
@@ -133,7 +133,8 @@ export default function CharacterGrid() {
       ? SCRIPT_CHARACTERS
       : SCRIPT_CHARACTERS.filter((c) =>
           c.element.toLowerCase().includes(filter.toLowerCase()) ||
-          c.archetype.toLowerCase().includes(filter.toLowerCase())
+          c.archetype.toLowerCase().includes(filter.toLowerCase()) ||
+          c.name.toLowerCase().includes(filter.toLowerCase())
         );
 
   return (
@@ -154,13 +155,13 @@ export default function CharacterGrid() {
               Personajes de la Obra
             </h2>
             <p className="font-jakarta text-sm sm:text-base text-[#dfbfbc] mt-2 max-w-2xl leading-relaxed">
-              Las figuras que encarnan la farsa, el mito y el secreto de <em>Fiesta Pagana en Teatros</em>: desde el niño que digitó el 616 hasta José Mercado, Edwin el Venezolano y las cantoras del origen.
+              Las figuras que encarnan la farsa, el mito y el secreto de <em>Fiesta Pagana en Teatros</em>: desde el Niño Gabriel y el Colla hasta José Mercado, La Chola, La Tanguera, La Sahumadora y las cantoras del origen.
             </p>
           </div>
 
           {/* Filter badges */}
           <div className="flex flex-wrap gap-2 self-start md:self-auto">
-            {["todos", "secreto", "tierra", "libertad", "mercado"].map((cat) => (
+            {["todos", "secreto", "tierra", "zamba", "mercado"].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}

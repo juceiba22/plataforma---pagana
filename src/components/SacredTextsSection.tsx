@@ -48,14 +48,14 @@ const SCRIPT_SACRED_TEXTS: SacredManuscript[] = [
     number: "III",
     title: "Tratado de la Salamanca & La Sabiduría Criolla",
     subtitle: "Por qué desenterramos el carnaval y liberamos al demonio",
-    author: "El Gaucho / Coya Leguizamón (Escena 4)",
+    author: "La Chola / Danza de la Salamanca (Escena 4)",
     excerpt: "El hombre criollo hace de su casi ignorancia de las leyes del centro europeo una sabiduría única e irrepetible.",
     sacredPassage: [
       "En el norte argentino, y en todo el continente americano, tenemos una concepción diferente del demonio. La Salamanca justamente es liberada para que no ande suelta en tiempos donde no debe andar.",
       "El hombre criollo es más inocente y suelta a la Salamanca con pretensiones de divertimento. Antes de la Pascua liberamos el demonio por las dudas: desenterramos el carnaval, lo bailamos y después lo enterramos para volver a los deberes.",
       "¿Acaso el hombre criollo no se hace las mismas grandes preguntas universales de los filósofos? ¿Acaso cuando libera esa Salamanca todos los veranos no está buscando la verdadera libertad?",
     ],
-    ritualInstruction: "Entonar con poncho al hombro y bombo legüero al fondo, precediendo la farsa del show televisivo.",
+    ritualInstruction: "Entonar y bailar con pañuelo de zamba en mano y bombo legüero al fondo, precediendo la farsa del show.",
   },
   {
     id: "los-musicardi",
