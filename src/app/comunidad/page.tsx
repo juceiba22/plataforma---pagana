@@ -20,8 +20,8 @@ export default function CommunityPage() {
       {/* Main Streaming Forum Content Gated for Actors */}
       <main className="flex-grow pt-28 pb-16">
         <ActorGate
-          sectionTitle="Ágora & Foro Reservado de Actores"
-          sectionSubtitle="Este espacio de discusión y análisis escénico es de acceso exclusivo para el elenco, músicos y equipo artístico de Fiesta Pagana."
+          sectionTitle="Esta sección está restringida exclusivamente al staff de actores"
+          sectionSubtitle="El Ágora de Foros y debates escénicos es un espacio de intercambio reservado exclusivamente para el staff de actores, artistas y equipo técnico de Fiesta Pagana."
         >
           <StreamingForum />
         </ActorGate>

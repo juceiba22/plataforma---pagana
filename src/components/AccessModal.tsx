@@ -367,23 +367,22 @@ export default function AccessModal({ isOpen, onClose, defaultTab = "google" }: 
                   </div>
                 )}
 
-                <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-[#dfbfbc] font-semibold mb-1">
-                    Rol en la Obra / Departamento
-                  </label>
-                  <select
-                    value={staffRole}
-                    onChange={(e) => setStaffRole(e.target.value)}
-                    className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-lg px-3 py-2 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
-                  >
-                    <option value="Actor / Actriz / Performer">Actor / Actriz / Performer</option>
-                    <option value="Músico / Ensamble Sonoro">Músico / Ensamble Sonoro</option>
-                    <option value="Técnico / Iluminación / Sonido">Técnico / Iluminación / Sonido</option>
-                    <option value="Vestuario / Caracterización">Vestuario / Caracterización</option>
-                    <option value="Dramaturgia / Teatro Foro">Dramaturgia / Teatro Foro</option>
-                    <option value="Producción & Logística">Producción & Logística</option>
-                  </select>
-                </div>
+                  <div>
+                    <label className="block text-[11px] uppercase tracking-wider text-[#dfbfbc] font-semibold mb-1">
+                      Convocatoria / Tipo de Rol
+                    </label>
+                    <select
+                      value={staffRole}
+                      onChange={(e) => setStaffRole(e.target.value)}
+                      className="w-full bg-[#0b0b0e] border border-[#58413f] rounded-lg px-3 py-2 text-xs text-[#f7f4eb] focus:outline-none focus:border-[#fabc4d]"
+                    >
+                      <option value="Actor / Actriz / Performer">Actor / Actriz / Performer</option>
+                      <option value="Artista Escénico / Músico / Performer">Artista Escénico / Músico / Performer</option>
+                      <option value="Técnico / Iluminación / Sonido / Escenario">Técnico / Iluminación / Sonido / Escenario</option>
+                      <option value="Producción & Logística">Producción & Logística</option>
+                      <option value="Dramaturgia / Dirección">Dramaturgia / Dirección</option>
+                    </select>
+                  </div>
 
                 <div>
                   <label className="block text-[11px] uppercase tracking-wider text-[#dfbfbc] font-semibold mb-1">

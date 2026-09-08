@@ -50,20 +50,31 @@ export default function Navbar() {
                 <span className="px-1.5 py-0.2 text-[9px] rounded bg-[#9e2a2b] text-[#fabc4d] font-bold">ADMIN</span>
               ) : isStaff ? (
                 <span className="w-1.5 h-1.5 rounded-full bg-[#fabc4d] animate-pulse"></span>
-              ) : null}
+              ) : (
+                <span className="px-1.5 py-0.5 text-[9px] rounded bg-[#9e2a2b]/30 text-[#ffb3ae] font-semibold border border-[#9e2a2b]/60">ELENCO</span>
+              )}
             </Link>
             <Link
               href="/streaming"
               className="px-3.5 py-2 text-xs uppercase tracking-wider font-semibold text-[#dfbfbc] hover:text-[#f7f4eb] hover:bg-[#1f1f22] transition-colors rounded-lg flex items-center gap-1.5"
             >
               <span>Sala de Streaming</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ffb3ae]"></span>
+              {isStaff ? (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#ffb3ae]"></span>
+              ) : (
+                <span className="px-1.5 py-0.5 text-[9px] rounded bg-[#9e2a2b]/30 text-[#ffb3ae] font-semibold border border-[#9e2a2b]/60">ELENCO</span>
+              )}
             </Link>
             <Link
               href="/comunidad"
               className="px-3.5 py-2 text-xs uppercase tracking-wider font-semibold text-[#dfbfbc] hover:text-[#f7f4eb] hover:bg-[#1f1f22] transition-colors rounded-lg flex items-center gap-1.5"
             >
               <span>Ágora & Foros</span>
+              {isStaff ? (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#fabc4d]"></span>
+              ) : (
+                <span className="px-1.5 py-0.5 text-[9px] rounded bg-[#9e2a2b]/30 text-[#ffb3ae] font-semibold border border-[#9e2a2b]/60">ELENCO</span>
+              )}
             </Link>
             <a
               href="/#personajes-ritual"

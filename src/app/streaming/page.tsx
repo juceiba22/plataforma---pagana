@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 export default function StreamingPage() {
   return (
     <ActorGate
-      sectionTitle="Sala de Actores & Transmisiones"
-      sectionSubtitle="Este recinto contiene los ensayos en streaming en vivo, clases maestras y archivo de video reservado exclusivamente para los actores y equipo técnico de Fiesta Pagana."
+      sectionTitle="Esta sección está restringida exclusivamente al staff de actores"
+      sectionSubtitle="Este recinto contiene los ensayos en streaming en vivo, clases maestras y archivo de video reservado exclusivamente para los actores, artistas y equipo técnico de Fiesta Pagana."
     >
       <div className="flex w-full min-h-screen bg-[#0b0b0e] text-[#f7f4eb] bg-noise">
         {/* Lateral Navigation Sidebar */}
