@@ -67,8 +67,13 @@ export async function createMuxLiveStream(title: string = "Fiesta Pagana Live Br
     });
 
     if (!res.ok) {
-      const errData = await res.json();
-      return { stream: null, error: errData?.error?.message || "Error creating Mux live stream" };
+      const errData = await res.json().catch(() => null);
+      const muxMessage =
+        (Array.isArray(errData?.error?.messages) ? errData.error.messages.join(". ") : null) ||
+        errData?.error?.message ||
+        errData?.message ||
+        (errData ? JSON.stringify(errData) : `HTTP ${res.status}: ${res.statusText}`);
+      return { stream: null, error: `Mux API Error (${res.status}): ${muxMessage}` };
     }
 
     const json = await res.json();
