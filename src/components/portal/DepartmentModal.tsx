@@ -10,7 +10,7 @@ export interface DepartmentData {
   description: string;
   icon: React.ReactNode;
   accentColor: string;
-  files: { name: string; type: string; size: string }[];
+  files: { name: string; type: string; size: string; href?: string }[];
   keyGuidelines: string[];
   channelLink: string;
   galleryImages?: { caption: string; url: string }[];
@@ -140,22 +140,34 @@ export default function DepartmentModal({ department, onClose }: DepartmentModal
                     </span>
                   </div>
                 </div>
-                <button
-                  onClick={() => handleDownload(file.name)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1f1f22] hover:bg-[#2a2a2d] border border-[#58413f] text-xs text-[#dfbfbc] hover:text-[#f7f4eb] transition-all"
-                >
-                  {downloadedFile === file.name ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      <span className="text-emerald-400">Descargado</span>
-                    </>
-                  ) : (
-                    <>
-                      <Download className="w-3.5 h-3.5 text-[#fabc4d]" />
-                      <span>Descargar</span>
-                    </>
-                  )}
-                </button>
+                {file.href ? (
+                  <a
+                    href={file.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1f1f22] hover:bg-[#2a2a2d] border border-[#58413f] text-xs text-[#dfbfbc] hover:text-[#f7f4eb] transition-all"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-[#fabc4d]" />
+                    <span>Abrir</span>
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => handleDownload(file.name)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1f1f22] hover:bg-[#2a2a2d] border border-[#58413f] text-xs text-[#dfbfbc] hover:text-[#f7f4eb] transition-all"
+                  >
+                    {downloadedFile === file.name ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-emerald-400">Descargado</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-3.5 h-3.5 text-[#fabc4d]" />
+                        <span>Descargar</span>
+                      </>
+                    )}
+                  </button>
+                )}
               </div>
             ))}
           </div>

@@ -6,6 +6,7 @@ import PortalSidebar from "@/components/portal/PortalSidebar";
 import PortalHeader from "@/components/portal/PortalHeader";
 import CastCardsGrid from "@/components/portal/CastCardsGrid";
 import RehearsalCalendar from "@/components/portal/RehearsalCalendar";
+import DepartmentWorkspaces from "@/components/portal/DepartmentWorkspaces";
 import StaffApprovalPanel from "@/components/portal/StaffApprovalPanel";
 import ActorGate from "@/components/ActorGate";
 import AccessModal from "@/components/AccessModal";
@@ -38,6 +39,9 @@ export default function PortalView() {
 
             {/* 3. Cronograma de Ensayos (Calendario Interactivo para Llenar) */}
             <RehearsalCalendar />
+
+            {/* 4. Mesas de Trabajo por Departamento (Vestuario, Dramaturgia, Música, Técnica & Luces) */}
+            <DepartmentWorkspaces />
           </main>
         </div>
 

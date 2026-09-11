@@ -88,6 +88,8 @@ const DEPARTMENTS: DepartmentData[] = [
       { name: "Plano_Parrilla_Teatral.dwg", type: "CAD", size: "22.0 MB" },
       { name: "Patch_DMX_Show_2025.xml", type: "XML", size: "540 KB" },
       { name: "Rider_Tecnico_Galpon_Guevara.pdf", type: "PDF", size: "4.8 MB" },
+      { name: "planta-luces.html", type: "HTML", size: "31 KB", href: "/planta-luces.html" },
+      { name: "planta-luces.pdf", type: "PDF", size: "349 KB", href: "/planta-luces.pdf" },
     ],
     keyGuidelines: [
       "Canal DMX 07 asignado a estroboscópica ámbar para el clímax del rito.",

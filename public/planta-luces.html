@@ -1,0 +1,769 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planta de Luces — Fiesta Pagana</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#EAE7DC;
+  --paper-line:#D6D1C0;
+  --card-bg:#F5F3EA;
+  --ink:#1C2B3A;
+  --ink-soft:#4C5C6B;
+  --ink-faint:#1C2B3A66;
+  --rule:#C7C1AE;
+  --badge-bg:#1C2B3A;
+  --badge-fg:#F5F3EA;
+  --warm:#B96A26;
+  --cool:#3E7C93;
+  --rasante:#963119;
+  --tvwhite:#7C7669;
+  --nightblue:#2E4066;
+  --magenta:#A23763;
+  --amarillo:#B08823;
+  --verde:#396B48;
+  --metalcyan:#3E7C86;
+  --gold:#B4881F;
+  --celeste:#3E7FAA;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141F29;
+    --paper-line:#233244;
+    --card-bg:#1B2733;
+    --ink:#E7EFF2;
+    --ink-soft:#A9BEC9;
+    --ink-faint:#E7EFF266;
+    --rule:#33465A;
+    --badge-bg:#E7EFF2;
+    --badge-fg:#141F29;
+    --warm:#D68C43;
+    --cool:#7FC4DE;
+    --rasante:#D2603F;
+    --tvwhite:#B9C2C6;
+    --nightblue:#7C93C4;
+    --magenta:#D66B96;
+    --amarillo:#D6B24F;
+    --verde:#63A87D;
+    --metalcyan:#6FC1CC;
+    --gold:#E0B94F;
+    --celeste:#7FB6DE;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141F29;
+  --paper-line:#233244;
+  --card-bg:#1B2733;
+  --ink:#E7EFF2;
+  --ink-soft:#A9BEC9;
+  --ink-faint:#E7EFF266;
+  --rule:#33465A;
+  --badge-bg:#E7EFF2;
+  --badge-fg:#141F29;
+  --warm:#D68C43;
+  --cool:#7FC4DE;
+  --rasante:#D2603F;
+  --tvwhite:#B9C2C6;
+  --nightblue:#7C93C4;
+  --magenta:#D66B96;
+  --amarillo:#D6B24F;
+  --verde:#63A87D;
+  --metalcyan:#6FC1CC;
+  --gold:#E0B94F;
+  --celeste:#7FB6DE;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--paper);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);
+  font-family:'Archivo',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{max-width:1180px;margin:0 auto;padding:28px 20px 60px;}
+
+/* ---- title block ---- */
+.titleblock{
+  border:1.5px solid var(--ink);
+  background:var(--card-bg);
+  padding:20px 24px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:16px;
+  align-items:end;
+  margin-bottom:22px;
+}
+.titleblock h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+  font-size:clamp(28px,4vw,44px);
+  letter-spacing:0.02em;
+  margin:0 0 4px;
+  text-wrap:balance;
+}
+.titleblock .sub{
+  margin:0;
+  color:var(--ink-soft);
+  font-size:15px;
+  max-width:62ch;
+}
+.tb-meta{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;
+  color:var(--ink-soft);
+  text-align:right;
+  line-height:1.6;
+}
+.tb-meta strong{color:var(--ink);font-weight:500;}
+
+/* ---- legend plate ---- */
+.legend-plate{
+  border:1.5px solid var(--ink);
+  background:var(--card-bg);
+  margin-bottom:26px;
+  padding:18px 22px 22px;
+}
+.legend-plate h2, .plate-head h3{margin:0;}
+.section-label{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin:0 0 14px;
+}
+.legend-body{
+  display:grid;
+  grid-template-columns:minmax(280px,420px) 1fr;
+  gap:24px;
+  align-items:start;
+}
+.legend-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+.legend-list li{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;font-size:13px;line-height:1.45;}
+.legend-list b{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--ink);
+  border:1px solid var(--ink);
+  border-radius:2px;
+  text-align:center;
+  padding:1px 0;
+}
+.legend-list span{color:var(--ink-soft);}
+.legend-list span em{color:var(--ink);font-style:normal;}
+
+/* ---- scene grid ---- */
+.scene-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(430px,1fr));
+  gap:18px;
+}
+.plate{
+  border:1.5px solid var(--ink);
+  background:var(--card-bg);
+  padding:16px 18px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.plate-head{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  flex-wrap:wrap;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:8px;
+}
+.plate-num{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--ink-soft);
+  letter-spacing:0.04em;
+}
+.plate-head h3{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;
+  font-size:20px;
+  letter-spacing:0.01em;
+  flex:1;
+  text-wrap:balance;
+}
+.cue-badge{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  background:var(--badge-bg);
+  color:var(--badge-fg);
+  padding:2px 7px;
+  border-radius:2px;
+  white-space:nowrap;
+}
+.trigger{
+  margin:0;
+  font-size:12.5px;
+  font-style:italic;
+  color:var(--ink-soft);
+  line-height:1.4;
+}
+.frames{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.frame{
+  flex:1 1 220px;
+  min-width:220px;
+  border:1px solid var(--rule);
+  background:var(--paper);
+  padding:6px 6px 4px;
+}
+.frame svg{display:block;width:100%;height:auto;}
+.frame-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  color:var(--ink-soft);
+  text-align:center;
+  padding-top:3px;
+  letter-spacing:0.03em;
+}
+.notes{
+  margin:0;
+  font-size:12.5px;
+  line-height:1.5;
+  color:var(--ink);
+}
+.notes b{font-weight:600;}
+
+/* ---- character key / footer ---- */
+.keyplate{
+  border:1.5px solid var(--ink);
+  background:var(--card-bg);
+  margin-top:26px;
+  padding:18px 22px 20px;
+}
+.key-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:8px 16px;
+  font-size:12.5px;
+}
+.key-grid div{display:flex;gap:7px;align-items:baseline;}
+.key-grid b{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--ink-soft);
+  min-width:24px;
+}
+.footnote{
+  margin-top:20px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  color:var(--ink-faint);
+  text-align:center;
+  letter-spacing:0.02em;
+}
+
+svg text{font-family:'IBM Plex Mono',monospace;fill:var(--ink);}
+svg .stagefill{fill:var(--card-bg);}
+svg .frameline{stroke:var(--ink);fill:none;}
+svg .dim{stroke:var(--ink-faint);fill:none;}
+svg .caption{font-size:8px;letter-spacing:0.02em;}
+svg .caption-sm{font-size:7px;fill:var(--ink-soft);}
+
+@media (max-width:640px){
+  .titleblock{grid-template-columns:1fr;}
+  .tb-meta{text-align:left;}
+  .legend-body{grid-template-columns:1fr;}
+}
+
+@media print{
+  :root{
+    --paper:#FFFFFF;
+    --paper-line:#FFFFFF;
+    --card-bg:#FFFFFF;
+    --ink:#1C2B3A;
+    --ink-soft:#4C5C6B;
+    --ink-faint:#1C2B3A66;
+    --rule:#B9B2A0;
+    --badge-bg:#1C2B3A;
+    --badge-fg:#FFFFFF;
+  }
+  body{background:#FFFFFF;background-image:none;}
+  .sheet{max-width:none;padding:0;}
+  .titleblock,.legend-plate,.plate,.keyplate{
+    border:1.3pt solid #1C2B3A;
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+  .titleblock{margin-bottom:14pt;}
+  .legend-plate{margin-bottom:16pt;}
+  .scene-grid{display:block;}
+  .plate{margin-bottom:14pt;break-after:page;page-break-after:always;}
+  .plate:last-of-type{break-after:auto;page-break-after:auto;}
+  .frames{flex-wrap:nowrap;}
+  .keyplate{margin-top:14pt;break-before:page;page-break-before:always;}
+  a{color:inherit;text-decoration:none;}
+}
+
+@page{
+  size:A4 portrait;
+  margin:14mm 12mm;
+}
+</style>
+
+<div class="sheet">
+
+  <div class="titleblock">
+    <div>
+      <h1>Fiesta Pagana — Planta de Escenas</h1>
+      <p class="sub">Esquema base de blocking e iluminación, escena por escena. Boceto lineal de referencia para trabajar sobre él: posición de personajes y qué zona de luz los ilumina en cada momento.</p>
+    </div>
+    <div class="tb-meta">
+      <div><strong>Fuente:</strong> Guión General — Teatros</div>
+      <div><strong>Fuente:</strong> Rider Técnico de Iluminación (pts. 2–3)</div>
+      <div><strong>Lámina</strong> 01 / Vista en planta</div>
+    </div>
+  </div>
+
+  <div class="legend-plate">
+    <p class="section-label">Planta base — leyenda de zonas de luz</p>
+    <div class="legend-body">
+      <ul class="legend-list">
+        <li><b>Z1</b><span><em>Centro / mesa manzana.</em> Cenital cerrado blanco frío, dimmer propio para destacar la fruta sobre el mantel negro.</span></li>
+        <li><b>Z2</b><span><em>Proscenio lateral izquierdo.</em> Recorte / PC cálido puntual — Cantora 1 y Gabriel.</span></li>
+        <li><b>Z3</b><span><em>Proscenio lateral derecho.</em> Recorte / PC cálido puntual — Cantora 2 y la Madre.</span></li>
+        <li><b>Z4</b><span><em>Calle frontal general.</em> Baño cálido de frente para escenas corales y texto colectivo.</span></li>
+        <li><b>Z5</b><span><em>Calles rasantes bajas.</em> Laterales a piso en ámbar / rojo profundo — demonios y danza.</span></li>
+        <li><b>Z6</b><span><em>Contraluz / ciclorama.</em> Barra RGBW de fondo — color cambia según la escena.</span></li>
+      </ul>
+      <div class="frame" id="legend-frame" style="min-width:280px;"></div>
+    </div>
+  </div>
+
+  <div class="scene-grid" id="scene-grid"></div>
+
+  <div class="keyplate">
+    <p class="section-label">Referencia de personajes</p>
+    <div class="key-grid" id="key-grid"></div>
+  </div>
+
+  <p class="footnote">Basado en «Guión General Fiesta Pagana – Teatros» y «Rider Técnico de Iluminación, Puntos 2 y 3». Boceto de trabajo — no reemplaza la planta técnica definitiva.</p>
+</div>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const VB_W = 600, VB_H = 420;
+const STAGE = {x0:55,y0:34,x1:545,y1:330};
+const CX = 300;
+
+// fixed fixture anchors (never move — this is the reusable base plan)
+const FX = {
+  z1:{x:300,y:96,ang:90},
+  z2:{x:96,y:320,ang:-52},
+  z3:{x:504,y:320,ang:232},
+  z4:[{x:188,y:362,ang:-90},{x:300,y:362,ang:-90},{x:412,y:362,ang:-90}],
+  z5l:{x:64,y:182,ang:0},
+  z5r:{x:536,y:182,ang:180},
+  z6:[{x:140,y:16,ang:90},{x:220,y:16,ang:90},{x:300,y:16,ang:90},{x:380,y:16,ang:90},{x:460,y:16,ang:90}]
+};
+
+function tri(x,y,angDeg,size,active,color){
+  const a = angDeg*Math.PI/180;
+  const tip = [x+Math.cos(a)*size, y+Math.sin(a)*size];
+  const perp = a+Math.PI/2;
+  const back1=[x-Math.cos(a)*size*0.5+Math.cos(perp)*size*0.55, y-Math.sin(a)*size*0.5+Math.sin(perp)*size*0.55];
+  const back2=[x-Math.cos(a)*size*0.5-Math.cos(perp)*size*0.55, y-Math.sin(a)*size*0.5-Math.sin(perp)*size*0.55];
+  const pts=`${tip[0].toFixed(1)},${tip[1].toFixed(1)} ${back1[0].toFixed(1)},${back1[1].toFixed(1)} ${back2[0].toFixed(1)},${back2[1].toFixed(1)}`;
+  const fill = active ? color : "none";
+  const stroke = active ? color : "var(--ink-faint)";
+  const op = active ? 1 : 0.55;
+  return `<polygon points="${pts}" fill="${fill}" stroke="${stroke}" stroke-width="1" opacity="${op}"/>`;
+}
+
+function beam(fx,fy,tx,ty,color,w){
+  w = w||1.6;
+  return `<line x1="${fx}" y1="${fy}" x2="${tx}" y2="${ty}" stroke="${color}" stroke-width="${w}" stroke-dasharray="4 3" opacity="0.85"/>`;
+}
+
+function arrow(x1,y1,x2,y2,color,dash){
+  const ang = Math.atan2(y2-y1,x2-x1);
+  const s=7;
+  const a1 = ang+2.6, a2 = ang-2.6;
+  const p1=[x2+Math.cos(a1)*s, y2+Math.sin(a1)*s];
+  const p2=[x2+Math.cos(a2)*s, y2+Math.sin(a2)*s];
+  const dashAttr = dash ? `stroke-dasharray="${dash}"` : "";
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="1.4" ${dashAttr} opacity="0.9"/>`+
+         `<polygon points="${x2},${y2} ${p1[0].toFixed(1)},${p1[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}" fill="${color}"/>`;
+}
+
+function actorNode(x,y,label,caption,dim){
+  const strokeCol = dim ? "var(--ink-faint)" : "var(--ink)";
+  const textOp = dim ? 0.55 : 1;
+  let s = `<circle cx="${x}" cy="${y}" r="11" class="stagefill" stroke="${strokeCol}" stroke-width="1.4"/>`;
+  s += `<text x="${x}" y="${y+3.2}" text-anchor="middle" font-size="9" opacity="${textOp}">${label}</text>`;
+  if(caption){
+    s += `<text x="${x}" y="${y+23}" text-anchor="middle" class="caption-sm">${caption}</text>`;
+  }
+  return s;
+}
+
+function groupDots(points,caption){
+  let s = points.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="4.2" class="stagefill" stroke="var(--ink)" stroke-width="1.1"/>`).join("");
+  if(caption && points.length){
+    const cx = points.reduce((a,p)=>a+p.x,0)/points.length;
+    const maxY = Math.max(...points.map(p=>p.y));
+    s += `<text x="${cx}" y="${maxY+16}" text-anchor="middle" class="caption-sm">${caption}</text>`;
+  }
+  return s;
+}
+
+function tableIcon(x,y,dim){
+  const op = dim?0.5:1;
+  return `<rect x="${x-7}" y="${y-7}" width="14" height="14" class="stagefill" stroke="var(--ink)" stroke-width="1.2" opacity="${op}"/>`+
+         `<text x="${x}" y="${y+22}" text-anchor="middle" class="caption-sm">manzana</text>`;
+}
+
+function stageFrame(){
+  let s = "";
+  // outer stage
+  s += `<rect x="${STAGE.x0}" y="${STAGE.y0}" width="${STAGE.x1-STAGE.x0}" height="${STAGE.y1-STAGE.y0}" class="frameline" stroke-width="1.4"/>`;
+  // corner ticks
+  [[STAGE.x0,STAGE.y0],[STAGE.x1,STAGE.y0],[STAGE.x0,STAGE.y1],[STAGE.x1,STAGE.y1]].forEach(([cx,cy])=>{
+    s += `<line x1="${cx-5}" y1="${cy}" x2="${cx+5}" y2="${cy}" class="dim" stroke-width="1"/>`;
+    s += `<line x1="${cx}" y1="${cy-5}" x2="${cx}" y2="${cy+5}" class="dim" stroke-width="1"/>`;
+  });
+  // centerline
+  s += `<line x1="${CX}" y1="${STAGE.y0}" x2="${CX}" y2="${STAGE.y1}" class="dim" stroke-width="1" stroke-dasharray="2 4"/>`;
+  // audience arc
+  s += `<path d="M ${STAGE.x0-15} ${STAGE.y1+8} Q ${CX} ${STAGE.y1+52} ${STAGE.x1+15} ${STAGE.y1+8}" class="dim" stroke-width="1"/>`;
+  for(let i=0;i<9;i++){
+    const t=i/8;
+    const qx = (1-t)*(1-t)*(STAGE.x0-15)+2*(1-t)*t*CX+t*t*(STAGE.x1+15);
+    const qy = (1-t)*(1-t)*(STAGE.y1+8)+2*(1-t)*t*(STAGE.y1+52)+t*t*(STAGE.y1+8);
+    s += `<circle cx="${qx.toFixed(1)}" cy="${qy.toFixed(1)}" r="1.3" fill="var(--ink-faint)"/>`;
+  }
+  s += `<text x="${CX}" y="${STAGE.y1+46}" text-anchor="middle" class="caption-sm" letter-spacing="1">PÚBLICO</text>`;
+  return s;
+}
+
+function fixturesLayer(active){
+  active = active || {};
+  let s = "";
+  s += tri(FX.z1.x,FX.z1.y,FX.z1.ang,9, !!active.z1, active.z1);
+  s += tri(FX.z2.x,FX.z2.y,FX.z2.ang,9, !!active.z2, active.z2);
+  s += tri(FX.z3.x,FX.z3.y,FX.z3.ang,9, !!active.z3, active.z3);
+  FX.z4.forEach((f,i)=> s += tri(f.x,f.y,f.ang,7, !!(active.z4&&active.z4[i]!==undefined?active.z4[i]:active.z4), (active.z4&&active.z4[i])||active.z4) );
+  s += tri(FX.z5l.x,FX.z5l.y,FX.z5l.ang,8, !!active.z5, active.z5);
+  s += tri(FX.z5r.x,FX.z5r.y,FX.z5r.ang,8, !!active.z5, active.z5);
+  FX.z6.forEach((f,i)=>{
+    const col = Array.isArray(active.z6) ? active.z6[i] : active.z6;
+    s += tri(f.x,f.y,f.ang,7, !!col, col);
+  });
+  return s;
+}
+
+function legendFrame(){
+  let s = `<svg viewBox="0 0 ${VB_W} ${VB_H}" role="img" aria-label="Planta base del escenario con las seis zonas de foco marcadas en sus posiciones fijas">`;
+  s += stageFrame();
+  s += fixturesLayer({z1:"var(--cool)",z2:"var(--warm)",z3:"var(--warm)",z4:"var(--tvwhite)",z5:"var(--rasante)",z6:["var(--magenta)","var(--amarillo)","var(--verde)","var(--nightblue)","var(--celeste)"]});
+  const labels = [
+    [FX.z1.x,FX.z1.y-14,"Z1"],[FX.z2.x-2,FX.z2.y+18,"Z2"],[FX.z3.x+2,FX.z3.y+18,"Z3"],
+    [FX.z4[1].x,FX.z4[1].y+14,"Z4"],[FX.z5l.x,FX.z5l.y-12,"Z5"],[FX.z6[2].x,FX.z6[2].y-6,"Z6"]
+  ];
+  labels.forEach(([x,y,t])=> s += `<text x="${x}" y="${y}" text-anchor="middle" class="caption">${t}</text>`);
+  s += `</svg>`;
+  return s;
+}
+
+function rowPoints(n,y,xStart,xEnd){
+  const pts=[];
+  for(let i=0;i<n;i++){
+    pts.push({x: xStart + (xEnd-xStart)*(n===1?0.5:i/(n-1)), y});
+  }
+  return pts;
+}
+function arcPoints(n,cx,cy,r,a0,a1){
+  const pts=[];
+  for(let i=0;i<n;i++){
+    const t = n===1?0.5:i/(n-1);
+    const a = (a0 + (a1-a0)*t) * Math.PI/180;
+    pts.push({x: cx+Math.cos(a)*r, y: cy+Math.sin(a)*r*0.55});
+  }
+  return pts;
+}
+
+function buildFrameSVG(build){
+  let s = `<svg viewBox="0 0 ${VB_W} ${VB_H}" role="img" aria-label="${build.aria}">`;
+  s += stageFrame();
+  s += fixturesLayer(build.active);
+  if(build.pre) s += build.pre;
+  (build.beams||[]).forEach(b=> s += beam(b.fx,b.fy,b.tx,b.ty,b.color,b.w));
+  (build.arrows||[]).forEach(a=> s += arrow(a.x1,a.y1,a.x2,a.y2,a.color,a.dash));
+  if(build.groups) build.groups.forEach(g=> s += groupDots(g.points,g.caption));
+  if(build.actors) build.actors.forEach(a=> s += actorNode(a.x,a.y,a.label,a.caption,a.dim));
+  if(build.table) s += tableIcon(build.table.x,build.table.y,build.table.dim);
+  s += `</svg>`;
+  return s;
+}
+
+// ---------- reusable position sets ----------
+const P = {
+  extIzq:{x:112,y:292}, extDer:{x:488,y:292},
+  centro:{x:300,y:188}, centroUp:{x:300,y:120},
+  frontIzq:{x:172,y:250}, frontDer:{x:428,y:250}, frontC:{x:300,y:250},
+};
+
+// ---------- scene data ----------
+const SCENES = [
+
+{ n:"ESCENA INICIAL", title:"Las cantoras y la manzana", cue:"Q1 – Q2",
+  trigger:"“Argentina, ¿qué pasa con tu voz?” → “El tiempo pasa… y lo que queda…”",
+  frames:[
+    { label:"Q1 · Entrada — cantoras", build:{
+        aria:"Cantora 1 y Cantora 2 en los extremos del proscenio bajo luz cálida, manzana en penumbra al centro",
+        active:{z2:"var(--warm)",z3:"var(--warm)"},
+        beams:[{fx:FX.z2.x,fy:FX.z2.y,tx:P.extIzq.x,ty:P.extIzq.y,color:"var(--warm)"},
+               {fx:FX.z3.x,fy:FX.z3.y,tx:P.extDer.x,ty:P.extDer.y,color:"var(--warm)"}],
+        actors:[{x:P.extIzq.x,y:P.extIzq.y,label:"C1",caption:"cantora 1"},
+                {x:P.extIzq.x-30,y:P.extIzq.y-4,label:"MJ",caption:""},
+                {x:P.extIzq.x+30,y:P.extIzq.y-4,label:"DN",caption:""},
+                {x:P.extDer.x,y:P.extDer.y,label:"C2",caption:"cantora 2"},
+                {x:P.extDer.x-30,y:P.extDer.y-4,label:"MJ",caption:""},
+                {x:P.extDer.x+30,y:P.extDer.y-4,label:"DN",caption:""},
+                {x:P.centroUp.x,y:P.centroUp.y,label:"BM",caption:"bombista",dim:true}],
+        table:{x:P.centro.x,y:P.centro.y,dim:true}
+    }},
+    { label:"Q2 · Revelación — manzana", build:{
+        aria:"Las cantoras se apagan y el cenital sube sobre la manzana mientras el elenco se retira",
+        active:{z1:"var(--cool)"},
+        beams:[{fx:FX.z1.x,fy:FX.z1.y,tx:P.centro.x,ty:P.centro.y,color:"var(--cool)",w:2.2}],
+        arrows:[{x1:P.extIzq.x,y1:P.extIzq.y,x2:P.extIzq.x-40,y2:STAGE.y0-6,color:"var(--ink-soft)",dash:"2 3"},
+                {x1:P.extDer.x,y1:P.extDer.y,x2:P.extDer.x+40,y2:STAGE.y0-6,color:"var(--ink-soft)",dash:"2 3"}],
+        table:{x:P.centro.x,y:P.centro.y}
+    }}
+  ],
+  notes:"Zonas 2/3 cálidas sobre las cantoras en los extremos; al cantar “el tiempo pasa” hacen <b>crossfade</b> a Zona 1 (cenital frío) sobre la manzana mientras todo el elenco se retira lentamente."
+},
+
+{ n:"ESCENA 2", title:"Demonios y el Colla", cue:"Q3",
+  trigger:"Colla: “A la búsqueda de la verdad. Asistimos hace algún tiempo todos.”",
+  frames:[
+    { label:"Q3 · Acecho + Colla al centro", build:{
+        aria:"Cuatro demonios en cuclillas avanzan hacia la manzana desde el fondo; Colla se desplaza desde el extremo hacia el centro",
+        active:{z1:"var(--cool)",z5:"var(--rasante)",z4:[0,"var(--warm)",0]},
+        beams:[{fx:FX.z1.x,fy:FX.z1.y,tx:P.centro.x,ty:P.centro.y,color:"var(--cool)",w:2.2},
+               {fx:FX.z5l.x,fy:FX.z5l.y,tx:260,ty:150,color:"var(--rasante)"},
+               {fx:FX.z5r.x,fy:FX.z5r.y,tx:340,ty:150,color:"var(--rasante)"}],
+        arrows:[{x1:112,y1:292,x2:270,y2:196,color:"var(--ink-soft)",dash:"2 3"}],
+        groups:[{points:[{x:262,y:140},{x:338,y:140},{x:262,y:168},{x:338,y:168}],caption:"4 demonios (cuclillas)"}],
+        actors:[{x:488,y:292,label:"BM",caption:"bombista"}],
+        table:{x:P.centro.x,y:P.centro.y}
+    }}
+  ],
+  notes:"Donde estaban las cantoras ahora están el Colla y el Bombista. Zona 1 se mantiene al 100% sobre la manzana; calles rasantes (Z5) tenues en rojo/ámbar marcan el arrastre de los demonios. El Colla termina mordiendo la manzana en el centro."
+},
+
+{ n:"ESCENA 3", title:"Gabriel y la Madre", cue:"Q4",
+  trigger:"Gabriel: “Yo soy el niño que despertó al demonio…” — Madre: “…te vas a la pieza.”",
+  frames:[
+    { label:"Q4 · Dos recortes divididos", build:{
+        aria:"Gabriel a la izquierda y la Madre a la derecha, cada uno bajo su propio recorte frontal cálido, resto del escenario a oscuras, hablan al público sin mirarse",
+        active:{z2:"var(--warm)",z3:"var(--warm)"},
+        beams:[{fx:FX.z2.x,fy:FX.z2.y,tx:P.frontIzq.x,ty:P.frontIzq.y,color:"var(--warm)",w:2},
+               {fx:FX.z3.x,fy:FX.z3.y,tx:P.frontDer.x,ty:P.frontDer.y,color:"var(--warm)",w:2}],
+        actors:[{x:P.frontIzq.x,y:P.frontIzq.y,label:"GA",caption:"gabriel"},
+                {x:P.frontDer.x,y:P.frontDer.y,label:"MA",caption:"madre"}]
+    }}
+  ],
+  notes:"Blackout de calles y mesa; entran dos recortes cálidos separados (Z2 izq / Z3 der), cada personaje habla al público, no entre sí. Resto del escenario oscuro."
+},
+
+{ n:"ESCENA 4", title:"El gaucho y la Salamanca", cue:"Q5",
+  trigger:"Gaucho: “…¿acaso el hombre criollo no está buscando la libertad?”",
+  frames:[
+    { label:"Q5 · Fogón criollo", build:{
+        aria:"El gaucho solo al centro del escenario, bajo contraluz cálido y un frente suave",
+        active:{z6:"var(--warm)",z4:[0,"var(--warm)",0]},
+        beams:[{fx:FX.z6[2].x,fy:FX.z6[2].y,tx:P.frontC.x,ty:P.frontC.y-30,color:"var(--warm)"},
+               {fx:FX.z4[1].x,fy:FX.z4[1].y,tx:P.frontC.x,ty:P.frontC.y,color:"var(--warm)",w:2}],
+        actors:[{x:P.frontC.x,y:P.frontC.y,label:"GU",caption:"gaucho"}]
+    }}
+  ],
+  notes:"Monólogo solo en escena. Contraluz ámbar/dorado (Z6) + frente suave centrado (Z4): clima íntimo de fogón, todo lo demás en penumbra."
+},
+
+{ n:"ESCENA 5", title:"¡Viva la libertad, carajo!", cue:"Q6 – Q7",
+  trigger:"Periodista: “¡Viva la libertad, carajo!” → Juan Salteño canta “Zamba para Olvidar”",
+  frames:[
+    { label:"Q6 · Acto mediático", build:{
+        aria:"El periodista al frente y centro liderando al pueblo, con Daiana, José Mercado y Edwin entrando a su alrededor, bajo un frente pleno blanco y brillante",
+        active:{z4:"var(--tvwhite)"},
+        beams:[{fx:FX.z4[0].x,fy:FX.z4[0].y,tx:220,ty:280,color:"var(--tvwhite)",w:2},
+               {fx:FX.z4[1].x,fy:FX.z4[1].y,tx:P.frontC.x,ty:270,color:"var(--tvwhite)",w:2.2},
+               {fx:FX.z4[2].x,fy:FX.z4[2].y,tx:380,ty:280,color:"var(--tvwhite)",w:2}],
+        groups:[{points:arcPoints(6,300,205,150,200,340),caption:"pueblo"}],
+        actors:[{x:P.frontC.x,y:280,label:"PE",caption:"periodista"},
+                {x:220,y:295,label:"DA",caption:"daiana"},
+                {x:380,y:295,label:"JM",caption:"j. mercado"},
+                {x:265,y:300,label:"ED",caption:"edwin"}]
+    }},
+    { label:"Q7 · Zamba para olvidar", build:{
+        aria:"Juan Salteño con guitarra en un especial de luz, bailarinas con recorte suave, el resto del elenco en semicírculo mirando, contraluz azul noche y ámbar",
+        active:{z1:"var(--nightblue)",z6:["var(--nightblue)","var(--warm)","var(--nightblue)","var(--warm)","var(--nightblue)"]},
+        beams:[{fx:FX.z1.x,fy:FX.z1.y,tx:P.frontC.x,ty:220,color:"var(--warm)",w:2.2}],
+        groups:[{points:arcPoints(7,300,195,165,195,345),caption:"elenco (semicírculo)"}],
+        actors:[{x:P.frontC.x,y:220,label:"JS",caption:"juan salteño"},
+                {x:255,y:250,label:"BA",caption:"bailarinas"},
+                {x:345,y:250,label:"BA",caption:""}]
+    }}
+  ],
+  notes:"Q6: pleno frontal blanco homogéneo, estilo estudio de TV. Q7: baja general al 30%, contras azul noche + ámbar (Z6), especial puntual sobre Juan y recorte suave sobre las bailarinas."
+},
+
+{ n:"ESCENA 6", title:"El olvido", cue:"Q8",
+  trigger:"Gabriel: “…¿Qué me olvidé? Ahí no. Bueno.”",
+  frames:[
+    { label:"Q8 · Dispersión", build:{
+        aria:"El elenco se dispersa hacia las salidas mientras Gabriel queda solo al centro bajo un cenital difuso",
+        active:{z1:"var(--cool)"},
+        beams:[{fx:FX.z1.x,fy:FX.z1.y,tx:P.centro.x,ty:P.centro.y,color:"var(--cool)"}],
+        arrows:[
+          {x1:260,y1:220,x2:70,y2:120,color:"var(--ink-soft)",dash:"2 3"},
+          {x1:340,y1:220,x2:530,y2:120,color:"var(--ink-soft)",dash:"2 3"},
+          {x1:240,y1:280,x2:70,y2:320,color:"var(--ink-soft)",dash:"2 3"},
+          {x1:360,y1:280,x2:530,y2:320,color:"var(--ink-soft)",dash:"2 3"}
+        ],
+        actors:[{x:P.centro.x,y:P.centro.y,label:"GA",caption:"gabriel · solo"}]
+    }}
+  ],
+  notes:"Disparada por “Uy, me olvidé”, la dispersión general vacía el escenario en penumbra fría y desorientadora; sólo queda un cenital difuso sobre Gabriel."
+},
+
+{ n:"ESCENA 7", title:"La cantora y la comparsa", cue:"Q9",
+  trigger:"“Somos los indios del norte, no nos vamos a olvidar…”",
+  frames:[
+    { label:"Q9 · Comparsa festiva", build:{
+        aria:"La comparsa entra en procesión sobre el frente del escenario bajo colores festivos de contraluz y un frente claro",
+        active:{z4:"var(--warm)",z6:["var(--magenta)","var(--amarillo)","var(--verde)","var(--rasante)","var(--magenta)"]},
+        beams:[{fx:FX.z4[1].x,fy:FX.z4[1].y,tx:P.frontC.x,ty:290,color:"var(--warm)",w:2}],
+        actors:[{x:300,y:150,label:"CA",caption:"cantora (coplas)"}],
+        groups:[{points:rowPoints(8,295,110,490),caption:"comparsa"}]
+    }}
+  ],
+  notes:"Colores vivos y festivos de contra (magenta, amarillo, verde, rojo) y frente claro para máscaras y comparsa cruzando el escenario."
+},
+
+{ n:"ESCENA 8", title:"Bloque musical — teatro popular", cue:"Q10 – Q11",
+  trigger:"“Nuestra génesis…” → Madre: “¡Es que no la soporto más, Sergio!”",
+  frames:[
+    { label:"Q10 · Peña / génesis", build:{
+        aria:"La banda de redoblante, bajo y bandoneón toca al fondo mientras el elenco completo ocupa el escenario en un ambiente cálido y rítmico",
+        active:{z6:"var(--warm)",z5:"var(--warm)",z4:"var(--warm)"},
+        beams:[{fx:FX.z5l.x,fy:FX.z5l.y,tx:130,ty:200,color:"var(--warm)"},
+               {fx:FX.z5r.x,fy:FX.z5r.y,tx:470,ty:200,color:"var(--warm)"}],
+        groups:[{points:[{x:150,y:110},{x:180,y:120},{x:120,y:120}],caption:"banda"},
+                {points:rowPoints(6,270,140,460),caption:"elenco"}]
+    }},
+    { label:"Q11 · Monólogo de la Madre", build:{
+        aria:"La madre sola bajo un recorte frontal blanco y cerrado, el resto del elenco queda apenas visible en la oscuridad",
+        active:{z4:[0,"var(--tvwhite)",0]},
+        beams:[{fx:FX.z4[1].x,fy:FX.z4[1].y,tx:P.frontC.x,ty:P.frontC.y,color:"var(--tvwhite)",w:2.4}],
+        actors:[{x:P.frontC.x,y:P.frontC.y,label:"MA",caption:"madre"},
+                {x:160,y:300,label:"",caption:"",dim:true},
+                {x:440,y:300,label:"",caption:"",dim:true}]
+    }}
+  ],
+  notes:"Q10: contras cálidos rítmicos, laterales activos y frente medio parejo para toda la compañía. Q11: recorte blanco/neutro incisivo y cerrado sólo sobre la Madre; fondo apagado en tono frío dramático."
+},
+
+{ n:"ESCENA 9", title:"El secreto — Argentum", cue:"Q12 – Q13",
+  trigger:"Gabriel: “Yo tengo el secreto…” → Rezo en loop: “Hazte de plata y espeja el oro…”",
+  frames:[
+    { label:"Q12 · Foco algorítmico", build:{
+        aria:"Gabriel solo al centro bajo un foco severo de contraluz frío, plateado y cian",
+        active:{z6:["var(--metalcyan)","var(--metalcyan)","var(--metalcyan)","var(--metalcyan)","var(--metalcyan)"]},
+        beams:[{fx:FX.z6[2].x,fy:FX.z6[2].y,tx:P.centro.x,ty:P.centro.y,color:"var(--metalcyan)",w:2.4}],
+        actors:[{x:P.centro.x,y:P.centro.y,label:"GA",caption:"gabriel"}]
+    }},
+    { label:"Q13 · Rezo colectivo", build:{
+        aria:"Todo el elenco reunido reza en loop mientras el plateado se funde con un cenital dorado en crescendo",
+        active:{z1:"var(--gold)",z6:["var(--metalcyan)","var(--gold)","var(--metalcyan)","var(--gold)","var(--metalcyan)"]},
+        beams:[{fx:FX.z1.x,fy:FX.z1.y,tx:P.centro.x,ty:P.centro.y,color:"var(--gold)",w:2.2}],
+        groups:[{points:arcPoints(9,300,190,160,195,345),caption:"elenco — en loop"}]
+    }}
+  ],
+  notes:"Q12: apagado de cálidos, contraluz frío metálico/cian, foco severo sobre Gabriel. Q13: el plateado se funde progresivamente con un baño cenital dorado in crescendo hasta el Himno."
+},
+
+{ n:"ESCENA 10", title:"Himno Nacional", cue:"Q14",
+  trigger:"Primer acorde del Himno Nacional — hasta el último acorde.",
+  frames:[
+    { label:"Q14 · Elenco completo", build:{
+        aria:"Todo el elenco alineado sobre el frente del escenario bajo contraluz celeste puro y frente cálido solemne",
+        active:{z6:"var(--celeste)",z5:"var(--tvwhite)",z4:"var(--warm)"},
+        beams:[{fx:FX.z4[0].x,fy:FX.z4[0].y,tx:190,ty:290,color:"var(--warm)"},
+               {fx:FX.z4[1].x,fy:FX.z4[1].y,tx:300,ty:290,color:"var(--warm)",w:2},
+               {fx:FX.z4[2].x,fy:FX.z4[2].y,tx:410,ty:290,color:"var(--warm)"},
+               {fx:FX.z5l.x,fy:FX.z5l.y,tx:130,ty:220,color:"var(--tvwhite)"},
+               {fx:FX.z5r.x,fy:FX.z5r.y,tx:470,ty:220,color:"var(--tvwhite)"}],
+        groups:[{points:rowPoints(10,290,120,480),caption:"elenco completo"}]
+    }}
+  ],
+  notes:"Contraluz celeste puro con calles blancas limpias; frente cálido solemne al 100% en todo el elenco, alineado hacia el público."
+},
+
+{ n:"SALUDO FINAL", title:"Apertura y sala", cue:"Q15",
+  trigger:"Paso al frente para saludar — fin de función.",
+  frames:[
+    { label:"Q15 · General 100%", build:{
+        aria:"El elenco completo saluda al frente con todas las zonas encendidas al máximo y la luz de sala subiendo",
+        active:{z1:"var(--tvwhite)",z2:"var(--tvwhite)",z3:"var(--tvwhite)",z4:"var(--tvwhite)",z5:"var(--tvwhite)",z6:"var(--tvwhite)"},
+        groups:[{points:rowPoints(10,285,120,480),caption:"elenco completo"}],
+        pre:`<text x="${STAGE.x1+2}" y="${STAGE.y1+40}" text-anchor="end" class="caption-sm">luz de sala ↑</text>`
+    }}
+  ],
+  notes:"General de escena abierto al 100% en todas las zonas y encendido gradual de la luz de sala hasta el fin de función."
+}
+
+];
+
+const CHARACTERS = [
+  ["C1","Cantora 1"],["C2","Cantora 2"],["MJ","Monje"],["DN","Diablo norteño"],
+  ["BM","Bombista / bombista"],["CO","Colla"],["D","Demonio (x4)"],
+  ["GA","Gabriel"],["MA","Madre"],["GU","Gaucho"],["PE","Periodista"],
+  ["DA","Daiana"],["JM","José Mercado"],["ED","Edwin"],["JS","Juan Salteño"],
+  ["BA","Bailarina"],["CA","Cantora (coplas)"],["—","Pueblo / comparsa / elenco (grupo)"]
+];
+
+// ---------- render ----------
+document.getElementById("legend-frame").innerHTML = legendFrame();
+
+const grid = document.getElementById("scene-grid");
+SCENES.forEach(scene=>{
+  const art = document.createElement("article");
+  art.className = "plate";
+  const framesHTML = scene.frames.map(f=>`
+    <div class="frame">
+      ${buildFrameSVG(f.build)}
+      <div class="frame-label">${f.label}</div>
+    </div>`).join("");
+  art.innerHTML = `
+    <div class="plate-head">
+      <span class="plate-num">${scene.n}</span>
+      <h3>${scene.title}</h3>
+      <span class="cue-badge">${scene.cue}</span>
+    </div>
+    <p class="trigger">${scene.trigger}</p>
+    <div class="frames">${framesHTML}</div>
+    <p class="notes">${scene.notes}</p>
+  `;
+  grid.appendChild(art);
+});
+
+const keyGrid = document.getElementById("key-grid");
+keyGrid.innerHTML = CHARACTERS.map(([code,name])=>`<div><b>${code}</b>${name}</div>`).join("");
+</script>
