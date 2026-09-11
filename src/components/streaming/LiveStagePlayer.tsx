@@ -30,9 +30,11 @@ import {
   RefreshCw,
   Signal,
   AlertCircle,
+  Layers,
 } from "lucide-react";
 import StageSettingsModal from "./StageSettingsModal";
 import UploadBroadcastModal from "./UploadBroadcastModal";
+import NewBroadcastModal from "./NewBroadcastModal";
 import { useAuth } from "@/context/AuthContext";
 
 export default function LiveStagePlayer() {
@@ -49,6 +51,7 @@ export default function LiveStagePlayer() {
   const [isShared, setIsShared] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isNewBroadcastOpen, setIsNewBroadcastOpen] = useState(false);
   const [viewerCount, setViewerCount] = useState(64);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -57,12 +60,16 @@ export default function LiveStagePlayer() {
   const [isLoadingStream, setIsLoadingStream] = useState(false);
   const [streamError, setStreamError] = useState<string | null>(null);
 
+  // Broadcast Title & Subtitle state
+  const [currentTitle, setCurrentTitle] = useState("Fiesta Pagana en Teatros");
+  const [currentSubtitle, setCurrentSubtitle] = useState("Transmisión en directo y ensayo escénico con elenco principal");
+  const [currentCategory, setCurrentCategory] = useState("ensayos");
+
   // Mux & Google Meet Streaming State
   const [broadcastMode, setBroadcastMode] = useState<"mux" | "meet">("mux");
   const [muxStreamKey, setMuxStreamKey] = useState("");
   const [muxPlaybackId, setMuxPlaybackId] = useState("");
   const [meetUrl, setMeetUrl] = useState("https://meet.google.com/fp-teatro-ritual");
-  const [isCreatingMuxStream, setIsCreatingMuxStream] = useState(false);
   const [streamCreatedAlert, setStreamCreatedAlert] = useState(false);
   const [apiErrorMessage, setApiErrorMessage] = useState<string | null>(null);
 
@@ -77,6 +84,9 @@ export default function LiveStagePlayer() {
           if (parsed.muxPlaybackId) setMuxPlaybackId(parsed.muxPlaybackId);
           if (parsed.meetUrl) setMeetUrl(parsed.meetUrl);
           if (parsed.broadcastMode) setBroadcastMode(parsed.broadcastMode);
+          if (parsed.currentTitle) setCurrentTitle(parsed.currentTitle);
+          if (parsed.currentSubtitle) setCurrentSubtitle(parsed.currentSubtitle);
+          if (parsed.currentCategory) setCurrentCategory(parsed.currentCategory);
         }
       } catch (e) {
         console.warn("Could not read stream config from localStorage", e);
@@ -88,6 +98,9 @@ export default function LiveStagePlayer() {
           if (e.detail.muxPlaybackId !== undefined) setMuxPlaybackId(e.detail.muxPlaybackId);
           if (e.detail.meetUrl !== undefined) setMeetUrl(e.detail.meetUrl);
           if (e.detail.broadcastMode !== undefined) setBroadcastMode(e.detail.broadcastMode);
+          if (e.detail.currentTitle !== undefined) setCurrentTitle(e.detail.currentTitle);
+          if (e.detail.currentSubtitle !== undefined) setCurrentSubtitle(e.detail.currentSubtitle);
+          if (e.detail.currentCategory !== undefined) setCurrentCategory(e.detail.currentCategory);
         }
       };
 
@@ -139,7 +152,6 @@ export default function LiveStagePlayer() {
         setIsLoadingStream(false);
         setStreamError(null);
         video.play().catch(() => {
-          // Autoplay restriction fallback
           video.muted = true;
           setIsMuted(true);
           video.play().catch(() => {});
@@ -243,45 +255,6 @@ export default function LiveStagePlayer() {
     }
   };
 
-  const handleCreateNewMuxStream = async () => {
-    if (!isAdmin) return;
-    setIsCreatingMuxStream(true);
-    setApiErrorMessage(null);
-    try {
-      const res = await fetch("/api/mux/live-stream", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: "Fiesta Pagana - Transmisión en Directo" }),
-      });
-      const data = await res.json();
-      if (data?.stream) {
-        const newKey = data.stream.stream_key || "";
-        const newPlayback = data.stream.playback_ids?.[0]?.id || "";
-        setMuxStreamKey(newKey);
-        setMuxPlaybackId(newPlayback);
-        if (typeof window !== "undefined") {
-          localStorage.setItem(
-            "pagana_live_stage_config",
-            JSON.stringify({
-              muxStreamKey: newKey,
-              muxPlaybackId: newPlayback,
-              meetUrl,
-              broadcastMode: "mux",
-            })
-          );
-        }
-        setStreamCreatedAlert(true);
-        setTimeout(() => setStreamCreatedAlert(false), 4000);
-      } else if (data?.error) {
-        setApiErrorMessage(data.error);
-      }
-    } catch (err: any) {
-      setApiErrorMessage(err.message || "Error al conectar con la API de Mux");
-    } finally {
-      setIsCreatingMuxStream(false);
-    }
-  };
-
   const handleSaveClass = () => {
     setIsSaved(!isSaved);
   };
@@ -347,21 +320,16 @@ export default function LiveStagePlayer() {
                   className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#9e2a2b] hover:bg-[#c1383a] text-[#f7f4eb] font-jakarta text-xs font-bold transition-all shadow-[0_0_15px_rgba(158,42,43,0.4)] border-t border-white/20"
                 >
                   <HardDrive className="w-3.5 h-3.5 text-[#fabc4d]" />
-                  <span>Alojar Video en Supabase</span>
+                  <span>Alojar Video Supabase</span>
                 </button>
 
-                {/* Create new live stream on Mux (Admin only) */}
+                {/* Open New Titled Broadcast Modal (Admin only) */}
                 <button
-                  onClick={handleCreateNewMuxStream}
-                  disabled={isCreatingMuxStream}
+                  onClick={() => setIsNewBroadcastOpen(true)}
                   className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#fabc4d] text-[#281900] hover:brightness-110 font-jakarta text-xs font-bold transition-all shadow-[0_0_15px_rgba(250,188,77,0.3)]"
                 >
-                  {isCreatingMuxStream ? (
-                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  ) : (
-                    <PlusCircle className="w-3.5 h-3.5" />
-                  )}
-                  <span>{isCreatingMuxStream ? "Generando..." : "Nueva Emisión MUX"}</span>
+                  <PlusCircle className="w-3.5 h-3.5" />
+                  <span>Nueva Emisión MUX</span>
                 </button>
 
                 <button
@@ -478,15 +446,15 @@ export default function LiveStagePlayer() {
                     Cámara Negra • Mux Live Stream
                   </span>
 
-                  <h2 className="font-cinzel text-xl sm:text-2xl lg:text-3xl text-[#f7f4eb] font-bold drop-shadow-lg">
-                    {muxPlaybackId ? "En espera de señal desde OBS" : "Transmisión Pendiente de Inicio"}
+                  <h2 className="font-cinzel text-xl sm:text-2xl lg:text-3xl text-[#f7f4eb] font-bold drop-shadow-lg max-w-xl">
+                    {currentTitle || (muxPlaybackId ? "En espera de señal desde OBS" : "Transmisión Pendiente de Inicio")}
                   </h2>
 
-                  <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] max-w-md mt-2 leading-relaxed">
-                    {muxPlaybackId
-                      ? "El servidor está listo. En cuanto comience la emisión en OBS Studio o vMix, el reproductor transmitirá en vivo automáticamente."
-                      : "Genera una nueva emisión en los controles superiores para obtener tu clave de OBS."}
-                  </p>
+                  {currentSubtitle && (
+                    <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] max-w-lg mt-1.5 leading-relaxed">
+                      {currentSubtitle}
+                    </p>
+                  )}
 
                   {muxPlaybackId && (
                     <div className="mt-4 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0b0b0e]/90 border border-[#58413f]/50 font-mono text-xs text-[#efbf67]">
@@ -497,6 +465,12 @@ export default function LiveStagePlayer() {
 
                   {isAdmin && (
                     <div className="mt-5 flex items-center gap-3">
+                      <button
+                        onClick={() => setIsNewBroadcastOpen(true)}
+                        className="px-4 py-2 rounded-xl bg-[#9e2a2b] hover:bg-[#c1383a] text-[#f7f4eb] font-bold text-xs uppercase tracking-wider shadow-lg"
+                      >
+                        Nueva Emisión Titulada
+                      </button>
                       <button
                         onClick={() => setIsSettingsOpen(true)}
                         className="px-4 py-2 rounded-xl bg-[#fabc4d] text-[#281900] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg"
@@ -631,14 +605,15 @@ export default function LiveStagePlayer() {
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <h3 className="font-cinzel text-lg sm:text-xl font-bold text-[#f7f4eb]">
-                  Dirección Escénica & Transmisión
+                  {currentTitle || "Dirección Escénica & Transmisión"}
                 </h3>
                 <span className="px-2 py-0.5 rounded bg-[#bd8718]/20 border border-[#bd8718]/40 text-[#fabc4d] font-jakarta text-[10px] uppercase font-bold">
-                  Mux Production VOD
+                  {currentCategory ? `Categoría: ${currentCategory}` : "Mux Production VOD"}
                 </span>
               </div>
-              <p className="font-jakarta text-xs text-[#dfbfbc] mt-0.5 max-w-lg">
-                Señal de video transmitida por OBS vía RTMP y archivada automáticamente en los servidores de Mux para reproducción bajo demanda.
+              <p className="font-jakarta text-xs text-[#dfbfbc] mt-0.5 max-w-xl">
+                {currentSubtitle ||
+                  "Señal de video transmitida por OBS vía RTMP y archivada automáticamente en los servidores de Mux para reproducción bajo demanda."}
               </p>
             </div>
           </div>
@@ -693,10 +668,23 @@ export default function LiveStagePlayer() {
         isOpen={isUploadOpen}
         onClose={() => setIsUploadOpen(false)}
         onVideoUploaded={(newVideo) => {
-          // Trigger custom event or notification
           if (typeof window !== "undefined") {
             window.dispatchEvent(new CustomEvent("pagana_video_uploaded", { detail: newVideo }));
           }
+        }}
+      />
+
+      <NewBroadcastModal
+        isOpen={isNewBroadcastOpen}
+        onClose={() => setIsNewBroadcastOpen(false)}
+        onBroadcastCreated={(created) => {
+          setMuxStreamKey(created.streamKey);
+          setMuxPlaybackId(created.playbackId);
+          setCurrentTitle(created.title);
+          setCurrentSubtitle(created.subtitle);
+          setCurrentCategory(created.category);
+          setStreamCreatedAlert(true);
+          setTimeout(() => setStreamCreatedAlert(false), 5000);
         }}
       />
     </>

@@ -6,6 +6,9 @@ export interface MuxLiveStream {
   rtmp_url: string;
   created_at: string;
   recent_asset_ids?: string[];
+  title?: string;
+  subtitle?: string;
+  category?: string;
 }
 
 export interface MuxAsset {
@@ -15,7 +18,15 @@ export interface MuxAsset {
   duration: number;
   created_at: string;
   title: string;
+  subtitle?: string;
+  category?: string;
   aspect_ratio?: string;
+}
+
+export interface CreateStreamOptions {
+  title: string;
+  subtitle?: string;
+  category?: string;
 }
 
 const MUX_API_BASE = "https://api.mux.com/video/v1";
@@ -35,7 +46,7 @@ function getMuxAuthHeader() {
 /**
  * Create a new live stream on Mux with automatic VOD recording
  */
-export async function createMuxLiveStream(title: string = "Fiesta Pagana Live Broadcast"): Promise<{
+export async function createMuxLiveStream(options: CreateStreamOptions | string = "Fiesta Pagana Live Broadcast"): Promise<{
   stream: MuxLiveStream | null;
   error: string | null;
 }> {
@@ -49,6 +60,17 @@ export async function createMuxLiveStream(title: string = "Fiesta Pagana Live Br
     };
   }
 
+  const title = typeof options === "string" ? options : options.title || "Fiesta Pagana - Transmisión en Directo";
+  const subtitle = typeof options === "object" ? options.subtitle || "" : "";
+  const category = typeof options === "object" ? options.category || "ensayos" : "ensayos";
+
+  const passthroughPayload = JSON.stringify({
+    title,
+    subtitle,
+    category,
+    created_at: new Date().toISOString(),
+  });
+
   try {
     const res = await fetch(`${MUX_API_BASE}/live-streams`, {
       method: "POST",
@@ -61,7 +83,7 @@ export async function createMuxLiveStream(title: string = "Fiesta Pagana Live Br
         new_asset_settings: {
           playback_policy: ["public"],
         },
-        passthrough: title,
+        passthrough: passthroughPayload,
         reconnect_window: 60,
       }),
     });
@@ -88,6 +110,9 @@ export async function createMuxLiveStream(title: string = "Fiesta Pagana Live Br
         rtmp_url: "rtmps://global-live.mux.com:443/app",
         created_at: data.created_at,
         recent_asset_ids: data.recent_asset_ids,
+        title,
+        subtitle,
+        category,
       },
       error: null,
     };
@@ -113,7 +138,7 @@ export async function listMuxRecordedAssets(): Promise<{
   }
 
   try {
-    const res = await fetch(`${MUX_API_BASE}/assets?limit=25`, {
+    const res = await fetch(`${MUX_API_BASE}/assets?limit=30`, {
       headers: {
         Authorization: auth,
       },
@@ -124,15 +149,34 @@ export async function listMuxRecordedAssets(): Promise<{
     }
 
     const json = await res.json();
-    const assets: MuxAsset[] = (json.data || []).map((a: any) => ({
-      id: a.id,
-      playback_id: a.playback_ids?.[0]?.id || "",
-      status: a.status,
-      duration: a.duration || 0,
-      created_at: new Date(Number(a.created_at) * 1000).toISOString(),
-      title: a.passthrough || "Grabación de Transmisión",
-      aspect_ratio: a.aspect_ratio,
-    }));
+    const assets: MuxAsset[] = (json.data || []).map((a: any) => {
+      let title = "Transmisión en Diferido";
+      let subtitle = "";
+      let category = "ensayos";
+
+      if (a.passthrough) {
+        try {
+          const parsed = JSON.parse(a.passthrough);
+          if (parsed.title) title = parsed.title;
+          if (parsed.subtitle) subtitle = parsed.subtitle;
+          if (parsed.category) category = parsed.category;
+        } catch {
+          title = a.passthrough;
+        }
+      }
+
+      return {
+        id: a.id,
+        playback_id: a.playback_ids?.[0]?.id || "",
+        status: a.status,
+        duration: a.duration || 0,
+        created_at: new Date(Number(a.created_at) * 1000).toISOString(),
+        title,
+        subtitle,
+        category,
+        aspect_ratio: a.aspect_ratio,
+      };
+    });
 
     return { assets, error: null };
   } catch (err: any) {
