@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Hls from "hls.js";
 import {
   Video,
   Play,
@@ -25,6 +26,10 @@ import {
   Lock,
   Upload,
   HardDrive,
+  Maximize2,
+  RefreshCw,
+  Signal,
+  AlertCircle,
 } from "lucide-react";
 import StageSettingsModal from "./StageSettingsModal";
 import UploadBroadcastModal from "./UploadBroadcastModal";
@@ -33,16 +38,24 @@ import { useAuth } from "@/context/AuthContext";
 export default function LiveStagePlayer() {
   const { user, profile, role, isAdmin, isStaff } = useAuth();
 
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const hlsRef = useRef<Hls | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isBroadcasting, setIsBroadcasting] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(85);
+  const [volume, setVolume] = useState(90);
   const [isSaved, setIsSaved] = useState(false);
   const [isShared, setIsShared] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
-  const [resolution, setResolution] = useState("1080p");
   const [viewerCount, setViewerCount] = useState(64);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Live Stream state
+  const [isStreamLive, setIsStreamLive] = useState(false);
+  const [isLoadingStream, setIsLoadingStream] = useState(false);
+  const [streamError, setStreamError] = useState<string | null>(null);
 
   // Mux & Google Meet Streaming State
   const [broadcastMode, setBroadcastMode] = useState<"mux" | "meet">("mux");
@@ -53,6 +66,7 @@ export default function LiveStagePlayer() {
   const [streamCreatedAlert, setStreamCreatedAlert] = useState(false);
   const [apiErrorMessage, setApiErrorMessage] = useState<string | null>(null);
 
+  // Read saved config
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
@@ -83,6 +97,151 @@ export default function LiveStagePlayer() {
       };
     }
   }, []);
+
+  // Initialize and attach HLS stream
+  useEffect(() => {
+    if (broadcastMode !== "mux" || !muxPlaybackId) {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
+      }
+      setIsStreamLive(false);
+      setIsLoadingStream(false);
+      return;
+    }
+
+    const streamUrl = `https://stream.mux.com/${muxPlaybackId}.m3u8`;
+    const video = videoRef.current;
+    if (!video) return;
+
+    setIsLoadingStream(true);
+    setStreamError(null);
+
+    if (Hls.isSupported()) {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+      }
+
+      const hls = new Hls({
+        enableWorker: true,
+        lowLatencyMode: true,
+        backBufferLength: 60,
+        manifestLoadingTimeOut: 10000,
+        manifestLoadingMaxRetry: 5,
+      });
+
+      hlsRef.current = hls;
+      hls.loadSource(streamUrl);
+      hls.attachMedia(video);
+
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        setIsStreamLive(true);
+        setIsLoadingStream(false);
+        setStreamError(null);
+        video.play().catch(() => {
+          // Autoplay restriction fallback
+          video.muted = true;
+          setIsMuted(true);
+          video.play().catch(() => {});
+        });
+      });
+
+      hls.on(Hls.Events.ERROR, (_event, data) => {
+        if (data.fatal) {
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              setIsStreamLive(false);
+              setIsLoadingStream(false);
+              setStreamError("En espera de señal desde OBS o reconectando...");
+              setTimeout(() => {
+                if (hlsRef.current) {
+                  hls.startLoad();
+                }
+              }, 4000);
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              hls.recoverMediaError();
+              break;
+            default:
+              hls.destroy();
+              break;
+          }
+        }
+      });
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      // Native Safari / iOS HLS
+      video.src = streamUrl;
+      video.addEventListener("loadedmetadata", () => {
+        setIsStreamLive(true);
+        setIsLoadingStream(false);
+        setStreamError(null);
+        video.play().catch(() => {
+          video.muted = true;
+          setIsMuted(true);
+          video.play().catch(() => {});
+        });
+      });
+      video.addEventListener("error", () => {
+        setIsStreamLive(false);
+        setIsLoadingStream(false);
+        setStreamError("En espera de señal desde OBS...");
+      });
+    }
+
+    return () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
+      }
+    };
+  }, [muxPlaybackId, broadcastMode]);
+
+  // Handle Play/Pause
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (isPlaying) {
+      video.pause();
+      setIsPlaying(false);
+    } else {
+      video.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  // Handle Mute/Unmute
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    const nextMuted = !isMuted;
+    video.muted = nextMuted;
+    setIsMuted(nextMuted);
+  };
+
+  // Handle Volume
+  const handleVolumeChange = (newVol: number) => {
+    const video = videoRef.current;
+    setVolume(newVol);
+    if (video) {
+      video.volume = newVol / 100;
+      if (newVol > 0 && isMuted) {
+        video.muted = false;
+        setIsMuted(false);
+      }
+    }
+  };
+
+  // Handle Fullscreen
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return;
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch(() => {});
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen().catch(() => {});
+      setIsFullscreen(false);
+    }
+  };
 
   const handleCreateNewMuxStream = async () => {
     if (!isAdmin) return;
@@ -248,7 +407,10 @@ export default function LiveStagePlayer() {
         )}
 
         {/* Video Canvas Container (16:9 Aspect Ratio) */}
-        <div className="relative w-full aspect-video rounded-2xl bg-[#09090c] overflow-hidden shadow-2xl border border-[#58413f]/40 group flex flex-col justify-between">
+        <div
+          ref={containerRef}
+          className="relative w-full aspect-video rounded-2xl bg-black overflow-hidden shadow-2xl border border-[#58413f]/40 group flex flex-col justify-between"
+        >
           {broadcastMode === "meet" ? (
             /* Google Meet Mode */
             <div className="absolute inset-0 bg-[#0e0e11] flex flex-col items-center justify-center p-6 text-center z-10">
@@ -291,16 +453,77 @@ export default function LiveStagePlayer() {
           ) : (
             /* Mux Live Stream Stage Canvas */
             <>
-              {/* Dynamic Aura & Dark Scrim */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e11] via-[#0e0e11]/60 to-[#0e0e11]/80 pointer-events-none"></div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[20rem] bg-[#9e2a2b]/20 rounded-full blur-[120px] pointer-events-none"></div>
+              {/* Actual HTML5 / HLS Video Element */}
+              <video
+                ref={videoRef}
+                playsInline
+                autoPlay
+                className={`w-full h-full object-contain bg-black transition-opacity duration-500 ${
+                  isStreamLive ? "opacity-100" : "opacity-0"
+                }`}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              />
+
+              {/* Standby / Waiting Screen if Stream is not yet live */}
+              {!isStreamLive && (
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e11] via-[#141419]/90 to-[#0e0e11] flex flex-col items-center justify-center p-6 text-center z-10">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(158,42,43,0.25)_0%,transparent_70%)] pointer-events-none"></div>
+
+                  <div className="relative w-16 h-16 rounded-full bg-[#9e2a2b]/30 border border-[#fabc4d]/60 backdrop-blur-md flex items-center justify-center text-[#fabc4d] mb-4 shadow-[0_0_30px_rgba(158,42,43,0.7)] animate-pulse">
+                    <Radio className="w-8 h-8" />
+                  </div>
+
+                  <span className="font-jakarta text-xs text-[#fabc4d] uppercase tracking-[0.25em] font-bold mb-1">
+                    Cámara Negra • Mux Live Stream
+                  </span>
+
+                  <h2 className="font-cinzel text-xl sm:text-2xl lg:text-3xl text-[#f7f4eb] font-bold drop-shadow-lg">
+                    {muxPlaybackId ? "En espera de señal desde OBS" : "Transmisión Pendiente de Inicio"}
+                  </h2>
+
+                  <p className="font-jakarta text-xs sm:text-sm text-[#dfbfbc] max-w-md mt-2 leading-relaxed">
+                    {muxPlaybackId
+                      ? "El servidor está listo. En cuanto comience la emisión en OBS Studio o vMix, el reproductor transmitirá en vivo automáticamente."
+                      : "Genera una nueva emisión en los controles superiores para obtener tu clave de OBS."}
+                  </p>
+
+                  {muxPlaybackId && (
+                    <div className="mt-4 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0b0b0e]/90 border border-[#58413f]/50 font-mono text-xs text-[#efbf67]">
+                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                      <span>Playback ID: {muxPlaybackId}</span>
+                    </div>
+                  )}
+
+                  {isAdmin && (
+                    <div className="mt-5 flex items-center gap-3">
+                      <button
+                        onClick={() => setIsSettingsOpen(true)}
+                        className="px-4 py-2 rounded-xl bg-[#fabc4d] text-[#281900] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg"
+                      >
+                        Ver Claves de OBS
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Top Overlays Bar */}
-              <div className="relative z-20 p-4 sm:p-5 flex items-center justify-between">
+              <div className="absolute top-0 inset-x-0 z-20 p-4 sm:p-5 flex items-center justify-between bg-gradient-to-b from-black/80 via-black/40 to-transparent pointer-events-auto">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#9e2a2b] text-[#f7f4eb] font-jakarta text-[11px] uppercase tracking-widest font-bold shadow-[0_0_15px_rgba(158,42,43,0.8)] border-t border-white/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
-                    OBS • MUX LIVE
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-[#f7f4eb] font-jakarta text-[11px] uppercase tracking-widest font-bold border-t border-white/20 ${
+                      isStreamLive
+                        ? "bg-[#9e2a2b] shadow-[0_0_15px_rgba(158,42,43,0.8)]"
+                        : "bg-[#2a2a2d] text-[#dfbfbc]"
+                    }`}
+                  >
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        isStreamLive ? "bg-white animate-pulse" : "bg-amber-400"
+                      }`}
+                    ></span>
+                    {isStreamLive ? "OBS • EN VIVO" : "OBS • STANDBY"}
                   </span>
 
                   <span className="px-3 py-1 rounded-md bg-[#141419]/85 backdrop-blur-md text-[#dfbfbc] font-jakarta text-[11px] flex items-center gap-1.5 border border-[#58413f]/40">
@@ -327,51 +550,12 @@ export default function LiveStagePlayer() {
                 )}
               </div>
 
-              {/* Center Stage Focus Info */}
-              <div className="relative z-10 mx-auto flex flex-col items-center justify-center text-center px-4 max-w-xl py-10">
-                <div className="w-16 h-16 rounded-full bg-[#9e2a2b]/40 border border-[#fabc4d]/50 backdrop-blur-md flex items-center justify-center text-[#fabc4d] mb-3 shadow-[0_0_30px_rgba(158,42,43,0.6)] animate-pulse">
-                  <Radio className="w-8 h-8" />
-                </div>
-                <p className="font-jakarta text-xs text-[#fabc4d] uppercase tracking-[0.2em] font-bold">
-                  Transmisión en Vivo • Mux Ingest
-                </p>
-                <h2 className="font-cinzel text-xl sm:text-2xl lg:text-3xl text-[#f7f4eb] font-bold mt-1 drop-shadow-lg">
-                  Fiesta Pagana en Teatros
-                </h2>
-                {muxPlaybackId ? (
-                  <span className="font-mono text-xs text-[#dfbfbc] mt-2 bg-[#0b0b0e]/80 px-3 py-1 rounded border border-[#58413f]/40">
-                    Playback ID: {muxPlaybackId}
-                  </span>
-                ) : (
-                  <div className="mt-3">
-                    {isAdmin ? (
-                      <button
-                        onClick={() => setIsSettingsOpen(true)}
-                        className="px-4 py-2 rounded-xl bg-[#fabc4d] text-[#281900] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg"
-                      >
-                        Configurar Clave y Playback ID de Mux
-                      </button>
-                    ) : (
-                      <span className="text-xs text-[#dfbfbc]">Emisión en espera de inicio por la Dirección</span>
-                    )}
-                  </div>
-                )}
-              </div>
-
               {/* Player Controls Dock */}
-              <div className="relative z-20 p-4 sm:p-5 bg-gradient-to-t from-[#0e0e11] to-transparent flex flex-col gap-2">
-                {/* Timeline Scrub bar */}
-                <div className="w-full h-1.5 bg-[#2a2a2d] rounded-full cursor-pointer relative group/timeline">
-                  <div className="h-full bg-[#9e2a2b] rounded-full w-[88%] relative">
-                    <span className="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#fabc4d] opacity-0 group-hover/timeline:opacity-100 transition-opacity shadow-md"></span>
-                  </div>
-                </div>
-
-                {/* Bottom Controls */}
+              <div className="absolute bottom-0 inset-x-0 z-20 p-4 sm:p-5 bg-gradient-to-t from-black/90 via-black/60 to-transparent flex flex-col gap-2 pointer-events-auto">
                 <div className="flex items-center justify-between text-[#f7f4eb] pt-1">
                   <div className="flex items-center gap-3">
                     <button
-                      onClick={() => setIsPlaying(!isPlaying)}
+                      onClick={togglePlay}
                       className="p-1.5 text-[#f7f4eb] hover:text-[#fabc4d] transition-colors"
                       aria-label="Play/Pause"
                     >
@@ -380,7 +564,7 @@ export default function LiveStagePlayer() {
 
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() => setIsMuted(!isMuted)}
+                        onClick={toggleMute}
                         className="p-1.5 text-[#f7f4eb] hover:text-[#fabc4d] transition-colors"
                         aria-label="Mute/Unmute"
                       >
@@ -395,32 +579,31 @@ export default function LiveStagePlayer() {
                         min="0"
                         max="100"
                         value={isMuted ? 0 : volume}
-                        onChange={(e) => {
-                          setVolume(Number(e.target.value));
-                          setIsMuted(false);
-                        }}
+                        onChange={(e) => handleVolumeChange(Number(e.target.value))}
                         className="w-16 sm:w-20 h-1 bg-[#2a2a2d] accent-[#fabc4d] rounded cursor-pointer"
                       />
                     </div>
 
                     <span className="font-jakarta text-xs text-[#dfbfbc]">
-                      01:45:20 / <strong className="text-[#ffb3ae]">MUX BROADCAST</strong>
+                      {isStreamLive ? (
+                        <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                          TRANSMISIÓN EN DIRECTO
+                        </span>
+                      ) : (
+                        <span>Mux Live Ingest</span>
+                      )}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 text-xs text-[#dfbfbc]">
-                      <span className="hidden sm:inline">Calidad:</span>
-                      <select
-                        value={resolution}
-                        onChange={(e) => setResolution(e.target.value)}
-                        className="bg-[#141419] text-[#f7f4eb] border border-[#58413f] text-xs py-1 px-2 rounded-lg outline-none cursor-pointer"
-                      >
-                        <option value="1080p">1080p60 (Pro OBS)</option>
-                        <option value="720p">720p HD</option>
-                        <option value="480p">480p</option>
-                      </select>
-                    </div>
+                    <button
+                      onClick={toggleFullscreen}
+                      className="p-1.5 text-[#dfbfbc] hover:text-[#fabc4d] transition-colors"
+                      title="Pantalla Completa"
+                    >
+                      <Maximize2 className="w-4 h-4" />
+                    </button>
 
                     {isAdmin && (
                       <button
