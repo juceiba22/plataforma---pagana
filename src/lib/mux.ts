@@ -60,8 +60,8 @@ export async function createMuxLiveStream(title: string = "Fiesta Pagana Live Br
         playback_policy: ["public"],
         new_asset_settings: {
           playback_policy: ["public"],
-          passthrough: title,
         },
+        passthrough: title,
         reconnect_window: 60,
       }),
     });
