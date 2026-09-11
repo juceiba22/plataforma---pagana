@@ -62,6 +62,22 @@ export default function StageSettingsModal({
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "pagana_live_stage_config",
+        JSON.stringify({
+          muxStreamKey: muxStreamKey.trim(),
+          muxPlaybackId: muxPlaybackId.trim(),
+          meetUrl: meetUrl.trim(),
+          broadcastMode,
+        })
+      );
+      window.dispatchEvent(
+        new CustomEvent("pagana_stage_config_updated", {
+          detail: { muxStreamKey, muxPlaybackId, meetUrl, broadcastMode },
+        })
+      );
+    }
     setSaved(true);
     setTimeout(() => {
       setSaved(false);
@@ -84,7 +100,7 @@ export default function StageSettingsModal({
         </button>
 
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl bg-[#9e2a2b]/30 border border-[#9e2a2b] flex items-center justify-center text-[#fabc4d]">
             <Sliders className="w-5 h-5" />
           </div>
@@ -96,6 +112,12 @@ export default function StageSettingsModal({
               Ajustes de servidor MUX para OBS Studio y enlace embebido de Google Meet
             </p>
           </div>
+        </div>
+
+        {/* Instruction Info Banner */}
+        <div className="p-3.5 rounded-xl bg-[#9e2a2b]/20 border border-[#fabc4d]/30 text-xs text-[#dfbfbc] mb-5 leading-relaxed">
+          <span className="text-[#fabc4d] font-bold block mb-1">🔑 Claves de Transmisión Reales:</span>
+          Para generar claves de emisión automáticamente con 1 clic, añade <code className="bg-[#0b0b0e] px-1 py-0.5 rounded text-[#fabc4d]">MUX_TOKEN_ID</code> y <code className="bg-[#0b0b0e] px-1 py-0.5 rounded text-[#fabc4d]">MUX_TOKEN_SECRET</code> en tus variables de entorno. De lo contrario, puedes pegar directamente aquí tu <strong>Clave de Emisión</strong> y <strong>Playback ID</strong> obtenidos de Mux u OBS y hacer clic en <em>Aplicar a Producción</em>.
         </div>
 
         {/* Settings Navigation Tabs */}

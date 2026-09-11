@@ -46,15 +46,48 @@ export default function LiveStagePlayer() {
 
   // Mux & Google Meet Streaming State
   const [broadcastMode, setBroadcastMode] = useState<"mux" | "meet">("mux");
-  const [muxStreamKey, setMuxStreamKey] = useState("live_sk_fp_production_98a7");
-  const [muxPlaybackId, setMuxPlaybackId] = useState("DS00Spx1CV902MCtP7GsWm0147LnFiNo00k");
+  const [muxStreamKey, setMuxStreamKey] = useState("");
+  const [muxPlaybackId, setMuxPlaybackId] = useState("");
   const [meetUrl, setMeetUrl] = useState("https://meet.google.com/fp-teatro-ritual");
   const [isCreatingMuxStream, setIsCreatingMuxStream] = useState(false);
   const [streamCreatedAlert, setStreamCreatedAlert] = useState(false);
+  const [apiErrorMessage, setApiErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem("pagana_live_stage_config");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed.muxStreamKey) setMuxStreamKey(parsed.muxStreamKey);
+          if (parsed.muxPlaybackId) setMuxPlaybackId(parsed.muxPlaybackId);
+          if (parsed.meetUrl) setMeetUrl(parsed.meetUrl);
+          if (parsed.broadcastMode) setBroadcastMode(parsed.broadcastMode);
+        }
+      } catch (e) {
+        console.warn("Could not read stream config from localStorage", e);
+      }
+
+      const handleConfigUpdate = (e: any) => {
+        if (e.detail) {
+          if (e.detail.muxStreamKey !== undefined) setMuxStreamKey(e.detail.muxStreamKey);
+          if (e.detail.muxPlaybackId !== undefined) setMuxPlaybackId(e.detail.muxPlaybackId);
+          if (e.detail.meetUrl !== undefined) setMeetUrl(e.detail.meetUrl);
+          if (e.detail.broadcastMode !== undefined) setBroadcastMode(e.detail.broadcastMode);
+        }
+      };
+
+      window.addEventListener("pagana_stage_config_updated", handleConfigUpdate);
+      return () => {
+        window.removeEventListener("pagana_stage_config_updated", handleConfigUpdate);
+      };
+    }
+  }, []);
 
   const handleCreateNewMuxStream = async () => {
     if (!isAdmin) return;
     setIsCreatingMuxStream(true);
+    setApiErrorMessage(null);
     try {
       const res = await fetch("/api/mux/live-stream", {
         method: "POST",
@@ -63,13 +96,28 @@ export default function LiveStagePlayer() {
       });
       const data = await res.json();
       if (data?.stream) {
-        if (data.stream.stream_key) setMuxStreamKey(data.stream.stream_key);
-        if (data.stream.playback_ids?.[0]?.id) setMuxPlaybackId(data.stream.playback_ids[0].id);
+        const newKey = data.stream.stream_key || "";
+        const newPlayback = data.stream.playback_ids?.[0]?.id || "";
+        setMuxStreamKey(newKey);
+        setMuxPlaybackId(newPlayback);
+        if (typeof window !== "undefined") {
+          localStorage.setItem(
+            "pagana_live_stage_config",
+            JSON.stringify({
+              muxStreamKey: newKey,
+              muxPlaybackId: newPlayback,
+              meetUrl,
+              broadcastMode: "mux",
+            })
+          );
+        }
         setStreamCreatedAlert(true);
-        setTimeout(() => setStreamCreatedAlert(false), 3000);
+        setTimeout(() => setStreamCreatedAlert(false), 4000);
+      } else if (data?.error) {
+        setApiErrorMessage(data.error);
       }
-    } catch (err) {
-      console.error("Error creating Mux live stream:", err);
+    } catch (err: any) {
+      setApiErrorMessage(err.message || "Error al conectar con la API de Mux");
     } finally {
       setIsCreatingMuxStream(false);
     }
@@ -174,6 +222,21 @@ export default function LiveStagePlayer() {
           </div>
         </div>
 
+        {apiErrorMessage && (
+          <div className="p-4 rounded-xl bg-[#93000a]/30 border border-[#ffb4ab]/50 text-xs text-[#ffdad6] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-fadeIn">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#ffb4ab] shrink-0"></span>
+              <span>{apiErrorMessage}</span>
+            </div>
+            <button
+              onClick={() => setIsSettingsOpen(true)}
+              className="px-3 py-1.5 rounded-lg bg-[#fabc4d] text-[#281900] font-bold text-xs shrink-0 hover:brightness-110 uppercase"
+            >
+              Abrir Ajustes OBS
+            </button>
+          </div>
+        )}
+
         {streamCreatedAlert && (
           <div className="p-3.5 rounded-xl bg-[#9e2a2b]/30 border border-[#fabc4d] text-xs text-[#f7f4eb] flex items-center justify-between animate-fadeIn">
             <span className="flex items-center gap-2 font-jakarta">
@@ -265,7 +328,7 @@ export default function LiveStagePlayer() {
               </div>
 
               {/* Center Stage Focus Info */}
-              <div className="relative z-10 mx-auto flex flex-col items-center justify-center text-center px-4 max-w-xl pointer-events-none py-10">
+              <div className="relative z-10 mx-auto flex flex-col items-center justify-center text-center px-4 max-w-xl py-10">
                 <div className="w-16 h-16 rounded-full bg-[#9e2a2b]/40 border border-[#fabc4d]/50 backdrop-blur-md flex items-center justify-center text-[#fabc4d] mb-3 shadow-[0_0_30px_rgba(158,42,43,0.6)] animate-pulse">
                   <Radio className="w-8 h-8" />
                 </div>
@@ -275,9 +338,24 @@ export default function LiveStagePlayer() {
                 <h2 className="font-cinzel text-xl sm:text-2xl lg:text-3xl text-[#f7f4eb] font-bold mt-1 drop-shadow-lg">
                   Fiesta Pagana en Teatros
                 </h2>
-                <span className="font-mono text-xs text-[#dfbfbc] mt-2 bg-[#0b0b0e]/80 px-3 py-1 rounded border border-[#58413f]/40">
-                  Playback ID: {muxPlaybackId}
-                </span>
+                {muxPlaybackId ? (
+                  <span className="font-mono text-xs text-[#dfbfbc] mt-2 bg-[#0b0b0e]/80 px-3 py-1 rounded border border-[#58413f]/40">
+                    Playback ID: {muxPlaybackId}
+                  </span>
+                ) : (
+                  <div className="mt-3">
+                    {isAdmin ? (
+                      <button
+                        onClick={() => setIsSettingsOpen(true)}
+                        className="px-4 py-2 rounded-xl bg-[#fabc4d] text-[#281900] font-bold text-xs uppercase tracking-wider hover:brightness-110 shadow-lg"
+                      >
+                        Configurar Clave y Playback ID de Mux
+                      </button>
+                    ) : (
+                      <span className="text-xs text-[#dfbfbc]">Emisión en espera de inicio por la Dirección</span>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Player Controls Dock */}

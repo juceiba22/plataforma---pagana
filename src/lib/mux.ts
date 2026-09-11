@@ -42,18 +42,10 @@ export async function createMuxLiveStream(title: string = "Fiesta Pagana Live Br
   const auth = getMuxAuthHeader();
 
   if (!auth) {
-    // If no MUX API token is set yet, return a production-ready mock stream
-    const fallbackPlaybackId = "DS00Spx1CV902MCtP7GsWm0147LnFiNo00k";
     return {
-      stream: {
-        id: `live_${Date.now()}`,
-        status: "idle",
-        stream_key: `live_sk_fp_${Math.random().toString(36).substring(2, 10)}`,
-        playback_ids: [{ id: fallbackPlaybackId, policy: "public" }],
-        rtmp_url: "rtmps://global-live.mux.com:443/app",
-        created_at: new Date().toISOString(),
-      },
-      error: null,
+      stream: null,
+      error:
+        "Faltan configurar MUX_TOKEN_ID y MUX_TOKEN_SECRET en las variables de entorno (.env.local o Vercel). Puedes generarlas en dashboard.mux.com/settings/access-tokens o ingresar tus claves de OBS manualmente.",
     };
   }
 
